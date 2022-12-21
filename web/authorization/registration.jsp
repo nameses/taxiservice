@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,41 +7,59 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
-<jsp:include page="../common/header.jsp"></jsp:include>
+<jsp:include page="../common/header.jsp" />
 <div class="container">
     <h2>User Register Form</h2>
     <div class="col-md-6 col-md-offset-3">
-        <c:if test="${not empty message}">
+        <c:if test="${not empty pageScope.MESSAGE}">
             <div class="alert alert-success center" role="alert">
-                <p>${NOTIFICATION}</p>
+                <p>${pageScope.MESSAGE}</p>
             </div>
         </c:if>
-        <form action="<%=request.getContextPath()%>/register" method="post">
-
+        <form action="${pageContext.request.contextPath}/controller" method="POST">
+            <input type="hidden" name="command" value="registration"/>
             <div class="form-group">
-                <label for="firstName">First Name:</label>
-                <input type="text" class="form-control" id="firstName"
-                       placeholder="First Name" name="firstName" required>
+                <label for="firstname">First Name:</label>
+                <input type="text" class="form-control" id="firstname"
+                       placeholder="First Name" name="firstname" required>
             </div>
-
             <div class="form-group">
-                <label for="lastName">Last Name:</label>
-                <input type="text" class="form-control" id="lastName"
-                       placeholder="last Name" name="lastName" required>
+                <label for="lastname">Last Name:</label>
+                <input type="text" class="form-control" id="lastname"
+                       placeholder="last Name" name="lastname" required>
             </div>
-
             <div class="form-group">
                 <label for="username">User Name:</label>
                 <input type="text" class="form-control" id="username"
-                       placeholder="User Name" name="username" required>
+                       placeholder="Username" name="username" required>
             </div>
-
             <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password"
                        placeholder="Password" name="password" required>
             </div>
-
+            <div class="form-group">
+                <label for="confirm_password">Confirm password:</label>
+                <input type="password" class="form-control" id="confirm_password"
+                       placeholder="Password" name="confirm_password" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Password:</label>
+                <input type="text" class="form-control" id="phone"
+                       placeholder="Phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Password:</label>
+                <input type="text" class="form-control" id="email"
+                       placeholder="Email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select name="role" id="role" required>
+                    <option>admin</option>
+                    <option>client</option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
 
         </form>
