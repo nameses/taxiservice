@@ -16,7 +16,9 @@ public class Registration implements Command {
     @Override
     public PageUrl execute(HttpServletRequest request) throws ServletException {
         UserService userService = new UserService();
-        UserAccount client = getUser(request);
+        UserAccount user = getUser(request);
+        userService.registerUser(user);
+        return PageUrl("/authorization/login.jsp", isRedirection=true);
     }
 
     private UserAccount getUser(HttpServletRequest request){
@@ -24,11 +26,18 @@ public class Registration implements Command {
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String username = request.getParameter("username");
-        String password = EncryptionUtil.getEncrypted(request.getParameter("password"));
+        String password = request.getParameter("password");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         String role = request.getParameter("role");
         //TODO validation
-        
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
+        user.setUsername(username);
+        user.setPassword(EncryptionUtil.getEncrypted(password);
+        user.setPhone(phone);
+        user.setEmail(email);
+        user.setRole(role);
+        return user;
     }
 }
