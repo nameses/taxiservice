@@ -1,8 +1,11 @@
 package controller;
 
 import com.sun.mail.iap.CommandFailedException;
+import command.Command;
 import command.CommandFactory;
+import command.page.PageUrl;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +30,30 @@ public class Controller extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response){
         try{
             CommandFactory factory = new CommandFactory();
+            Command command = factory.getCommand(request);
+            PageUrl page = command.execute(request);
+            if (page.isRedirection()) {
+                redirect(page, request, response);
+            } else {
+                forward(page, request, response);
+            }
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
         }
+    }
+    private void redirect(PageUrl page, HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        String url = page.getUrlPath();
+        response.sendRedirect(request.getContextPath() + url);
+    }
+
+    private void forward(PageUrl page, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String message = page.getMessage();
+        if (message!=null)
+            request.setAttribute("message", message);
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(page.getUrlPath());
+        requestDispatcher.forward(request, response);
     }
 }

@@ -11,7 +11,7 @@
 <div class="container">
     <h2>User Register Form</h2>
     <div class="col-md-6 col-md-offset-3">
-        <c:if test="${not empty NOTIFICATION}">
+        <c:if test="${not empty message}">
             <div class="alert alert-success center" role="alert">
                 <p>${NOTIFICATION}</p>
             </div>

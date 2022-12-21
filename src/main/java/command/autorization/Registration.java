@@ -1,24 +1,24 @@
 package command.autorization;
 
 import command.Command;
+import command.page.PageConstants;
 import command.page.PageUrl;
 import entity.UserAccount;
 import service.UserService;
 import utils.EncryptionUtil;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class Registration implements Command {
 
 
     @Override
-    public PageUrl execute(HttpServletRequest request) throws ServletException {
+    public PageUrl execute(HttpServletRequest request){
         UserService userService = new UserService();
         UserAccount user = getUser(request);
-        userService.registerUser(user);
-        return PageUrl("/authorization/login.jsp", isRedirection=true);
+        if(!userService.registerUser(user)){
+            return new PageUrl(PageConstants.REGISTRATION, false, "Unknown error.");
+        }
+        return new PageUrl(PageConstants.LOGIN, true);
     }
 
     private UserAccount getUser(HttpServletRequest request){
@@ -34,7 +34,7 @@ public class Registration implements Command {
         user.setFirstname(firstname);
         user.setLastname(lastname);
         user.setUsername(username);
-        user.setPassword(EncryptionUtil.getEncrypted(password);
+        user.setPassword(EncryptionUtil.getEncrypted(password));
         user.setPhone(phone);
         user.setEmail(email);
         user.setRole(role);

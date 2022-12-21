@@ -8,9 +8,11 @@ public class CommandFactory {
     public Command getCommand(HttpServletRequest request){
         Command currentCommand = null;
         String command = request.getParameter("command");
-        try{
-            currentCommand = CommandType.getCommandType()
-
+        try {
+            currentCommand = CommandType.getCommand(command);
+        } catch (IllegalArgumentException e) {
+            request.setAttribute("MESSAGE","Wrong command name");
         }
+        return currentCommand;
     }
 }
