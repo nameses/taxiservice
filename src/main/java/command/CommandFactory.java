@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CommandFactory {
 
     public Command getCommand(HttpServletRequest request){
-        Command currentCommand = null;
+        Command currentCommand = CommandType.getCommand("homepage");
         String command = request.getParameter("command");
         try {
             currentCommand = CommandType.getCommand(command);

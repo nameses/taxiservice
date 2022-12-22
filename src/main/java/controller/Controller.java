@@ -31,6 +31,8 @@ public class Controller extends HttpServlet {
         try{
             CommandFactory factory = new CommandFactory();
             Command command = factory.getCommand(request);
+
+
             PageUrl page = command.execute(request);
             if (page.isRedirection()) {
                 redirect(page, request, response);

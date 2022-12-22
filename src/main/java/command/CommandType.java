@@ -14,6 +14,7 @@ public class CommandType {
     }
     static void init(){
         commandMap.put("registration", new Registration());
+        commandMap.put("homepage", new Registration());
     }
     public static Command getCommand(String command){
         return commandMap.get(command);
