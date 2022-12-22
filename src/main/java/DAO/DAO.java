@@ -1,18 +1,18 @@
 package DAO;
 
+import pool.ConnectionCreator;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static utils.JDBCUtil.getConnection;
-
 public abstract class DAO<T> {
     protected abstract List<String> getParameters(T entity);
     protected abstract T buildEntity(ResultSet resultSet);
     protected Boolean executeQuery(String query, List<String> parameters){
-        try (PreparedStatement preparedStatement = prepareStatement(query, parameters)) {
+        try (PreparedStatement preparedStatement = this.prepareStatement(query, parameters)) {
             return Boolean.valueOf(String.valueOf(preparedStatement.executeUpdate()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -20,10 +20,10 @@ public abstract class DAO<T> {
     }
 
     protected T getEntity(String query, List<String> params){
-        try(PreparedStatement preparedStatement = prepareStatement(query, params);
+        try(PreparedStatement preparedStatement = this.prepareStatement(query, params);
             ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
-                return buildEntity(resultSet);
+                return this.buildEntity(resultSet);
             }
             return null;
         } catch (SQLException e) {
@@ -31,13 +31,13 @@ public abstract class DAO<T> {
         }
     }
     protected Boolean insert(String query, T entity){
-        List<String> params = getParameters(entity);
-        return executeQuery(query, params);
+        List<String> params = this.getParameters(entity);
+        return this.executeQuery(query, params);
     }
 
-    private PreparedStatement prepareStatement(String sqlQuery, List<String> parameters){
-        try(Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+    private PreparedStatement prepareStatement(String query, List<String> parameters){
+        try(Connection connection = ConnectionCreator.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             if (parameters != null) {
                 int index = 1;
                 for (String parameter : parameters)
