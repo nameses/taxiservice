@@ -11,9 +11,16 @@ public class UserDAO extends DAO<UserAccount> {
     private final static String INSERT =
             "INSERT INTO UserAccount(firstname,lastname,username,password,phone,email,role) " +
                     "VALUES(?,?,?,?,?,?,?)";
+    private final static String SELECT =
+            "SELECT * FROM UserAccount WHERE username=? AND password=?";
 
-    public Boolean insertUser(UserAccount user){
+    public Boolean insertUser(UserAccount user) {
         return insert(INSERT, user);
+    }
+
+    public UserAccount login(String username, String password) {
+        List<String> params = List.of(username, password);
+        return getEntity(SELECT, params);
     }
 
     @Override
@@ -25,12 +32,12 @@ public class UserDAO extends DAO<UserAccount> {
         String phone = user.getPhone();
         String email = user.getEmail();
         String role = user.getRole();
-        return List.of(firstname,lastname,username,password,phone,email,role);
+        return List.of(firstname, lastname, username, password, phone, email, role);
     }
 
     @Override
     protected UserAccount buildEntity(ResultSet resultSet) {
-        try{
+        try {
             UserAccount user = new UserAccount();
             user.setFirstname(resultSet.getString("firstname"));
             user.setLastname(resultSet.getString("lastname"));

@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,7 +7,7 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
-<jsp:include page="../common/header.jsp" />
+<jsp:include page="../common/header.jsp"/>
 <div class="container">
     <h2>User Register Form</h2>
     <div class="col-md-6 col-md-offset-3">
@@ -20,18 +20,18 @@
             <input type="hidden" name="command" value="registration"/>
             <div class="form-group">
                 <label for="firstname">First Name:</label>
-                <input type="text" class="form-control" id="firstname"
-                       placeholder="First Name" name="firstname" required>
+                <input type="text" class="form-control" id="firstname" placeholder="First Name"
+                       value="<c:out value="${pageScope.firstname}"/>" name="firstname" required>
             </div>
             <div class="form-group">
                 <label for="lastname">Last Name:</label>
-                <input type="text" class="form-control" id="lastname"
-                       placeholder="last Name" name="lastname" required>
+                <input type="text" class="form-control" id="lastname" placeholder="last Name"
+                       value="<c:out value="${pageScope.lastname}"/>" name="lastname" required>
             </div>
             <div class="form-group">
                 <label for="username">User Name:</label>
-                <input type="text" class="form-control" id="username"
-                       placeholder="Username" name="username" required>
+                <input type="text" class="form-control" id="username" placeholder="Username"
+                       value="<c:out value="${pageScope.username}"/>" name="username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
@@ -45,13 +45,13 @@
             </div>
             <div class="form-group">
                 <label for="phone">Password:</label>
-                <input type="text" class="form-control" id="phone"
-                       placeholder="Phone" name="phone" required>
+                <input type="text" class="form-control" id="phone" placeholder="Phone"
+                       value="<c:out value="${pageScope.phone}"/>" name="phone" required>
             </div>
             <div class="form-group">
                 <label for="email">Password:</label>
-                <input type="text" class="form-control" id="email"
-                       placeholder="Email" name="email" required>
+                <input type="text" class="form-control" id="email" placeholder="Email"
+                       value="<c:out value="${pageScope.email}"/>" name="email" required>
             </div>
             <div class="form-group">
                 <label for="role">Role:</label>
@@ -62,8 +62,8 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
 
-        </form>
+    </form>
     </div>
-</div>
-</body>
-</html>
+    </div>
+    </body>
+    </html>

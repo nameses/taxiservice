@@ -1,5 +1,6 @@
 package command;
 
+import command.autorization.Login;
 import command.autorization.Registration;
 
 import java.util.HashMap;
@@ -15,6 +16,7 @@ public class CommandType {
     static void init(){
         commandMap.put("registration", new Registration());
         commandMap.put("homepage", new Registration());
+        commandMap.put("login", new Login());
     }
     public static Command getCommand(String command){
         return commandMap.get(command);

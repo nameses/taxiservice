@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serial;
 
-@WebServlet("/")
+@WebServlet("/controller")
 public class Controller extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -31,8 +31,6 @@ public class Controller extends HttpServlet {
         try{
             CommandFactory factory = new CommandFactory();
             Command command = factory.getCommand(request);
-
-
             PageUrl page = command.execute(request);
             if (page.isRedirection()) {
                 redirect(page, request, response);
