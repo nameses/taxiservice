@@ -1,5 +1,6 @@
 package command;
 
+import command.autorization.Homepage;
 import command.autorization.Login;
 import command.autorization.Registration;
 
@@ -15,7 +16,7 @@ public class CommandType {
     }
     static void init(){
         commandMap.put("registration", new Registration());
-        commandMap.put("homepage", new Registration());
+        commandMap.put("homepage", new Homepage());
         commandMap.put("login", new Login());
     }
     public static Command getCommand(String command){

@@ -7,6 +7,7 @@ public class Taxi {
     private String status;
     private String capacity;
     private String category;
+    private Integer fare;
 
     public Integer getTaxiID() {
         return taxiID;
@@ -40,16 +41,25 @@ public class Taxi {
         this.category = category;
     }
 
+
+    public Integer getFare() {
+        return fare;
+    }
+
+    public void setFare(Integer fare) {
+        this.fare = fare;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Taxi taxi = (Taxi) o;
-        return Objects.equals(taxiID, taxi.taxiID) && Objects.equals(status, taxi.status) && Objects.equals(capacity, taxi.capacity) && Objects.equals(category, taxi.category);
+        return Objects.equals(taxiID, taxi.taxiID) && Objects.equals(status, taxi.status) && Objects.equals(capacity, taxi.capacity) && Objects.equals(category, taxi.category) && Objects.equals(fare, taxi.fare);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taxiID, status, capacity, category);
+        return Objects.hash(taxiID, status, capacity, category, fare);
     }
 }
