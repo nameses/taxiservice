@@ -1,5 +1,7 @@
 package command;
 
+import command.admin.ListTaxis;
+import command.admin.UpdateTaxiStatus;
 import command.autorization.Homepage;
 import command.autorization.Login;
 import command.autorization.Registration;
@@ -18,6 +20,9 @@ public class CommandType {
         commandMap.put("registration", new Registration());
         commandMap.put("homepage", new Homepage());
         commandMap.put("login", new Login());
+        commandMap.put("listTaxis", new ListTaxis());
+        commandMap.put("updateTaxiStatus", new UpdateTaxiStatus());
+
     }
     public static Command getCommand(String command){
         return commandMap.get(command);

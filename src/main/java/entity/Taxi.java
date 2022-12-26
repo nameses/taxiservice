@@ -8,6 +8,8 @@ public class Taxi {
     private String capacity;
     private String category;
     private Integer fare;
+    private String licensePlate;
+    private String driverName;
 
     public Integer getTaxiID() {
         return taxiID;
@@ -50,16 +52,32 @@ public class Taxi {
         this.fare = fare;
     }
 
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Taxi taxi = (Taxi) o;
-        return Objects.equals(taxiID, taxi.taxiID) && Objects.equals(status, taxi.status) && Objects.equals(capacity, taxi.capacity) && Objects.equals(category, taxi.category) && Objects.equals(fare, taxi.fare);
+        return Objects.equals(taxiID, taxi.taxiID) && Objects.equals(status, taxi.status) && Objects.equals(capacity, taxi.capacity) && Objects.equals(category, taxi.category) && Objects.equals(fare, taxi.fare) && Objects.equals(licensePlate, taxi.licensePlate) && Objects.equals(driverName, taxi.driverName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taxiID, status, capacity, category, fare);
+        return Objects.hash(taxiID, status, capacity, category, fare, licensePlate, driverName);
     }
 }

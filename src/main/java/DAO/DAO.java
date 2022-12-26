@@ -16,17 +16,20 @@ public abstract class DAO<T> {
 
 
     protected Boolean executeQuery(String query, List<String> params) {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = this.prepareStatement(connection, query, params)) {
+        Connection connection = connectionPool.getConnection();
+        try{
+            PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
             return Boolean.valueOf(String.valueOf(preparedStatement.executeUpdate()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            connectionPool.returnConnection(connection);
         }
     }
 
     protected T getEntity(String query, List<String> params) {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
+        Connection connection = connectionPool.getConnection();
+        try (PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
                 return this.buildEntity(resultSet);
@@ -34,6 +37,8 @@ public abstract class DAO<T> {
             return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally{
+            connectionPool.returnConnection(connection);
         }
     }
 
