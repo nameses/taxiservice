@@ -51,7 +51,7 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         String message = page.getMessage();
         if (message!=null)
-            request.setAttribute("message", message);
+            request.setAttribute("MESSAGE", message);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(page.getUrlPath());
         requestDispatcher.forward(request, response);

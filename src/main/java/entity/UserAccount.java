@@ -11,6 +11,15 @@ public class UserAccount {
     private String phone;
     private String email;
     private String role;
+    private Integer bonusPoints;
+
+    public Integer getBonusPoints() {
+        return bonusPoints;
+    }
+
+    public void setBonusPoints(Integer bonusPoints) {
+        this.bonusPoints = bonusPoints;
+    }
 
     public Integer getUserID() {
         return userID;
@@ -80,12 +89,12 @@ public class UserAccount {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserAccount userAccount = (UserAccount) o;
-        return Objects.equals(userID, userAccount.userID) && Objects.equals(firstname, userAccount.firstname) && Objects.equals(lastname, userAccount.lastname) && Objects.equals(username, userAccount.username) && Objects.equals(password, userAccount.password) && Objects.equals(phone, userAccount.phone) && Objects.equals(email, userAccount.email) && Objects.equals(role, userAccount.role);
+        UserAccount that = (UserAccount) o;
+        return Objects.equals(userID, that.userID) && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(phone, that.phone) && Objects.equals(email, that.email) && Objects.equals(role, that.role) && Objects.equals(bonusPoints, that.bonusPoints);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userID, firstname, lastname, username, password, phone, email, role);
+        return Objects.hash(userID, firstname, lastname, username, password, phone, email, role, bonusPoints);
     }
 }

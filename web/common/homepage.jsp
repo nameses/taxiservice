@@ -9,7 +9,7 @@
 <body>
 <jsp:include page="/common/header.jsp" />
 <div class="container">
-
+    <a href="${pageContext.request.contextPath}/user/order/order.jsp">Order taxi</a>
 </div>
 </body>
 </html>

@@ -46,6 +46,7 @@ public class UserDAO extends DAO<UserAccount> {
             user.setPhone(resultSet.getString("phone"));
             user.setEmail(resultSet.getString("email"));
             user.setRole(resultSet.getString("role"));
+            user.setBonusPoints(resultSet.getInt("bonus_points"));
             return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
