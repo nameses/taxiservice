@@ -1,17 +1,15 @@
 package service;
 
 import DAO.TaxiDAO;
-import DAO.UserDAO;
 import entity.Taxi;
 
-import java.net.http.HttpRequest;
 import java.util.List;
 
 public class TaxiService {
     private final TaxiDAO taxiDAO = new TaxiDAO();
     public List<Taxi> getList(String orderByString, String orderBySort){
         try{
-            return taxiDAO.selectAllByName(orderByString, orderBySort);
+            return taxiDAO.selectAllByString(orderByString, orderBySort);
         } catch (Exception e){
             e.printStackTrace();
         }

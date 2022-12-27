@@ -1,7 +1,6 @@
 package DAO;
 
 import entity.Taxi;
-import entity.UserAccount;
 import pool.ConnectionPool;
 
 import java.sql.Connection;
@@ -9,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class TaxiDAO extends DAO<Taxi> {
@@ -17,14 +15,13 @@ public class TaxiDAO extends DAO<Taxi> {
             "SELECT * FROM taxi";
     private static final String UPDATE_STATUS =
             "UPDATE taxi SET status=? where taxiid=?";
-    private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     public void updateStatus(Integer id, String toStatus) {
-        try{
+        try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_STATUS);
-            preparedStatement.setString(1,toStatus);
-            preparedStatement.setInt(2,id);
+            preparedStatement.setString(1, toStatus);
+            preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
@@ -32,28 +29,10 @@ public class TaxiDAO extends DAO<Taxi> {
         }
     }
 
-    public List<Taxi> selectAllByName(String orderByString, String orderBySort) {
-        String query;
+    public List<Taxi> selectAllByString(String orderByString, String orderBySort) {
         if (orderByString == null || orderBySort == null) {
-            return selectAll(SELECT_ALL);
-        } else return selectAll(SELECT_ALL + " ORDER BY " + orderByString + " " + orderBySort);
-    }
-
-    protected List<Taxi> selectAll(String query) {
-        List<Taxi> taxis = new ArrayList<>();
-        try{
-            Connection connection = connectionPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Taxi taxi = buildEntity(resultSet);
-                taxis.add(taxi);
-            }
-            connectionPool.returnConnection(connection);
-            return taxis;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            return selectList(SELECT_ALL);
+        } else return selectList(SELECT_ALL + " ORDER BY " + orderByString + " " + orderBySort);
     }
 
     @Override

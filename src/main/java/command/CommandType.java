@@ -1,5 +1,6 @@
 package command;
 
+import command.admin.ListOrders;
 import command.admin.ListTaxis;
 import command.admin.UpdateTaxiStatus;
 import command.autorization.Homepage;
@@ -17,11 +18,15 @@ public class CommandType {
         init();
     }
     static void init(){
+        //authentication
         commandMap.put("registration", new Registration());
         commandMap.put("homepage", new Homepage());
         commandMap.put("login", new Login());
+        //taxis
         commandMap.put("listTaxis", new ListTaxis());
         commandMap.put("updateTaxiStatus", new UpdateTaxiStatus());
+        //orders
+        commandMap.put("listOrders", new ListOrders());
 
     }
     public static Command getCommand(String command){

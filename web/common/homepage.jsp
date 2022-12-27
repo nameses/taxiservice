@@ -16,6 +16,7 @@
         </c:when>
         <c:otherwise>
             <a href="${pageContext.request.contextPath}/controller?command=listTaxis">List of taxis</a>
+            <a href="${pageContext.request.contextPath}/controller?command=listOrders">List of orders</a>
         </c:otherwise>
     </c:choose>
 </div>

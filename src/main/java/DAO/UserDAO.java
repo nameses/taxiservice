@@ -2,6 +2,7 @@ package DAO;
 
 import entity.UserAccount;
 
+import javax.xml.registry.infomodel.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,16 +12,23 @@ public class UserDAO extends DAO<UserAccount> {
     private final static String INSERT =
             "INSERT INTO UserAccount(firstname,lastname,username,password,phone,email,role) " +
                     "VALUES(?,?,?,?,?,?,?)";
-    private final static String SELECT =
+    private final static String SELECT_LOGIN =
             "SELECT * FROM UserAccount WHERE username=? AND password=?";
+    private final static String SELECT_USERNAME_BY_ID =
+            "SELECT username FROM UserAccount WHERE id=?";
 
     public Boolean insertUser(UserAccount user) {
         return insert(INSERT, user);
     }
 
+    public String selectUsernameById(Integer id) {
+        UserAccount user = selectEntityByID(SELECT_USERNAME_BY_ID, id);
+        return user.getFirstname()+user.getLastname();
+    }
+
     public UserAccount login(String username, String password) {
         List<String> params = List.of(username, password);
-        return getEntity(SELECT, params);
+        return getEntity(SELECT_LOGIN, params);
     }
 
     @Override
