@@ -10,7 +10,18 @@ public class TaxiOrder {
     private Timestamp orderOpened;
     private Timestamp orderAccepted;
     private Integer cost;
+    private Taxi taxi;
+    private UserAccount user;
 
+    public Taxi getTaxi() {
+        if (taxi == null) taxi = new Taxi();
+        return taxi;
+    }
+
+    public UserAccount getUser() {
+        if (user == null) user = new UserAccount();
+        return user;
+    }
 
     public Integer getOrderID() {
         return orderID;

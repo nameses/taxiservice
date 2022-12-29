@@ -31,8 +31,8 @@ public class TaxiDAO extends DAO<Taxi> {
 
     public List<Taxi> selectAllByString(String orderByString, String orderBySort) {
         if (orderByString == null || orderBySort == null) {
-            return selectList(SELECT_ALL);
-        } else return selectList(SELECT_ALL + " ORDER BY " + orderByString + " " + orderBySort);
+            return selectList(SELECT_ALL,null);
+        } else return selectList(SELECT_ALL + " ORDER BY " + orderByString + " " + orderBySort,null);
     }
 
     @Override

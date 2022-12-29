@@ -17,10 +17,8 @@ public class ListTaxis implements Command {
     @Override
     public PageUrl execute(HttpServletRequest request) {
         TaxiService taxiService = new TaxiService();
-        String orderByString = request.getParameter("orderByString");
-        String orderBySort = request.getParameter("orderBySort");
         HttpSession session = request.getSession();
-        List<Taxi> taxis = taxiService.getList(orderByString, orderBySort);
+        List<Taxi> taxis = taxiService.getList(request);
         session.setAttribute("listTaxis", taxis);
         return new PageUrl(PageConstants.LIST_TAXIS, true);
     }

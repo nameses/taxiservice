@@ -13,12 +13,23 @@ import java.util.List;
 
 public class OrderDAO extends DAO<TaxiOrder> {
     private static final String SELECT_ALL =
-            "SELECT * FROM taxiorder";
+            "SELECT orderid,orderopened,orderaccepted,cost,\"licensePlate\",username from taxiorder " +
+                    "JOIN taxi ON taxi.taxiid=taxiorder.taxiid " +
+                    "JOIN useraccount ON useraccount.userid=taxiorder.userid";
 
-    public List<TaxiOrder> selectAllByString(String orderByString, String orderBySort) {
-        if (orderByString == null || orderBySort == null) {
-            return selectList(SELECT_ALL);
-        } else return selectList(SELECT_ALL + " ORDER BY " + orderByString + " " + orderBySort);
+    public List<TaxiOrder> selectAllByString(String orderByString, String orderBySort,
+                                             String filterBy, String filterValue) {
+        String resultQuery = SELECT_ALL;
+        List<String> params = new ArrayList<>();
+        if (filterBy != null && filterValue != null) {
+            if(filterBy.equals("licensePlate")) filterBy="\"licensePlate\"";
+            resultQuery += " WHERE " + filterBy + "=?";
+            params.add(filterValue);
+        }
+        if (orderByString != null && orderBySort !=null) {
+            resultQuery += " ORDER BY " + orderByString + " " + orderBySort;
+        }
+        return selectList(resultQuery,params);
     }
 
     @Override
@@ -34,11 +45,11 @@ public class OrderDAO extends DAO<TaxiOrder> {
         try {
             TaxiOrder order = new TaxiOrder();
             order.setOrderID(resultSet.getInt("orderid"));
-            order.setUserID(resultSet.getInt("userid"));
-            order.setTaxiID(resultSet.getInt("taxiid"));
             order.setOrderOpened(resultSet.getTimestamp("orderopened"));
             order.setOrderAccepted(resultSet.getTimestamp("orderaccepted"));
             order.setCost(resultSet.getInt("cost"));
+            order.getUser().setUsername(resultSet.getString("username"));
+            order.getTaxi().setLicensePlate(resultSet.getString("licensePlate"));
             return order;
         } catch (SQLException e) {
             throw new RuntimeException(e);

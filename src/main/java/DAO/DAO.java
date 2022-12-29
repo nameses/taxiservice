@@ -16,11 +16,11 @@ public abstract class DAO<T> {
 
     protected final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
-    protected List<T> selectList(String query) {
+    protected List<T> selectList(String query, List<String> params) {
         Connection connection = connectionPool.getConnection();
         List<T> entities = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = prepareStatement(connection, query, params);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 T entity = buildEntity(resultSet);
@@ -29,17 +29,18 @@ public abstract class DAO<T> {
             return entities;
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             connectionPool.returnConnection(connection);
         }
     }
-    protected T selectEntityByID(String query, Integer id){
+
+    protected T selectEntityByID(String query, Integer id) {
         Connection connection = connectionPool.getConnection();
-        try{
+        try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next())
+            if (resultSet.next())
                 return buildEntity(resultSet);
             return null;
         } catch (SQLException e) {
