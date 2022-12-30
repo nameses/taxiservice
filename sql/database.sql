@@ -1,12 +1,12 @@
 create table Taxi
 (
-    taxiID   serial      not null primary key,
-    status   varchar(16) not null,
-    capacity integer not null,
-    category varchar(30) not null,
-    fare integer not null,
-    driverName varchar(30) not null,
-    licensePlate varchar(8) not null
+    taxiID       serial      not null primary key,
+    status       varchar(16) not null,
+    capacity     integer     not null,
+    category     varchar(30) not null,
+    fare         integer     not null,
+    driverName   varchar(30) not null,
+    licensePlate varchar(8)  not null
 );
 
 
@@ -24,12 +24,13 @@ create table Client
 
 create table TaxiOrder
 (
-    orderID  serial    not null primary key,
-    clientID serial    not null,
-    taxiID   serial    not null,
-    orderOpened     timestamp not null,
-    orderAccepted     timestamp not null,
-    cost     int       not null,
+    orderID       serial      not null primary key,
+    clientID      serial      not null,
+    taxiID        serial      not null,
+    orderOpened   timestamp   not null,
+    orderAccepted timestamp   not null,
+    cost          int         not null,
+    status        varchar(16) not null,
     FOREIGN KEY (TaxiID) REFERENCES Taxi (TaxiID),
     FOREIGN KEY (ClientID) REFERENCES Client (ClientID)
 );

@@ -15,6 +15,7 @@ public class Login implements Command{
     public PageUrl execute(HttpServletRequest request){
         UserService userService = new UserService();
         HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(600);//10 minutes inactive
         String username = request.getParameter("username");
         String password = EncryptionUtil.getEncrypted(request.getParameter("password"));
         UserAccount user = userService.login(username,password);

@@ -3,6 +3,7 @@ package command;
 import command.admin.*;
 import command.autorization.Homepage;
 import command.autorization.Login;
+import command.autorization.Logout;
 import command.autorization.Registration;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class CommandType {
         commandMap.put("registration", new Registration());
         commandMap.put("homepage", new Homepage());
         commandMap.put("login", new Login());
+        commandMap.put("logout", new Logout());
         //taxis
         commandMap.put("listTaxis", new ListTaxis());
         commandMap.put("newTaxi", new NewTaxi());

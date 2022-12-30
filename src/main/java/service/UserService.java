@@ -5,7 +5,6 @@ import entity.UserAccount;
 
 public class UserService {
     private final UserDAO userDAO = new UserDAO();
-
     public UserAccount login(String username, String password){
         try{
             return userDAO.login(username, password);
