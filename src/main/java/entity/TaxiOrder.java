@@ -10,6 +10,7 @@ public class TaxiOrder {
     private Timestamp orderOpened;
     private Timestamp orderAccepted;
     private Integer cost;
+    private String status;
     private Taxi taxi;
     private UserAccount user;
 
@@ -82,5 +83,13 @@ public class TaxiOrder {
     @Override
     public int hashCode() {
         return Objects.hash(orderID, userID, taxiID, orderOpened, orderAccepted, cost);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

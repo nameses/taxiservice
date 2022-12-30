@@ -74,6 +74,7 @@
                         Cost <%out.print(Objects.equals(str, "cost") ? sort : "");%>
                     </a>
                 </th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -86,6 +87,7 @@
                     <td><c:out value="${order.orderOpened}"/></td>
                     <td><c:out value="${order.orderAccepted}"/></td>
                     <td><c:out value="${order.cost}"/></td>
+                    <td><c:out value="${order.status}"/></td>
                     <td>
                         <a href="delete?id=<c:out value='${order.taxiID}' />">Delete</a>
                     </td>

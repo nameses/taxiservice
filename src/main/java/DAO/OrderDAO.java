@@ -48,6 +48,7 @@ public class OrderDAO extends DAO<TaxiOrder> {
             order.setOrderOpened(resultSet.getTimestamp("orderopened"));
             order.setOrderAccepted(resultSet.getTimestamp("orderaccepted"));
             order.setCost(resultSet.getInt("cost"));
+            order.setStatus(resultSet.getString("status"));
             order.getUser().setUsername(resultSet.getString("username"));
             order.getTaxi().setLicensePlate(resultSet.getString("licensePlate"));
             return order;
