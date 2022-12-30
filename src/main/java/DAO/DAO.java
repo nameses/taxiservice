@@ -59,7 +59,7 @@ public abstract class DAO<T> {
         Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
-            return Boolean.valueOf(String.valueOf(preparedStatement.executeUpdate()));
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

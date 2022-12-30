@@ -44,12 +44,12 @@
                        placeholder="Password" name="confirm_password" required>
             </div>
             <div class="form-group">
-                <label for="phone">Password:</label>
+                <label for="phone">Phone:</label>
                 <input type="text" class="form-control" id="phone" placeholder="Phone"
                        value="<c:out value="${pageScope.phone}"/>" name="phone" required>
             </div>
             <div class="form-group">
-                <label for="email">Password:</label>
+                <label for="email">Email:</label>
                 <input type="text" class="form-control" id="email" placeholder="Email"
                        value="<c:out value="${pageScope.email}"/>" name="email" required>
             </div>
