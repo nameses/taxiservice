@@ -107,27 +107,28 @@
     <script>
         const apiKey = '7KITbDwmEhgHG0ebDknTDA7L8cO1HiRP';
         const passengerInitCoordinates = [30.515614, 50.447339]
-        let passengerMarker
-        let passengerFirstMarker
+        const submit = document.getElementById('submit-button');
+        let passengerStartMarker;
+        let passengerDestinationMarker;
 
+
+        //map
         const map = tt.map({
             key: apiKey,
             container: "map",
             center: passengerInitCoordinates,
             zoom: 11,
         })
-
-
-        passengerMarker = createMarker(
+        //create first market
+        passengerStartMarker = createMarker(
             passengerInitCoordinates,
             new tt.Popup({offset: 35}).setHTML(
                 "Click anywhere on the map to change passenger location."
             )
         )
-
-
-        passengerMarker.togglePopup()
-
+        //turn on marker
+        passengerStartMarker.togglePopup()
+        //1st and 2nd on click handler
         let startMapHandler = function (event) {
             const position = event.lngLat
             tt.services
@@ -137,10 +138,9 @@
                 })
                 .then(function (results) {
                     drawPassengerMarkerOnMap(results)
-                    console.log(passengerMarker.anchor, 'start')
+                    console.log(passengerStartMarker.anchor, 'start')
                 })
         }
-
         let finalMapHandler = function (event) {
             const position = event.lngLat
             tt.services
@@ -150,29 +150,31 @@
                 })
                 .then(function (results) {
                     drawFinalMarkerOnMap(results)
-                    console.log(passengerFirstMarker.anchor, 'final')
+                    console.log(passengerDestinationMarker.anchor, 'final')
                 })
         }
 
+        //set 1st on click event
         map.on("click", startMapHandler)
 
-        const submit = document.getElementById('submit-button');
-
-        submit.addEventListener('click', () => {
-
-            passengerFirstMarker = createMarker(
-                passengerInitCoordinates,
-                new tt.Popup({offset: 35}).setHTML(
-                    "Click anywhere on the map to change final location."
+        function submitEventListener(event) {
+            if (passengerDestinationMarker!=null) {
+                map.off("click", finalMapHandler);
+                submit.removeEventListener("click", submitEventListener);
+            } else {
+                passengerDestinationMarker = createMarker(
+                    passengerInitCoordinates,
+                    new tt.Popup({offset: 35}).setHTML(
+                        "Click anywhere on the map to change final location."
+                    )
                 )
-            )
-
-            map.off("click", startMapHandler);
-
-            map.on("click", finalMapHandler);
-
-            passengerFirstMarker.togglePopup();
-        })
+                map.off("click", startMapHandler);
+                map.on("click", finalMapHandler);
+                passengerDestinationMarker.togglePopup();
+            }
+        }
+        // onclick event for button 'submit'
+        submit.addEventListener("click", submitEventListener)
 
         function createMarker(markerCoordinates, popup) {
             const passengerMarkerElement = document.createElement("div")
@@ -188,14 +190,14 @@
             if (geoResponse && geoResponse.addresses &&
                 geoResponse.addresses[0].address.freeformAddress
             ) {
-                passengerMarker.remove()
-                passengerMarker = createMarker(
+                passengerStartMarker.remove()
+                passengerStartMarker = createMarker(
                     geoResponse.addresses[0].position,
                     new tt.Popup({offset: 35}).setHTML(
                         geoResponse.addresses[0].address.freeformAddress
                     )
                 )
-                passengerMarker.togglePopup()
+                passengerStartMarker.togglePopup()
             }
         }
 
@@ -203,17 +205,16 @@
             if (geoResponse && geoResponse.addresses &&
                 geoResponse.addresses[0].address.freeformAddress
             ) {
-                passengerFirstMarker.remove()
-                passengerFirstMarker = createMarker(
+                passengerDestinationMarker.remove()
+                passengerDestinationMarker = createMarker(
                     geoResponse.addresses[0].position,
                     new tt.Popup({offset: 35}).setHTML(
                         geoResponse.addresses[0].address.freeformAddress
                     )
                 )
-                passengerFirstMarker.togglePopup()
+                passengerDestinationMarker.togglePopup()
             }
         }
-
 
 
     </script>
