@@ -2,8 +2,11 @@ create table Taxi
 (
     taxiID   serial      not null primary key,
     status   varchar(16) not null,
-    capacity varchar(30) not null,
-    category varchar(30) not null
+    capacity integer not null,
+    category varchar(30) not null,
+    fare integer not null,
+    driverName varchar(30) not null,
+    licensePlate varchar(8) not null
 );
 
 

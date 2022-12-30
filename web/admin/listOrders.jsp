@@ -38,12 +38,6 @@
     </div>
     <div class="container col-md-8">
         <h3 class="text-center">List of Orders</h3>
-        <%--        <hr>--%>
-        <%--        <div class="container text-left">--%>
-        <%--            <a href="<%=request.getContextPath()%>/controller?command=newTaxi"--%>
-        <%--               class="btn btn-success">Add Taxi</a>--%>
-        <%--        </div>--%>
-        <%--        <br>--%>
         <table class="table table-bordered">
             <%
                 if (session.getAttribute("ifASC") == null) session.setAttribute("ifASC", true);

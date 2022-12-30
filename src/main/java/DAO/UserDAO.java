@@ -21,11 +21,6 @@ public class UserDAO extends DAO<UserAccount> {
         return insert(INSERT, user);
     }
 
-    public String selectUsernameById(Integer id) {
-        UserAccount user = selectEntityByID(SELECT_USERNAME_BY_ID, id);
-        return user.getFirstname()+user.getLastname();
-    }
-
     public UserAccount login(String username, String password) {
         List<String> params = List.of(username, password);
         return getEntity(SELECT_LOGIN, params);

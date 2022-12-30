@@ -1,8 +1,6 @@
 package command;
 
-import command.admin.ListOrders;
-import command.admin.ListTaxis;
-import command.admin.UpdateTaxiStatus;
+import command.admin.*;
 import command.autorization.Homepage;
 import command.autorization.Login;
 import command.autorization.Registration;
@@ -24,10 +22,11 @@ public class CommandType {
         commandMap.put("login", new Login());
         //taxis
         commandMap.put("listTaxis", new ListTaxis());
+        commandMap.put("newTaxi", new NewTaxi());
+        commandMap.put("deleteTaxi", new DeleteTaxi());
         commandMap.put("updateTaxiStatus", new UpdateTaxiStatus());
         //orders
         commandMap.put("listOrders", new ListOrders());
-
     }
     public static Command getCommand(String command){
         return commandMap.get(command);

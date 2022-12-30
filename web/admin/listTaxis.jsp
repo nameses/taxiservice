@@ -11,12 +11,12 @@
 <div class="row">
     <div class="container col-md-8">
         <h3 class="text-center">List of Taxis</h3>
-        <%--        <hr>--%>
-        <%--        <div class="container text-left">--%>
-        <%--            <a href="<%=request.getContextPath()%>/controller?command=newTaxi"--%>
-        <%--               class="btn btn-success">Add Taxi</a>--%>
-        <%--        </div>--%>
-        <%--        <br>--%>
+                <hr>
+                <div class="container text-left">
+                    <a href="<%=request.getContextPath()%>/admin/forms/newTaxi.jsp"
+                       class="btn btn-success">Add Taxi</a>
+                </div>
+                <br>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -54,7 +54,7 @@
                         </c:choose>
                     </td>
                     <td>
-                        <a href="delete?id=<c:out value='${taxi.taxiID}' />">Delete</a>
+                        <a href="/controller?command=deleteTaxi&id=<c:out value='${taxi.taxiID}' />">Delete</a>
                     </td>
                 </tr>
             </c:forEach>

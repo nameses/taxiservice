@@ -3,6 +3,7 @@ package DAO;
 import entity.Taxi;
 import pool.ConnectionPool;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,25 @@ public class TaxiDAO extends DAO<Taxi> {
             "SELECT * FROM taxi";
     private static final String UPDATE_STATUS =
             "UPDATE taxi SET status=? where taxiid=?";
+    private static final String INSERT =
+            "INSERT INTO taxi(status,capacity,category,fare,\"licensePlate\",\"driverName\") VALUES(?,?,?,?,?,?)";
+    private final static String DELETE_BY_ID =
+            "DELETE FROM taxi WHERE taxiid=?";
+    public void deleteTaxi(Integer id){
+        try {
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            connectionPool.returnConnection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Boolean insertTaxi(Taxi taxi){
+        return insert(INSERT,taxi);
+    }
 
     public void updateStatus(Integer id, String toStatus) {
         try {
@@ -58,6 +78,21 @@ public class TaxiDAO extends DAO<Taxi> {
             taxi.setLicensePlate(resultSet.getString("licensePlate"));
             taxi.setDriverName(resultSet.getString("driverName"));
             return taxi;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    protected PreparedStatement prepareStatement(Connection connection, String query, List<String> parameters) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            if (parameters != null) {
+                int index = 1;
+                for (String p : parameters) {
+                    preparedStatement.setObject(index++, (isNumeric(p)?Integer.valueOf(p):p));
+                }
+            }
+            return preparedStatement;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

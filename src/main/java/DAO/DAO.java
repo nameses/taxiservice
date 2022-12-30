@@ -82,17 +82,27 @@ public abstract class DAO<T> {
         }
     }
 
-    private PreparedStatement prepareStatement(Connection connection, String query, List<String> parameters) {
+    protected PreparedStatement prepareStatement(Connection connection, String query, List<String> parameters) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             if (parameters != null) {
                 int index = 1;
-                for (String parameter : parameters)
-                    preparedStatement.setObject(index++, parameter);
+                for (String p : parameters) {
+                    preparedStatement.setObject(index++, p);
+                }
             }
             return preparedStatement;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
         }
     }
 }
