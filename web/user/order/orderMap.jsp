@@ -14,10 +14,14 @@
 <body>
 <jsp:include page="/common/header.jsp"/>
 <div class="container col-md-5">
-    <div class="md" id="map" style="height: 70vh;width: 50vw;margin-top: 10px"></div>
     <div>
-        <div></div>
-        <input class="btn btn-outline-dark btn-sm" type="button" id="submit-button" value="Submit">
+        <h3 id="main-text">Place your current place!</h3>
+        <div class="md" id="map" style="height: 70vh;width: 50vw;margin-top: 10px"></div>
+        <form method="POST" id="form-post" action="${pageContext.request.contextPath}/controller?command=orderDetails">
+            <input type="hidden" name="routeLength" id="input-route-length">
+            <input class="btn btn-outline-dark" type="button" id="submit-button" value="Submit">
+            <button class="btn btn-outline-dark" type="submit" id="redirect-button" disabled>Next Step</button>
+        </form>
     </div>
     <script src="../../static/js/config.js"></script>
     <script src="../../static/js/order.js"></script>

@@ -50,11 +50,12 @@
                                 <a href="<%=request.getContextPath()%>
                                 /controller?command=updateTaxiStatus&id=${taxi.taxiID}&toStatus=available">activate</a>
                             </c:when>
-                            <c:otherwise></c:otherwise>
+                            <c:otherwise />
                         </c:choose>
                     </td>
                     <td>
-                        <a href="/controller?command=deleteTaxi&id=<c:out value='${taxi.taxiID}' />">Delete</a>
+                        <a href="${pageContext.request.contextPath}
+                        /controller?command=deleteTaxi&id=<c:out value='${taxi.taxiID}' />">Delete</a>
                     </td>
                 </tr>
             </c:forEach>

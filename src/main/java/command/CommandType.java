@@ -5,6 +5,7 @@ import command.autorization.Homepage;
 import command.autorization.Login;
 import command.autorization.Logout;
 import command.autorization.Registration;
+import command.user.OrderDetails;
 
 import java.util.HashMap;
 
@@ -29,6 +30,8 @@ public class CommandType {
         commandMap.put("updateTaxiStatus", new UpdateTaxiStatus());
         //orders
         commandMap.put("listOrders", new ListOrders());
+        //user order process
+        commandMap.put("orderDetails", new OrderDetails());
     }
     public static Command getCommand(String command){
         return commandMap.get(command);

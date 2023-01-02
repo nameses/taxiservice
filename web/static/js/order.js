@@ -1,6 +1,7 @@
 const apiKey = config.apiTomtom
 const passengerInitCoordinates = [30.515614, 50.447339]
 const submit = document.getElementById('submit-button');
+const mainText = document.getElementById('main-text');
 let passengerStartMarker;
 let passengerDestinationMarker;
 
@@ -54,6 +55,7 @@ function submitEventListener(event) {
         submit.removeEventListener("click", submitEventListener);
         drawAllRoutes();
     } else {
+        mainText.textContent="Place destination place!"
         passengerDestinationMarker = createMarker(
             passengerInitCoordinates,
             new tt.Popup({offset: 35}).setHTML("Click anywhere on the map to change location.")
@@ -118,14 +120,13 @@ function drawAllRoutes() {
                 computeBestOrder: 'true',
                 routeType: 'fastest',
                 traffic: 'true'
-            }],
+            }]
         })
         .then(function (resultData) {
             resultData.batchItems.forEach(function (routeData, index) {
-                console.log(index, routeData)
                 const routeGeoJson = routeData.toGeoJson()
-                console.log(routeGeoJson.features[0].properties.summary.lengthInMeters,
-                    routeGeoJson.features[0].properties.summary.travelTimeInSeconds)
+                let routeLength = routeGeoJson.features[0].properties.summary.lengthInMeters
+                    // routeGeoJson.features[0].properties.summary.travelTimeInSeconds
                 map.addLayer({
                         id: 'route_1',
                         type: "line",
@@ -143,6 +144,11 @@ function drawAllRoutes() {
                         }
                     }
                 )
+                mainText.textContent="Go to the next step to enter some details!"
+                submit.disabled=true
+                document.getElementById("input-route-length").value = routeLength;
+                document.getElementById('redirect-button').disabled=false
             })
         })
 }
+
