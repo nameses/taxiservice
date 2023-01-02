@@ -15,8 +15,8 @@
                class="btn btn-outline-dark btn-sm">Order taxi</a>
         </c:when>
         <c:otherwise>
-            <a href="${pageContext.request.contextPath}/controller?command=listTaxis">List of taxis</a>
-            <a href="${pageContext.request.contextPath}/controller?command=listOrders">List of orders</a>
+            <a class="btn btn-outline-dark btn-sm" href="${pageContext.request.contextPath}/controller?command=listTaxis">List of taxis</a>
+            <a class="btn btn-outline-dark btn-sm" href="${pageContext.request.contextPath}/controller?command=listOrders">List of orders</a>
         </c:otherwise>
     </c:choose>
 </div>
