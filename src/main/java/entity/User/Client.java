@@ -4,10 +4,16 @@ import java.util.Objects;
 
 public class Client {
     private Integer clientID;
+    private Integer userID;
     private User user;
     private Integer bonusPoints;
+    public Integer getUserID() {
+        return userID;
+    }
 
-
+    public void setUserID(Integer userID) {
+        this.userID = userID;
+    }
     public Integer getClientID() {
         return clientID;
     }
@@ -37,11 +43,11 @@ public class Client {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return Objects.equals(clientID, client.clientID) && Objects.equals(user, client.user) && Objects.equals(bonusPoints, client.bonusPoints);
+        return Objects.equals(clientID, client.clientID) && Objects.equals(userID, client.userID) && Objects.equals(user, client.user) && Objects.equals(bonusPoints, client.bonusPoints);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(clientID, user, bonusPoints);
+        return Objects.hash(clientID, userID, user, bonusPoints);
     }
 }

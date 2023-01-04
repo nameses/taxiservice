@@ -1,17 +1,20 @@
 package DAO;
 
+import DAO.helper.DAO;
+import DAO.helper.EntityBuilder;
 import entity.Order;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO extends DAO<Order> {
     private static final String SELECT_ALL =
-            "SELECT orderid,orderopened,orderaccepted,cost,\"licensePlate\",username from taxiorder " +
-                    "JOIN taxi ON taxi.taxiid=taxiorder.taxiid " +
-                    "JOIN useraccount ON useraccount.userid=taxiorder.userid";
+            "SELECT orderid,orderopened,orderaccepted,cost,\"licensePlate\",username from Order " +
+                    "JOIN driver ON driver.driverid=\"Order\".driverid " +
+                    "JOIN taxi ON taxi.taxiid=driver.taxiid " +
+                    "JOIN client ON \"Order\".clientid=client.clientid " +
+                    "JOIN \"User\" ON client.userid=\"User\".userid ";
 
     public List<Order> selectAllByString(String orderByString, String orderBySort,
                                          String filterBy, String filterValue) {
@@ -28,28 +31,9 @@ public class OrderDAO extends DAO<Order> {
         return selectList(resultQuery,params);
     }
 
-    @Override
-    protected List<String> getParameters(Order order) {
-        String orderOpened = String.valueOf(order.getOrderOpened());
-        String orderAccepted = String.valueOf(order.getOrderAccepted());
-        String cost = String.valueOf(order.getCost());
-        return List.of(orderOpened, orderAccepted, cost);
-    }
 
     @Override
     protected Order buildEntity(ResultSet resultSet) {
-        try {
-            Order order = new Order();
-            order.setOrderID(resultSet.getInt("orderid"));
-            order.setOrderOpened(resultSet.getTimestamp("orderopened"));
-            order.setOrderAccepted(resultSet.getTimestamp("orderaccepted"));
-            order.setCost(resultSet.getInt("cost"));
-            order.setStatus(resultSet.getString("status"));
-            order.getUsername().setUsername(resultSet.getString("username"));
-            order.getTaxi().setLicensePlate(resultSet.getString("licensePlate"));
-            return order;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return EntityBuilder.buildOrder(resultSet);
     }
 }

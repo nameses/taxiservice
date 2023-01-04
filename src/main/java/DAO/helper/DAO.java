@@ -1,4 +1,4 @@
-package DAO;
+package DAO.helper;
 
 import pool.ConnectionPool;
 
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DAO<T> {
-    protected abstract List<String> getParameters(T entity);
 
     protected abstract T buildEntity(ResultSet resultSet);
 
@@ -50,11 +49,6 @@ public abstract class DAO<T> {
         }
     }
 
-    protected Boolean insert(String query, T entity) {
-        List<String> params = this.getParameters(entity);
-        return this.executeQuery(query, params);
-    }
-
     protected Boolean executeQuery(String query, List<String> params) {
         Connection connection = connectionPool.getConnection();
         try {
@@ -88,7 +82,7 @@ public abstract class DAO<T> {
             if (parameters != null) {
                 int index = 1;
                 for (String p : parameters) {
-                    preparedStatement.setObject(index++, p);
+                    preparedStatement.setObject(index++, (isNumeric(p) ? Integer.valueOf(p) : p));
                 }
             }
             return preparedStatement;
