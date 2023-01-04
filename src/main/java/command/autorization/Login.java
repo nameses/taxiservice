@@ -3,7 +3,7 @@ package command.autorization;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import entity.UserAccount;
+import entity.User.User;
 import service.UserService;
 import utils.EncryptionUtil;
 
@@ -18,7 +18,7 @@ public class Login implements Command{
         session.setMaxInactiveInterval(600);//10 minutes inactive
         String username = request.getParameter("username");
         String password = EncryptionUtil.getEncrypted(request.getParameter("password"));
-        UserAccount user = userService.login(username,password);
+        User user = userService.login(username,password);
         if (user == null) {
             return new PageUrl(PageConstants.LOGIN, false,
                     "Wrong login or password");

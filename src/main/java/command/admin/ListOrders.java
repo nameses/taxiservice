@@ -3,10 +3,8 @@ package command.admin;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import entity.Taxi;
-import entity.TaxiOrder;
+import entity.Order;
 import service.OrderService;
-import service.TaxiService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,7 +15,7 @@ public class ListOrders implements Command {
     public PageUrl execute(HttpServletRequest request) {
         OrderService orderService = new OrderService();
         HttpSession session = request.getSession();
-        List<TaxiOrder> orders = orderService.getList(request);
+        List<Order> orders = orderService.getList(request);
         session.setAttribute("listOrders", orders);
         return new PageUrl(PageConstants.LIST_ORDERS, true);
     }

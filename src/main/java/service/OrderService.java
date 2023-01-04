@@ -1,8 +1,7 @@
 package service;
 
 import DAO.OrderDAO;
-import entity.Taxi;
-import entity.TaxiOrder;
+import entity.Order;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,7 +10,7 @@ import java.util.List;
 public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();
 
-    public List<TaxiOrder> getList(HttpServletRequest request) {
+    public List<Order> getList(HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
             String orderByString = request.getParameter("orderByString");

@@ -16,9 +16,7 @@ const map = tt.map({
 //create first market
 passengerStartMarker = createMarker(
     passengerInitCoordinates,
-    new tt.Popup({offset: 35}).setHTML(
-        "Click anywhere on the map to change passenger location."
-    )
+    new tt.Popup({offset: 35}).setHTML("Place your current place!")
 )
 //turn on marker
 passengerStartMarker.togglePopup()
@@ -58,7 +56,7 @@ function submitEventListener(event) {
         mainText.textContent="Place destination place!"
         passengerDestinationMarker = createMarker(
             passengerInitCoordinates,
-            new tt.Popup({offset: 35}).setHTML("Click anywhere on the map to change location.")
+            new tt.Popup({offset: 35}).setHTML("Place destination!")
         )
         map.off("click", startMapHandler);
         map.on("click", finalMapHandler);

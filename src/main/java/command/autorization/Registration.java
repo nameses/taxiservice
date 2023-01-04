@@ -3,7 +3,7 @@ package command.autorization;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import entity.UserAccount;
+import entity.User.User;
 import service.UserService;
 import utils.EncryptionUtil;
 import javax.servlet.http.HttpServletRequest;
@@ -14,15 +14,15 @@ public class Registration implements Command {
     @Override
     public PageUrl execute(HttpServletRequest request){
         UserService userService = new UserService();
-        UserAccount user = getUser(request);
+        User user = getUser(request);
         if(!userService.registerUser(user)){
             return new PageUrl(PageConstants.REGISTRATION, false, "Unknown error.");
         }
         return new PageUrl(PageConstants.LOGIN, true);
     }
 
-    private UserAccount getUser(HttpServletRequest request){
-        UserAccount user = new UserAccount();
+    private User getUser(HttpServletRequest request){
+        User user = new User();
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String username = request.getParameter("username");

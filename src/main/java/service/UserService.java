@@ -1,11 +1,11 @@
 package service;
 
 import DAO.UserDAO;
-import entity.UserAccount;
+import entity.User.User;
 
 public class UserService {
     private final UserDAO userDAO = new UserDAO();
-    public UserAccount login(String username, String password){
+    public User login(String username, String password){
         try{
             return userDAO.login(username, password);
         } catch (Exception e) {
@@ -13,7 +13,7 @@ public class UserService {
         }
     }
 
-    public Boolean registerUser(UserAccount user){
+    public Boolean registerUser(User user){
         try{
             return userDAO.insertUser(user);
         } catch (Exception e) {
