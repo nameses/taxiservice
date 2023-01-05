@@ -1,10 +1,10 @@
 package command;
 
 import command.admin.*;
-import command.autorization.*;
-import command.autorization.registration.Registration;
-import command.autorization.registration.RegistrationClient;
-import command.autorization.registration.RegistrationDriver;
+import command.authorization.*;
+import command.authorization.registration.Registration;
+import command.authorization.registration.RegistrationClient;
+import command.authorization.registration.RegistrationDriver;
 import command.pageRender.*;
 import command.user.OrderDetails;
 

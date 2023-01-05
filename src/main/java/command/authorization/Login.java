@@ -1,12 +1,8 @@
-package command.autorization;
+package command.authorization;
 
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import entity.User.Client;
-import entity.User.Driver;
-import entity.User.User;
-import entity.enums.UserRole;
 import service.UserService;
 import utils.EncryptionUtil;
 

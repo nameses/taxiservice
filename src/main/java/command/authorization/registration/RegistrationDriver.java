@@ -1,19 +1,12 @@
-package command.autorization.registration;
+package command.authorization.registration;
 
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import entity.Taxi;
-import entity.User.Client;
 import entity.User.Driver;
 import entity.User.User;
-import entity.enums.CarCategory;
 import entity.enums.DriverStatus;
-import entity.enums.UserRole;
-import service.ClientService;
 import service.DriverService;
-import service.UserService;
-import utils.EncryptionUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

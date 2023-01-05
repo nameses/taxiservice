@@ -1,14 +1,12 @@
-package command.autorization.registration;
+package command.authorization.registration;
 
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
 import entity.User.Client;
 import entity.User.User;
-import entity.enums.UserRole;
 import service.ClientService;
-import service.UserService;
-import utils.EncryptionUtil;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class RegistrationClient extends Registration implements Command {

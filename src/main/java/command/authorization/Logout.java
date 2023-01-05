@@ -1,4 +1,4 @@
-package command.autorization;
+package command.authorization;
 
 import command.Command;
 import command.page.PageConstants;

@@ -17,8 +17,8 @@
                     <li><a href="<%= request.getContextPath() %>/app?command=mainpage" class="nav-link px-2 text-secondary">Home</a></li>
                 </ul>
                 <ul class="navbar-nav navbar-collapse justify-content-end">
-                    <li><a href="<%= request.getContextPath() %>/app?command=loginpage" class="nav-link">Login</a></li>
-                    <li><a href="<%= request.getContextPath() %>/app?command=regpage" class="nav-link">Signup</a></li>
+                    <li><a href="<%= request.getContextPath() %>/login?command=loginpage" class="nav-link">Login</a></li>
+                    <li><a href="<%= request.getContextPath() %>/login?command=regpage" class="nav-link">Signup</a></li>
                 </ul>
             </c:otherwise>
         </c:choose>
