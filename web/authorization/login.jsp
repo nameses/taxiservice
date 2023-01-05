@@ -19,14 +19,14 @@
         <input type="hidden" name="command" value="login"/>
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Username"
+            <input type="text" class="form-control" name="username" placeholder="Username"
                    value="<c:out value="${pageScope.username}" />"
-                   name="username" required>
+                   id="username" required>
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" placeholder="Password"
-                   name="password" required>
+            <input type="password" class="form-control" name="password" placeholder="Password"
+                   id="password" required>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

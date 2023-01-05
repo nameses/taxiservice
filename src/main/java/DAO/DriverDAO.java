@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DriverDAO extends DAO<Driver> {
     private static final String INSERT =
-            "INSERT INTO driver(userid,taxiid,status) VALUES(?,?,?)";
+            "INSERT INTO driver(userid) VALUES(?)";
     private static final String SELECT_BY_USER_ID =
             "SELECT * FROM driver join \"User\" on driver.userid=\"User\".userid " +
                     "join taxi on driver.taxiid=taxi.taxiid " +
@@ -29,9 +29,7 @@ public class DriverDAO extends DAO<Driver> {
     public Boolean insert(Driver driver) {
         return this.executeQuery(INSERT,
                 List.of(
-                        String.valueOf(driver.getUserID()),
-                        String.valueOf(driver.getTaxiID()),
-                        String.valueOf(driver.getDriverStatus())
+                        String.valueOf(driver.getUserID())
                 ));
     }
 
