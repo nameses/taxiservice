@@ -25,6 +25,6 @@ public class Login implements Command {
         if (!ifValid) {
             return new PageUrl(PageConstants.LOGIN, false, "Wrong login or password");
         }
-        return new PageUrl(PageConstants.HOMEPAGE, true);
+        return new PageUrl(PageConstants.HOME_PAGE, true);
     }
 }

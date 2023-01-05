@@ -1,4 +1,4 @@
-package command.autorization;
+package command.pageRender;
 
 import command.Command;
 import command.page.PageConstants;
@@ -6,9 +6,9 @@ import command.page.PageUrl;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class Homepage implements Command {
+public class Regpage implements Command {
     @Override
     public PageUrl execute(HttpServletRequest request){
-        return new PageUrl(PageConstants.HOMEPAGE,false);
+        return new PageUrl(PageConstants.REG_PAGE,false);
     }
 }

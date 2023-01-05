@@ -23,7 +23,7 @@ public class Registration implements Command {
         if(user==null){
             return new PageUrl(PageConstants.REGISTRATION, false, "Unknown error.");
         }
-        return new PageUrl(PageConstants.HOMEPAGE, true);
+        return new PageUrl(PageConstants.HOME_PAGE, true);
 //        if(role==UserRole.client){
 //            return new PageUrl(PageConstants.REGISTRATION_CLIENT, false);
 //        } else if(role==UserRole.driver){

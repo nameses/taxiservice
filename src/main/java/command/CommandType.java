@@ -5,6 +5,7 @@ import command.autorization.*;
 import command.autorization.registration.Registration;
 import command.autorization.registration.RegistrationClient;
 import command.autorization.registration.RegistrationDriver;
+import command.pageRender.*;
 import command.user.OrderDetails;
 
 import java.util.HashMap;
@@ -16,11 +17,16 @@ public class CommandType {
         init();
     }
     static void init(){
+        //pages rendering
+        commandMap.put("homepage", new Homepage());
+        commandMap.put("loginpage", new Loginpage());
+        commandMap.put("mainpage", new Mainpage());
+        commandMap.put("profilepage", new Profilepage());
+        commandMap.put("regpage", new Regpage());
         //authentication
         commandMap.put("registration", new Registration());
         commandMap.put("registrationClient", new RegistrationClient());
         commandMap.put("registrationDriver", new RegistrationDriver());
-        commandMap.put("homepage", new Homepage());
         commandMap.put("login", new Login());
         commandMap.put("logout", new Logout());
         //taxis
