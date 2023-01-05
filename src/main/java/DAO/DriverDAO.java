@@ -4,7 +4,9 @@ import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
 import entity.User.Driver;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class DriverDAO extends DAO<Driver> {
@@ -31,5 +33,10 @@ public class DriverDAO extends DAO<Driver> {
                         String.valueOf(driver.getTaxiID()),
                         String.valueOf(driver.getDriverStatus())
                 ));
+    }
+
+    @Override
+    protected void setStatement(PreparedStatement preparedStatement, Driver entity) throws SQLException {
+        return;
     }
 }

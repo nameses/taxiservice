@@ -4,7 +4,9 @@ import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
 import entity.Order;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,5 +37,10 @@ public class OrderDAO extends DAO<Order> {
     @Override
     protected Order buildEntity(ResultSet resultSet) {
         return EntityBuilder.buildOrder(resultSet);
+    }
+
+    @Override
+    protected void setStatement(PreparedStatement preparedStatement, Order entity) throws SQLException {
+        return;
     }
 }

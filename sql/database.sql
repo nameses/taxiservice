@@ -15,7 +15,7 @@ create table "User"
 (
     userID     serial                                             not null primary key,
     username   varchar(30)                                        not null,
-    "password" varchar(64)                                        not null,
+    "password" varchar(32)                                        not null,
     fullname   varchar(36)                                        not null,
     phone      varchar(13)                                        not null,
     email      varchar(30)                                        not null,

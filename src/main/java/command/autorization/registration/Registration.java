@@ -1,4 +1,4 @@
-package command.autorization;
+package command.autorization.registration;
 
 import command.Command;
 import command.page.PageConstants;
@@ -9,33 +9,35 @@ import entity.enums.UserRole;
 import service.ClientService;
 import service.UserService;
 import utils.EncryptionUtil;
-import javax.servlet.http.HttpServletRequest;
 
-public class RegistrationClient implements Command {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+public class Registration implements Command {
     @Override
     public PageUrl execute(HttpServletRequest request){
-        ClientService clientService = new ClientService();
-        Client client = getClient(request);
-        if(!clientService.register(client)){
+        UserService userService = new UserService();
+        User user = userService.register(getUser(request));
+        HttpSession session = request.getSession();
+        session.setAttribute("user",user);
+        if(user==null){
             return new PageUrl(PageConstants.REGISTRATION, false, "Unknown error.");
         }
-        return new PageUrl(PageConstants.LOGIN, true);
-    }
-    private Client getClient(HttpServletRequest request){
-        Client client = new Client();
-        String bonusPoints = request.getParameter("bonusPoints");
-        //TODO validation
-        client.setBonusPoints(Integer.valueOf(bonusPoints));
-        client.setUser(getUser(request));
-        client.setUserID(client.getUser().getUserID());
-        return client;
+        return new PageUrl(PageConstants.HOMEPAGE, true);
+//        if(role==UserRole.client){
+//            return new PageUrl(PageConstants.REGISTRATION_CLIENT, false);
+//        } else if(role==UserRole.driver){
+//            return new PageUrl(PageConstants.REGISTRATION_DRIVER, false);
+//        } else{
+//            return new PageUrl(PageConstants.REGISTRATION, false,"Unknown error");
+//        }
     }
 
-    private User getUser(HttpServletRequest request){
+    protected User getUser(HttpServletRequest request) {
         User user = new User();
         String fullname = request.getParameter("fullname");
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String password = EncryptionUtil.getEncrypted(request.getParameter("password"));
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         String role = request.getParameter("role");

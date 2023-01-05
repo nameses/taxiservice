@@ -54,6 +54,13 @@ public class TaxiDAO extends DAO<Taxi> {
         return EntityBuilder.buildTaxi(resultSet);
     }
 
+    @Override
+    protected void setStatement(PreparedStatement preparedStatement, Taxi entity) throws SQLException {
+        preparedStatement.setInt(1,entity.getCapacity());
+        preparedStatement.setString(2,entity.getCategory().toString());
+        preparedStatement.setInt(3,entity.getFare());
+        preparedStatement.setString(4,entity.getLicensePlate());
+    }
 
 
 }

@@ -3,7 +3,9 @@ package controller;
 import com.sun.mail.iap.CommandFailedException;
 import command.Command;
 import command.CommandFactory;
+import command.CommandType;
 import command.page.PageUrl;
+import entity.enums.UserRole;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,6 +33,12 @@ public class Controller extends HttpServlet {
         try{
             CommandFactory factory = new CommandFactory();
             Command command = factory.getCommand(request);
+            if(command==CommandType.getCommand("registration")){
+                PageUrl page = command.execute(request);
+                if(UserRole.valueOf(request.getParameter("role"))==UserRole.client){
+                    command=CommandType.getCommand("registrationClient");
+                }else command=CommandType.getCommand("registrationDriver");
+            }
             PageUrl page = command.execute(request);
             if (page.isRedirection()) {
                 redirect(page, request, response);

@@ -14,10 +14,20 @@ public class UserService {
     private final UserDAO userDAO = new UserDAO();
     private final DriverDAO driverDAO = new DriverDAO();
     private final ClientDAO clientDAO = new ClientDAO();
-    public boolean login(HttpSession session, String username, String password){
+
+    public User register(User user) {
         try{
+            userDAO.insert(user);
+            return userDAO.login(user.getUsername(),user.getPassword());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean login(HttpSession session, String username, String password) {
+        try {
             User user = userDAO.login(username, password);
-            if(user!=null) {
+            if (user != null) {
                 if (user.getRole() == UserRole.admin) {
                     session.setAttribute("user", user);
                 } else if (user.getRole() == UserRole.driver) {

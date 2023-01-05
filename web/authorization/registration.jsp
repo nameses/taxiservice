@@ -8,62 +8,67 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-<div class="container">
-    <h2>User Register Form</h2>
-    <div class="col-md-6 col-md-offset-3">
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4 justify-content-center text-center">
+        <h2>User Registration Form</h2>
         <c:if test="${not empty pageScope.MESSAGE}">
             <div class="alert alert-success center" role="alert">
                 <p>${pageScope.MESSAGE}</p>
             </div>
         </c:if>
-        <form action="${pageContext.request.contextPath}/controller" method="POST">
+        <form action="${pageContext.request.contextPath}/controller" method="POST"
+              oninput='password_conf.setCustomValidity(password_conf.value !== password.value ? "Passwords do not match." : "")'>
             <input type="hidden" name="command" value="registration"/>
             <div class="form-group">
-                <label for="firstname">First Name:</label>
-                <input type="text" class="form-control" id="firstname" placeholder="First Name"
-                       value="<c:out value="${pageScope.firstname}"/>" name="firstname" required>
-            </div>
-            <div class="form-group">
-                <label for="lastname">Last Name:</label>
-                <input type="text" class="form-control" id="lastname" placeholder="last Name"
-                       value="<c:out value="${pageScope.lastname}"/>" name="lastname" required>
+                <label for="fullname">Full Name:</label>
+                <input type="text" class="form-control" name="fullname" placeholder="Full name"
+                       pattern="^[a-zA-Z ]*$" minlength="5" maxlength="36"
+                       value="<c:out value="${pageScope.fullname}"/>" id="fullname" required>
             </div>
             <div class="form-group">
                 <label for="username">User Name:</label>
-                <input type="text" class="form-control" id="username" placeholder="Username"
-                       value="<c:out value="${pageScope.username}"/>" name="username" required>
+                <input type="text" class="form-control" name="username" placeholder="Username"
+                       pattern="^[a-zA-Z][A-Za-z0-9_]*$" minlength="5" maxlength="30"
+                       value="<c:out value="${pageScope.username}"/>" id="username" required>
+                <small>May contain letters, numbers and underscore. But can't start with number or _</small>
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password"
-                       placeholder="Password" name="password" required>
+                <label for="password">Password(from 8 to 32 symbols):</label>
+                <input type="password" class="form-control" name="password"
+                       minlength="8" maxlength="32" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                       placeholder="Password" id="password" required>
+                <small>Must contain lower- and uppercase letters and numbers</small>
             </div>
             <div class="form-group">
-                <label for="confirm_password">Confirm password:</label>
-                <input type="password" class="form-control" id="confirm_password"
-                       placeholder="Password" name="confirm_password" required>
+                <label for="password_conf">Confirm password:</label>
+                <input type="password" class="form-control" name="confirm_password"
+                       minlength="8" maxlength="32" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                       placeholder="Password" id="password_conf" required>
             </div>
             <div class="form-group">
                 <label for="phone">Phone:</label>
-                <input type="text" class="form-control" id="phone" placeholder="Phone"
-                       value="<c:out value="${pageScope.phone}"/>" name="phone" required>
+                <input type="tel" class="form-control" name="phone" placeholder="Phone"
+                       pattern="^\+380\d{9}" maxlength="13"
+                       value="<c:out value="${pageScope.phone}"/>" id="phone" required>
+                <small>Format: +380682155488</small>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="text" class="form-control" id="email" placeholder="Email"
-                       value="<c:out value="${pageScope.email}"/>" name="email" required>
+                <input type="email" class="form-control" name="email" placeholder="Email"
+                       maxlength="30"
+                       value="<c:out value="${pageScope.email}"/>" id="email" required>
             </div>
             <div class="form-group">
                 <label for="role">Role:</label>
-                <select name="role" id="role" required>
-                    <option>admin</option>
+                <select class="form-select" name="role" id="role" required>
                     <option>client</option>
+                    <option>driver</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-
-    </form>
+        </form>
     </div>
-    </div>
-    </body>
-    </html>
+</div>
+</body>
+</html>

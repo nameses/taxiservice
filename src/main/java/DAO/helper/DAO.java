@@ -12,6 +12,7 @@ import java.util.List;
 public abstract class DAO<T> {
 
     protected abstract T buildEntity(ResultSet resultSet);
+    protected abstract void setStatement(PreparedStatement preparedStatement, T entity) throws SQLException;
 
     protected final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
@@ -76,12 +77,12 @@ public abstract class DAO<T> {
         }
     }
 
-    protected PreparedStatement prepareStatement(Connection connection, String query, List<String> parameters) {
+    protected PreparedStatement prepareStatement(Connection connection, String query, List<String> params) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            if (parameters != null) {
+            if (params != null) {
                 int index = 1;
-                for (String p : parameters) {
+                for (String p : params) {
                     preparedStatement.setObject(index++, (isNumeric(p) ? Integer.valueOf(p) : p));
                 }
             }
@@ -90,10 +91,19 @@ public abstract class DAO<T> {
             throw new RuntimeException(e);
         }
     }
+    protected PreparedStatement prepareStatement(Connection connection, String query, T entity) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            setStatement(preparedStatement,entity);
+            return preparedStatement;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static boolean isNumeric(String str) {
         try {
-            Double.parseDouble(str);
+            Integer.parseInt(str);
             return true;
         } catch(NumberFormatException e){
             return false;

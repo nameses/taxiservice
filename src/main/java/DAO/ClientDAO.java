@@ -5,14 +5,16 @@ import DAO.helper.EntityBuilder;
 import entity.User.Client;
 import entity.User.Driver;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ClientDAO extends DAO<Client> {
     private static final String INSERT =
-            "INSERT INTO driver(userid,bonusPoints) VALUES(?,?)";
+            "INSERT INTO client(userid,\"bonusPoints\") VALUES(?,?)";
     private static final String SELECT_BY_USER_ID =
-            "SELECT * FROM client join \"User\" on client.userid=\"User\".userid WHERE driver.userid=? ";
+            "SELECT * FROM client join \"User\" on client.userid=\"User\".userid WHERE \"User\".userid=? ";
     @Override
     protected Client buildEntity(ResultSet resultSet) {
         return EntityBuilder.buildClient(resultSet);
@@ -27,5 +29,10 @@ public class ClientDAO extends DAO<Client> {
                         String.valueOf(client.getUserID()),
                         String.valueOf(client.getBonusPoints())
                 ));
+    }
+
+    @Override
+    protected void setStatement(PreparedStatement preparedStatement, Client entity) throws SQLException {
+        return;
     }
 }

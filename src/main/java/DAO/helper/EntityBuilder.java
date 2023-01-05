@@ -82,6 +82,7 @@ public class EntityBuilder {
     public static User buildUser(ResultSet resultSet) {
         try {
             User user = new User();
+            user.setUserID(resultSet.getInt("userid"));
             user.setFullname(resultSet.getString("fullname"));
             user.setUsername(resultSet.getString("username"));
             user.setPassword(resultSet.getString("password"));

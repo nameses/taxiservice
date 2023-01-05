@@ -2,6 +2,9 @@ package command;
 
 import command.admin.*;
 import command.autorization.*;
+import command.autorization.registration.Registration;
+import command.autorization.registration.RegistrationClient;
+import command.autorization.registration.RegistrationDriver;
 import command.user.OrderDetails;
 
 import java.util.HashMap;
@@ -14,6 +17,7 @@ public class CommandType {
     }
     static void init(){
         //authentication
+        commandMap.put("registration", new Registration());
         commandMap.put("registrationClient", new RegistrationClient());
         commandMap.put("registrationDriver", new RegistrationDriver());
         commandMap.put("homepage", new Homepage());
