@@ -17,7 +17,7 @@ public class EntityBuilder {
     public static Client buildClient(ResultSet resultSet) {
         try {
             Client client = new Client();
-            client.setClientID(resultSet.getInt("driverid"));
+            client.setClientID(resultSet.getInt("clientid"));
             client.setUserID(resultSet.getInt("userid"));
             client.setUser(buildUser(resultSet));
             client.setBonusPoints(resultSet.getInt("bonusPoints"));
@@ -33,10 +33,15 @@ public class EntityBuilder {
             Driver driver = new Driver();
             driver.setDriverID(resultSet.getInt("driverid"));
             driver.setUserID(resultSet.getInt("userid"));
-            driver.setTaxiID(resultSet.getInt("taxiid"));
             driver.setUser(buildUser(resultSet));
-            driver.setTaxi(buildTaxi(resultSet));
             driver.setDriverStatus(DriverStatus.valueOf(resultSet.getString("driverStatus")));
+            try {
+            driver.setTaxiID(resultSet.getInt("taxiid"));
+            driver.setTaxi(buildTaxi(resultSet));
+            }catch(Exception ignored){
+                driver.setTaxiID(null);
+                driver.setTaxi(null);
+            }
             return driver;
         } catch (SQLException e) {
             throw new RuntimeException(e);

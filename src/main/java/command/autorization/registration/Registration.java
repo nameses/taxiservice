@@ -44,7 +44,7 @@ public class Registration implements Command {
         //TODO validation
         user.setFullname(fullname);
         user.setUsername(username);
-        user.setPassword(EncryptionUtil.getEncrypted(password));
+        user.setPassword(password);
         user.setPhone(phone);
         user.setEmail(email);
         user.setRole(UserRole.valueOf(role));

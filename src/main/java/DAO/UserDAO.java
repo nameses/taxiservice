@@ -14,7 +14,7 @@ public class UserDAO extends DAO<User> {
             "INSERT INTO \"User\"(username,password,fullname,phone,email,role) " +
                     "VALUES(?,?,?,?,?,?::userrole)";
     private final static String SELECT_LOGIN =
-            "SELECT * FROM \"User\" WHERE username=? AND \"password\"=?";
+            "SELECT * FROM \"User\" WHERE username=? AND password=?";
     private final static String SELECT_USERNAME_BY_ID =
             "SELECT username FROM User WHERE userid=?";
 

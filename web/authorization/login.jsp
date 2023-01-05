@@ -8,7 +8,7 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-<div class="container col-md-8 col-md-offset-3 login">
+<div class="container col-4 login">
     <h1 class="text-center">Login Form</h1>
     <c:if test="${not empty pageScope.message}">
         <div class="alert alert-danger center" role="alert" style="height:50px;">

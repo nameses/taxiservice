@@ -14,7 +14,6 @@ public class DriverDAO extends DAO<Driver> {
             "INSERT INTO driver(userid) VALUES(?)";
     private static final String SELECT_BY_USER_ID =
             "SELECT * FROM driver join \"User\" on driver.userid=\"User\".userid " +
-                    "join taxi on driver.taxiid=taxi.taxiid " +
                     "WHERE driver.userid=? ";
 
     @Override
