@@ -10,14 +10,14 @@ import java.util.List;
 public class TaxiService {
     private final TaxiDAO taxiDAO = new TaxiDAO();
 
-    public List<Taxi> getList(HttpServletRequest request){
-        try{
-            String orderByString = request.getParameter("orderByString");
-            String orderBySort = request.getParameter("orderBySort");
-            return taxiDAO.selectAllByString(orderByString, orderBySort);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public List<Taxi> getList(HttpServletRequest request){
+//        try{
+//            String orderByString = request.getParameter("orderByString");
+//            String orderBySort = request.getParameter("orderBySort");
+//            return taxiDAO.selectAllByString(orderByString, orderBySort);
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }

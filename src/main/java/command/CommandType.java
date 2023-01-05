@@ -1,15 +1,10 @@
 package command;
 
 import command.admin.*;
-import command.autorization.Homepage;
-import command.autorization.Login;
-import command.autorization.Logout;
-import command.autorization.Registration;
+import command.autorization.*;
 import command.user.OrderDetails;
 
 import java.util.HashMap;
-
-import static command.page.PageConstants.REGISTRATION;
 
 public class CommandType {
 
@@ -19,15 +14,13 @@ public class CommandType {
     }
     static void init(){
         //authentication
-        commandMap.put("registration", new Registration());
+        commandMap.put("registrationClient", new RegistrationClient());
+        commandMap.put("registrationDriver", new RegistrationDriver());
         commandMap.put("homepage", new Homepage());
         commandMap.put("login", new Login());
         commandMap.put("logout", new Logout());
         //taxis
         commandMap.put("listTaxis", new ListTaxis());
-        commandMap.put("newTaxi", new NewTaxi());
-        commandMap.put("deleteTaxi", new DeleteTaxi());
-        commandMap.put("updateTaxiStatus", new UpdateTaxiStatus());
         //orders
         commandMap.put("listOrders", new ListOrders());
         //user order process
