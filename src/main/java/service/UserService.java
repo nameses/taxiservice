@@ -16,9 +16,9 @@ public class UserService {
     private final ClientDAO clientDAO = new ClientDAO();
 
     public User register(User user) {
-        try{
+        try {
             userDAO.insert(user);
-            return userDAO.login(user.getUsername(),user.getPassword());
+            return userDAO.login(user.getUsername(), user.getPassword());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -28,9 +28,9 @@ public class UserService {
         try {
             User user = userDAO.login(username, password);
             if (user != null) {
-                if (user.getRole() == UserRole.admin) {
-                    session.setAttribute("user", user);
-                } else if (user.getRole() == UserRole.driver) {
+                session.setAttribute("user", user);
+//                if (user.getRole() == UserRole.admin) else
+                if (user.getRole() == UserRole.driver) {
                     Driver driver = driverDAO.getByUserID(user.getUserID());
                     session.setAttribute("driver", driver);
                 } else {//client

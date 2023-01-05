@@ -17,7 +17,7 @@
                 <p>${pageScope.MESSAGE}</p>
             </div>
         </c:if>
-        <form action="${pageContext.request.contextPath}/controller" method="POST"
+        <form action="${pageContext.request.contextPath}/app" method="POST"
               oninput='password_conf.setCustomValidity(password_conf.value !== password.value ? "Passwords do not match." : "")'>
             <input type="hidden" name="command" value="registration"/>
             <div class="form-group">
