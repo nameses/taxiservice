@@ -7,7 +7,7 @@ import entity.User.Client;
 import entity.User.Driver;
 import entity.User.User;
 import entity.enums.CarCategory;
-import entity.enums.ClientStatus;
+import entity.enums.OrderStatus;
 import entity.enums.DriverStatus;
 import entity.enums.UserRole;
 
@@ -63,7 +63,7 @@ public class EntityBuilder {
             order.setCost(resultSet.getInt("cost"));
             order.setCarCapacity(resultSet.getInt("carCapacity"));
             order.setCarCategory(CarCategory.valueOf(resultSet.getString("username")));
-            order.setClientStatus(ClientStatus.valueOf(resultSet.getString("clientStatus")));
+            order.setOrderStatus(OrderStatus.valueOf(resultSet.getString("orderStatus")));
             return order;
         } catch (SQLException e) {
             throw new RuntimeException(e);

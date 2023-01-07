@@ -20,17 +20,20 @@ public class RouteService {
         try {
             HttpSession session = request.getSession();
             Integer id = routeDAO.insert(buildRoute(request));
-            session.setAttribute("routeid", id);
+            if(id!=null && id>0) {
+                session.setAttribute("routeid", id);
+                return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     private Route buildRoute(HttpServletRequest request) {
         Route route = new Route();
         route.setStartMarker(castArrayToDouble(request.getParameterValues("startMarker[]")));
-        route.setFinalMarker(castArrayToDouble(request.getParameterValues("startMarker[]")));
+        route.setFinalMarker(castArrayToDouble(request.getParameterValues("finalMarker[]")));
         route.setLength(Integer.parseInt(request.getParameter("routeLength")));
         return route;
     }

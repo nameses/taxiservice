@@ -1,6 +1,6 @@
 package entity.enums;
 
-public enum ClientStatus {
+public enum OrderStatus {
     processing,
     confirmation,
     on_route,

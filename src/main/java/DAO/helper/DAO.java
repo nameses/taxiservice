@@ -2,10 +2,7 @@ package DAO.helper;
 
 import pool.ConnectionPool;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +55,7 @@ public abstract class DAO<T> {
             boolean res = preparedStatement.executeUpdate() > 0;
             if(!res) return null;
             try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()){
-                if(generatedKeys.next()) return Math.toIntExact(generatedKeys.getLong(1));
+                if(generatedKeys.next()) return generatedKeys.getInt(1);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -97,7 +94,7 @@ public abstract class DAO<T> {
 
     protected PreparedStatement prepareStatement(Connection connection, String query, T entity) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             setStatement(preparedStatement, entity);
             return preparedStatement;
         } catch (SQLException e) {
