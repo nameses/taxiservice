@@ -53,7 +53,7 @@ function submitEventListener(event) {
         submit.removeEventListener("click", submitEventListener);
         drawAllRoutes();
     } else {
-        mainText.textContent="Place destination place!"
+        mainText.textContent = "Place destination place!"
         passengerDestinationMarker = createMarker(
             passengerInitCoordinates,
             new tt.Popup({offset: 35}).setHTML("Place destination!")
@@ -124,7 +124,7 @@ function drawAllRoutes() {
             resultData.batchItems.forEach(function (routeData, index) {
                 const routeGeoJson = routeData.toGeoJson()
                 let routeLength = routeGeoJson.features[0].properties.summary.lengthInMeters
-                    // routeGeoJson.features[0].properties.summary.travelTimeInSeconds
+                // routeGeoJson.features[0].properties.summary.travelTimeInSeconds
                 map.addLayer({
                         id: 'route_1',
                         type: "line",
@@ -142,11 +142,17 @@ function drawAllRoutes() {
                         }
                     }
                 )
-                mainText.textContent="Go to the next step to enter some details!"
-                submit.disabled=true
-                document.getElementById("input-route-length").value = routeLength;
-                document.getElementById('redirect-button').disabled=false
+                mainText.textContent = "Go to the next step to enter some details!"
+                submit.disabled = true
+                document.querySelector('#input-route-length').value = routeLength;
+                document.querySelector('#redirect-button').disabled = false;
+                map.disabled = true
+                document.querySelector('#start-marker1').value = passengerStartMarker.getLngLat().toArray()[0];
+                document.querySelector('#start-marker2').value = passengerStartMarker.getLngLat().toArray()[1];
+                document.querySelector('#final-marker1').value = passengerDestinationMarker.getLngLat().toArray()[0];
+                document.querySelector('#final-marker2').value = passengerDestinationMarker.getLngLat().toArray()[1];
             })
         })
+
 }
 

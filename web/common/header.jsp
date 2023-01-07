@@ -14,7 +14,7 @@
             </c:when>
             <c:otherwise>
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="<%= request.getContextPath() %>/app?command=mainpage" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li><a href="<%= request.getContextPath() %>/main?command=mainpage" class="nav-link px-2 text-secondary">Home</a></li>
                 </ul>
                 <ul class="navbar-nav navbar-collapse justify-content-end">
                     <li><a href="<%= request.getContextPath() %>/login?command=loginpage" class="nav-link">Login</a></li>

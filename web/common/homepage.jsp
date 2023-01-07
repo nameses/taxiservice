@@ -11,14 +11,14 @@
 <div class="border-bottom pb-3 m-3 small lh-sm">
     <c:choose>
         <c:when test="${sessionScope.client.user.role=='client'}">
-            <a href="${pageContext.request.contextPath}/client?command=showOrderMap"
+            <a href="${pageContext.request.contextPath}/client?command=orderMapPage"
                class="btn btn-outline-dark btn-sm">Order taxi</a>
         </c:when>
         <c:when test="${sessionScope.user.role=='admin'}">
             <a class="btn btn-outline-dark btn-sm"
-               href="${pageContext.request.contextPath}/controller?command=listTaxis">List of taxis</a>
+               href="${pageContext.request.contextPath}/admin?command=listTaxis">List of taxis</a>
             <a class="btn btn-outline-dark btn-sm"
-               href="${pageContext.request.contextPath}/controller?command=listOrders">List of orders</a>
+               href="${pageContext.request.contextPath}/admin?command=listOrders">List of orders</a>
         </c:when>
         <c:otherwise>
             <p>${sessionScope.driver.user.role}</p>

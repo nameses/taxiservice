@@ -3,4 +3,3 @@ out/
 target/
 src/main/resources/database.properties
 web/static/js/config.js
-src/main/java/controller/controllers/

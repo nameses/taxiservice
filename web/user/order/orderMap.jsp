@@ -16,9 +16,14 @@
     <div>
         <h3 id="main-text">Place your current place!</h3>
         <div class="md" id="map" style="height: 70vh;width: 50vw;margin-top: 10px"></div>
-        <form method="POST" id="form-post" action="${pageContext.request.contextPath}/controller?command=orderDetails">
-            <input type="hidden" name="routeLength" id="input-route-length">
-            <input class="btn btn-outline-dark" type="button" id="submit-button" value="Submit">
+        <form method="POST" id="form-post" action="${pageContext.request.contextPath}/client?command=orderDetails">
+            <input type="hidden" name="command" value="orderDetails" />
+            <input type="hidden" name="routeLength" id="input-route-length" />
+            <input type="hidden" name="startMarker[]" id="start-marker1" value="" />
+            <input type="hidden" name="startMarker[]" id="start-marker2" value="" />
+            <input type="hidden" name="finalMarker[]" id="final-marker1" value="" />
+            <input type="hidden" name="finalMarker[]" id="final-marker2" value="" />
+            <input class="btn btn-outline-dark" type="button" id="submit-button" value="Submit" />
             <button class="btn btn-outline-dark" type="submit" id="redirect-button" disabled>Next Step</button>
         </form>
     </div>

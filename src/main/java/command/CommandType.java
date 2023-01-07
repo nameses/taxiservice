@@ -23,6 +23,7 @@ public class CommandType {
         commandMap.put("mainpage", new Mainpage());
         commandMap.put("profilepage", new Profilepage());
         commandMap.put("regpage", new Regpage());
+        commandMap.put("orderMapPage", new OrderMapPage());
         //authentication
         commandMap.put("registration", new Registration());
         commandMap.put("registrationClient", new RegistrationClient());

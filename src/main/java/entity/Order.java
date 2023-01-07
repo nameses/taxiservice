@@ -12,6 +12,8 @@ public class Order {
     private Integer orderID;
     private Integer driverID;
     private Integer clientID;
+    private Integer routeID;
+    private Route route;
     private Client client;
 
     private Driver driver;
@@ -112,16 +114,32 @@ public class Order {
         this.clientID = clientID;
     }
 
+    public Integer getRouteID() {
+        return routeID;
+    }
+
+    public void setRouteID(Integer routeID) {
+        this.routeID = routeID;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(orderID, order.orderID) && Objects.equals(driverID, order.driverID) && Objects.equals(clientID, order.clientID) && Objects.equals(client, order.client) && Objects.equals(driver, order.driver) && Objects.equals(orderOpened, order.orderOpened) && Objects.equals(orderAccepted, order.orderAccepted) && Objects.equals(cost, order.cost) && Objects.equals(carCapacity, order.carCapacity) && carCategory == order.carCategory && clientStatus == order.clientStatus;
+        return Objects.equals(orderID, order.orderID) && Objects.equals(driverID, order.driverID) && Objects.equals(clientID, order.clientID) && Objects.equals(routeID, order.routeID) && Objects.equals(route, order.route) && Objects.equals(client, order.client) && Objects.equals(driver, order.driver) && Objects.equals(orderOpened, order.orderOpened) && Objects.equals(orderAccepted, order.orderAccepted) && Objects.equals(cost, order.cost) && Objects.equals(carCapacity, order.carCapacity) && carCategory == order.carCategory && clientStatus == order.clientStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderID, driverID, clientID, client, driver, orderOpened, orderAccepted, cost, carCapacity, carCategory, clientStatus);
+        return Objects.hash(orderID, driverID, clientID, routeID, route, client, driver, orderOpened, orderAccepted, cost, carCapacity, carCategory, clientStatus);
     }
 }

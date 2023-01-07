@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serial;
 
-@WebServlet(urlPatterns = {"/login", "/app", "/admin", "/driver", "/client"})
+@WebServlet(urlPatterns = {"/login", "/app", "/admin", "/driver", "/client","/main"})
 public class Controller extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 1L;

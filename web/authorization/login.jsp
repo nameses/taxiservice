@@ -15,7 +15,7 @@
             <p>${pageScope.message}</p>
         </div>
     </c:if>
-    <form action="${pageContext.request.contextPath}/app" method="POST">
+    <form action="${pageContext.request.contextPath}/login" method="POST">
         <input type="hidden" name="command" value="login"/>
         <div class="form-group">
             <label for="username">Username</label>
