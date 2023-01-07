@@ -12,6 +12,7 @@ import java.util.List;
 public abstract class DAO<T> {
 
     protected abstract T buildEntity(ResultSet resultSet);
+
     protected abstract void setStatement(PreparedStatement preparedStatement, T entity) throws SQLException;
 
     protected final ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -50,6 +51,23 @@ public abstract class DAO<T> {
         }
     }
 
+    protected Integer insert(String query, T entity) {
+        Connection connection = connectionPool.getConnection();
+        try {
+            PreparedStatement preparedStatement = this.prepareStatement(connection, query, entity);
+            boolean res = preparedStatement.executeUpdate() > 0;
+            if(!res) return null;
+            try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()){
+                if(generatedKeys.next()) return Math.toIntExact(generatedKeys.getLong(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return null;
+    }
+
     protected Boolean executeQuery(String query, List<String> params) {
         Connection connection = connectionPool.getConnection();
         try {
@@ -77,6 +95,16 @@ public abstract class DAO<T> {
         }
     }
 
+    protected PreparedStatement prepareStatement(Connection connection, String query, T entity) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            setStatement(preparedStatement, entity);
+            return preparedStatement;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     protected PreparedStatement prepareStatement(Connection connection, String query, List<String> params) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -91,21 +119,13 @@ public abstract class DAO<T> {
             throw new RuntimeException(e);
         }
     }
-    protected PreparedStatement prepareStatement(Connection connection, String query, T entity) {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            setStatement(preparedStatement,entity);
-            return preparedStatement;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     public static boolean isNumeric(String str) {
         try {
             Integer.parseInt(str);
             return true;
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
     }

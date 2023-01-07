@@ -1,6 +1,7 @@
 package DAO.helper;
 
 import entity.Order;
+import entity.Route;
 import entity.Taxi;
 import entity.User.Client;
 import entity.User.Driver;
@@ -64,6 +65,17 @@ public class EntityBuilder {
             order.setCarCategory(CarCategory.valueOf(resultSet.getString("username")));
             order.setClientStatus(ClientStatus.valueOf(resultSet.getString("clientStatus")));
             return order;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static Route buildRoute(ResultSet resultSet) {
+        try {
+            Route route = new Route();
+            route.setRouteID(resultSet.getInt("routeid"));
+            route.setStartMarker((Double[])resultSet.getArray("startmarker").getArray());
+            route.setFinalMarker((Double[])resultSet.getArray("finalmarker").getArray());
+            return route;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

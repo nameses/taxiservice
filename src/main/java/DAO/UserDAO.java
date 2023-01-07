@@ -11,12 +11,12 @@ import java.util.List;
 
 public class UserDAO extends DAO<User> {
     private final static String INSERT =
-            "INSERT INTO \"User\"(username,password,fullname,phone,email,role) " +
+            "INSERT INTO \"user\"(username,password,fullname,phone,email,role) " +
                     "VALUES(?,?,?,?,?,?::userrole)";
     private final static String SELECT_LOGIN =
-            "SELECT * FROM \"User\" WHERE username=? AND password=?";
+            "SELECT * FROM \"user\" WHERE username=? AND password=?";
     private final static String SELECT_USERNAME_BY_ID =
-            "SELECT username FROM User WHERE userid=?";
+            "SELECT username FROM user WHERE userid=?";
 
     public Boolean insert(User user) {
         return this.executeQuery(INSERT,

@@ -14,7 +14,7 @@ public class ClientDAO extends DAO<Client> {
     private static final String INSERT =
             "INSERT INTO client(userid,\"bonusPoints\") VALUES(?,?)";
     private static final String SELECT_BY_USER_ID =
-            "SELECT * FROM client join \"User\" on client.userid=\"User\".userid WHERE \"User\".userid=? ";
+            "SELECT * FROM client join \"user\" on client.userid=\"user\".userid WHERE \"user\".userid=? ";
     @Override
     protected Client buildEntity(ResultSet resultSet) {
         return EntityBuilder.buildClient(resultSet);

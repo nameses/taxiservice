@@ -12,11 +12,11 @@ import java.util.List;
 
 public class OrderDAO extends DAO<Order> {
     private static final String SELECT_ALL =
-            "SELECT orderid,orderopened,orderaccepted,cost,\"licensePlate\",username from Order " +
-                    "JOIN driver ON driver.driverid=\"Order\".driverid " +
+            "SELECT orderid,orderopened,orderaccepted,cost,\"licensePlate\",username from order " +
+                    "JOIN driver ON driver.driverid=\"order\".driverid " +
                     "JOIN taxi ON taxi.taxiid=driver.taxiid " +
-                    "JOIN client ON \"Order\".clientid=client.clientid " +
-                    "JOIN \"User\" ON client.userid=\"User\".userid ";
+                    "JOIN client ON \"order\".clientid=client.clientid " +
+                    "JOIN \"user\" ON client.userid=\"user\".userid ";
 
     public List<Order> selectAllByString(String orderByString, String orderBySort,
                                          String filterBy, String filterValue) {
