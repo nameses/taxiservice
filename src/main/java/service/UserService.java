@@ -29,7 +29,7 @@ public class UserService {
             User user = userDAO.login(username, password);
             if (user != null) {
                 session.setAttribute("user", user);
-//                if (user.getRole() == UserRole.admin) else
+//                if (user.getRole() == UserRole.admin)else
                 if (user.getRole() == UserRole.driver) {
                     Driver driver = driverDAO.getByUserID(user.getUserID());
                     session.setAttribute("driver", driver);

@@ -15,32 +15,32 @@
 <div class="container col-md-5">
     <div>
         <h3 id="main-text">Write down some order details</h3>
-        <form method="POST" id="form-post" action="${pageContext.request.contextPath}/client">
-            <input type="hidden" name="command" value="orderDetails"/>
+        <form method="POST" id="form-post" action="${pageContext.request.contextPath}/client?command=orderDetails">
             <%--routeid in session--%>
             <%--order opened timestamp in back--%>
-            <label for="car-capacity">Car capacity:</label><input type="number" name="carCapacity" id="car-capacity"/>
+            <label for="car-capacity">Car capacity:</label>
+            <input type="number" name="carCapacity" id="car-capacity"/>
             <div style="margin-left: 8px;">
                 <label>Car category:</label>
                 <div class="form-check">
-                    <input type="radio" id="Budget" name="category" value="Budget" checked/>
+                    <input type="radio" id="Budget" name="carCategory" value="Budget" checked/>
                     <label for="Budget">Budget</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" id="Standard" name="category" value="Standard"/>
+                    <input type="radio" id="Standard" name="carCategory" value="Standard"/>
                     <label for="Standard">Standard</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" id="Comfort" name="category" value="Comfort"/>
+                    <input type="radio" id="Comfort" name="carCategory" value="Comfort"/>
                     <label for="Comfort">Comfort</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" id="Premium" name="category" value="Premium"/>
+                    <input type="radio" id="Premium" name="carCategory" value="Premium"/>
                     <label for="Premium">Premium</label>
                 </div>
             </div>
     </div>
-    <button class="btn btn-outline-dark" type="submit" id="redirect-button">Next Step</button>
+    <button class="btn btn-outline-dark" type="submit">Submit</button>
     <c:if test="${pageScope.MESSAGE!=null}">
         <h3>${pageScope.MESSAGE}</h3>
     </c:if>

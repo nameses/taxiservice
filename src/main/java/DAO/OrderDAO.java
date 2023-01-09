@@ -17,7 +17,12 @@ public class OrderDAO extends DAO<Order> {
                     "JOIN taxi ON taxi.taxiid=driver.taxiid " +
                     "JOIN client ON \"order\".clientid=client.clientid " +
                     "JOIN \"user\" ON client.userid=\"user\".userid ";
-
+    private static final String INSERT =
+            "INSERT INTO \"order\"(clientid,orderopened,\"carCapacity\",category,status,routeid) " +
+                    "VALUES(?,?,?,?::carcategory,?::orderstatus,?)";
+    public Integer insert(Order order){
+        return insert(INSERT,order);
+    }
     public List<Order> selectAllByString(String orderByString, String orderBySort,
                                          String filterBy, String filterValue) {
         String resultQuery = SELECT_ALL;
@@ -41,6 +46,11 @@ public class OrderDAO extends DAO<Order> {
 
     @Override
     protected void setStatement(PreparedStatement preparedStatement, Order entity) throws SQLException {
-        return;
+        preparedStatement.setInt(1, entity.getClientID());
+        preparedStatement.setTimestamp(2, entity.getOrderOpened());
+        preparedStatement.setInt(3, entity.getCarCapacity());
+        preparedStatement.setString(4, entity.getCarCategory().toString());
+        preparedStatement.setString(5, entity.getOrderStatus().toString());
+        preparedStatement.setInt(6, entity.getRouteID());
     }
 }
