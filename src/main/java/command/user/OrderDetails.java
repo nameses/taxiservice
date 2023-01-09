@@ -15,6 +15,6 @@ public class OrderDetails implements Command {
         if (!orderService.saveOrder(request)) {
             return new PageUrl(PageConstants.ORDER_DETAILS_PAGE, false, "Error during saving order");
         }
-        return new PageUrl(PageConstants.ORDER_OPENED_PAGE, true);
+        return new PageUrl(PageConstants.ORDER_OPENED_PAGE_GET, true);
     }
 }

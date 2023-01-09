@@ -17,7 +17,7 @@ public class OrderRoute implements Command {
         if (!routeService.saveRoute(request)) {
             return new PageUrl(PageConstants.ORDER_MAP, false, "Error during saving order details");
         }
-        return new PageUrl(PageConstants.ORDER_DETAILS_PAGE, true);
+        return new PageUrl(PageConstants.ORDER_DETAILS_PAGE_GET, true);
     }
 
     private PageUrl routeCheck(Integer routeLength) {
