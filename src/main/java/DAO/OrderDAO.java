@@ -18,7 +18,7 @@ public class OrderDAO extends DAO<Order> {
                     "JOIN client ON \"order\".clientid=client.clientid " +
                     "JOIN \"user\" ON client.userid=\"user\".userid ";
     private static final String INSERT =
-            "INSERT INTO \"order\"(clientid,orderopened,\"carCapacity\",category,status,routeid) " +
+            "INSERT INTO \"order\"(clientid,orderopened,\"carCapacity\",carcategory,status,routeid) " +
                     "VALUES(?,?,?,?::carcategory,?::orderstatus,?)";
     public Integer insert(Order order){
         return insert(INSERT,order);

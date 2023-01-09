@@ -10,6 +10,8 @@ public class PageConstants {
     public static final String MAIN_PAGE = "/index.jsp";
     public static final String PROFILE_PAGE = "/authorization/profile.jsp";
     public static final String REG_PAGE = "/authorization/registration.jsp";
+    public static final String ORDER_DETAILS_PAGE_GET = "/client?command=orderDetailsPage";
     public static final String ORDER_DETAILS_PAGE = "/user/order/orderDetails.jsp";
+    public static final String ORDER_OPENED_PAGE_GET = "/client?command=orderOpenedPage";
     public static final String ORDER_OPENED_PAGE = "/user/order/orderOpened.jsp";
 }
