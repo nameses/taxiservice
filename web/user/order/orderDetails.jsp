@@ -23,19 +23,19 @@
             <div style="margin-left: 8px;">
                 <label>Car category:</label>
                 <div class="form-check">
-                    <input type="radio" id="Budget" name="carCategory" value="Budget" checked/>
+                    <input type="radio" id="Budget" name="carCategory" value="budget" checked/>
                     <label for="Budget">Budget</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" id="Standard" name="carCategory" value="Standard"/>
+                    <input type="radio" id="Standard" name="carCategory" value="standard"/>
                     <label for="Standard">Standard</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" id="Comfort" name="carCategory" value="Comfort"/>
+                    <input type="radio" id="Comfort" name="carCategory" value="comfort"/>
                     <label for="Comfort">Comfort</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" id="Premium" name="carCategory" value="Premium"/>
+                    <input type="radio" id="Premium" name="carCategory" value="premium"/>
                     <label for="Premium">Premium</label>
                 </div>
             </div>
