@@ -3,7 +3,9 @@ package DAO;
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
 import entity.Order;
+import entity.enums.OrderStatus;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +22,22 @@ public class OrderDAO extends DAO<Order> {
     private static final String INSERT =
             "INSERT INTO \"order\"(clientid,orderopened,\"carCapacity\",carcategory,status,routeid) " +
                     "VALUES(?,?,?,?::carcategory,?::orderstatus,?)";
+    private static final String UPDATE_ENUM_TO_STATUS =
+            "UPDATE \"order\" SET status=?::orderstatus WHERE \"order\".orderid=?";
+    public Boolean updateEnumToStatus(Integer id, OrderStatus orderStatus){
+        Connection connection = connectionPool.getConnection();
+        try {
+            PreparedStatement preparedStatement =
+                    this.prepareStatement(connection,
+                            UPDATE_ENUM_TO_STATUS,
+                            List.of(orderStatus.toString(),String.valueOf(id)));
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
     public Integer insert(Order order){
         return insert(INSERT,order);
     }

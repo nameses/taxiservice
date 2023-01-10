@@ -16,10 +16,24 @@ import java.util.List;
 public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();
 
+    public Boolean cancelOrder(Integer id) {
+        try{
+            return orderDAO.updateEnumToStatus(id,OrderStatus.canceled);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
     public Boolean saveOrder(HttpServletRequest request) {
         try {
             Integer id = orderDAO.insert(buildOrder(request));
-            return id != null && id > 0;
+            if(id!=null && id > 0) {
+                HttpSession session = request.getSession();
+                Order order = (Order) session.getAttribute("order");
+                order.setOrderID(id);
+                session.setAttribute("order",order);
+                return true;
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -36,6 +50,7 @@ public class OrderService {
         order.setOrderStatus(OrderStatus.processing);
         order.setRouteID((Integer) session.getAttribute("routeid"));
         session.removeAttribute("routeid");
+        session.setAttribute("order",order);
         return order;
     }
 

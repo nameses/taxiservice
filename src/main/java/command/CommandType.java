@@ -27,6 +27,7 @@ public class CommandType {
         commandMap.put("orderMapPage", new OrderMapPage());
         commandMap.put("orderOpenedPage", new OrderOpenedPage());
         commandMap.put("orderDetailsPage", new OrderDetailsPage());
+        commandMap.put("orderMainPage", new OrderMainPage());
         //authentication
         commandMap.put("registration", new Registration());
         commandMap.put("registrationClient", new RegistrationClient());
