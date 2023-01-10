@@ -4,8 +4,10 @@
     const apiKey = config.apiTomtom
     const passengerInitCoordinates = [30.515614, 50.447339]
     // convert arrays of coordinates from java session to js
-    let startMarkerCoord = Array.of(${sessionScope.route.startMarker[0]}, ${sessionScope.route.startMarker[1]});
-    let finalMarkerCoord = Array.of(${sessionScope.route.finalMarker[0]}, ${sessionScope.route.finalMarker[1]});
+    let startMarkerCoord = Array.of(${sessionScope.order.route.startMarker[0]},
+        ${sessionScope.order.route.startMarker[1]});
+    let finalMarkerCoord = Array.of(${sessionScope.order.route.finalMarker[0]},
+        ${sessionScope.order.route.finalMarker[1]});
     //map
     const map = tt.map({
         key: apiKey,
