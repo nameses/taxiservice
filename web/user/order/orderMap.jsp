@@ -31,7 +31,7 @@
         </form>
     </div>
     <script src="../../static/js/config.js"></script>
-    <script src="../../static/js/order.js"></script>
+    <script src="../../static/js/orderMap.js"></script>
 </div>
 </body>
 </html>

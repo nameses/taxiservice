@@ -1,4 +1,5 @@
 const apiKey = config.apiTomtom
+const passengerInitCoordinates = [30.515614, 50.447339]
 const submit = document.getElementById('submit-button');
 const mainText = document.getElementById('main-text');
 let passengerStartMarker;
@@ -14,8 +15,8 @@ const map = tt.map({
 })
 //create first market
 passengerStartMarker = createMarker(
-    passengerInitCoordinates,
-    new tt.Popup({offset: 35}).setHTML("Place your current place!")
+    passengerInitCoordinates
+    //new tt.Popup({offset: 35}).setHTML("Place your current place!")
 )
 //turn on marker
 passengerStartMarker.togglePopup()
@@ -66,12 +67,9 @@ function submitEventListener(event) {
 // onclick event for button 'submit'
 submit.addEventListener("click", submitEventListener)
 
-function createMarker(markerCoordinates, popup) {
-    const passengerMarkerElement = document.createElement("div")
-    passengerMarkerElement.innerHTML = "<img src='../../static/img/dot.png' style='width: 2vw; height: 4vh;'>"
-    return new tt.Marker({element: passengerMarkerElement})
+function createMarker(markerCoordinates) {
+    return new tt.Marker()
         .setLngLat(markerCoordinates)
-        .setPopup(popup)
         .addTo(map)
 }
 
@@ -80,12 +78,7 @@ function drawPassengerMarkerOnMap(geoResponse) {
         geoResponse.addresses[0].address.freeformAddress
     ) {
         passengerStartMarker.remove()
-        passengerStartMarker = createMarker(
-            geoResponse.addresses[0].position,
-            new tt.Popup({offset: 35}).setHTML(
-                geoResponse.addresses[0].address.freeformAddress
-            )
-        )
+        passengerStartMarker = createMarker(geoResponse.addresses[0].position)
         passengerStartMarker.togglePopup()
     }
 }
@@ -95,12 +88,9 @@ function drawFinalMarkerOnMap(geoResponse) {
         geoResponse.addresses[0].address.freeformAddress
     ) {
         passengerDestinationMarker.remove()
-        passengerDestinationMarker = createMarker(
-            geoResponse.addresses[0].position,
-            new tt.Popup({offset: 35}).setHTML(
-                geoResponse.addresses[0].address.freeformAddress
-            )
-        )
+        passengerDestinationMarker = createMarker(geoResponse.addresses[0].position);
+            // new tt.Popup({offset: 35}).setHTML(
+            //     geoResponse.addresses[0].address.freeformAddress
         passengerDestinationMarker.togglePopup()
     }
 }

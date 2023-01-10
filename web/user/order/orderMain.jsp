@@ -15,7 +15,8 @@
 <div class="container col-md-5">
     <div>
         <h3 id="main-text">Order details page</h3>
-        <p>Wait for driver...<br/>Your order route:</p>
+        <p>Wait for driver... Don't logout from app, this leads to canceling of current order.<br/>
+            Your order route:</p>
         <div class="md" id="map" style="height: 50vh;width: 40vw;margin-top: 5px"></div>
         <div class="d-flex justify-content-center">
             <form method="POST" id="form-post" action="${pageContext.request.contextPath}/client?command=deleteOrder">
@@ -25,7 +26,8 @@
         </div>
     </div>
     <script src="../../static/js/config.js"></script>
-    <script src="../../static/js/orderMain.js"></script>
+    <%--    <script src="../../static/js/orderMain.js"></script>--%>
+    <jsp:include page="../../static/js/orderMain_js.jsp" />
 </div>
 </body>
 </html>

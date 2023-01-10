@@ -48,8 +48,7 @@ public class OrderService {
         order.setCarCapacity(Integer.valueOf(request.getParameter("carCapacity")));
         order.setCarCategory(CarCategory.valueOf(request.getParameter("carCategory")));
         order.setOrderStatus(OrderStatus.processing);
-        order.setRouteID((Integer) session.getAttribute("routeid"));
-        session.removeAttribute("routeid");
+        order.setRouteID(((Route) session.getAttribute("route")).getRouteID());
         session.setAttribute("order",order);
         return order;
     }

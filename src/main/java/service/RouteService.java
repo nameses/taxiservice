@@ -19,9 +19,11 @@ public class RouteService {
     public Boolean saveRoute(HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
-            Integer id = routeDAO.insert(buildRoute(request));
-            if(id!=null && id>0) {
-                session.setAttribute("routeid", id);
+            Integer id = routeDAO.insert(buildRoute(request, session));
+            if (id != null && id > 0) {
+                Route route = (Route) session.getAttribute("route");
+                route.setRouteID(id);
+                session.setAttribute("route",route);
                 return true;
             }
         } catch (Exception e) {
@@ -30,11 +32,12 @@ public class RouteService {
         return false;
     }
 
-    private Route buildRoute(HttpServletRequest request) {
+    private Route buildRoute(HttpServletRequest request, HttpSession session) {
         Route route = new Route();
         route.setStartMarker(castArrayToDouble(request.getParameterValues("startMarker[]")));
         route.setFinalMarker(castArrayToDouble(request.getParameterValues("finalMarker[]")));
         route.setLength(Integer.parseInt(request.getParameter("routeLength")));
+        session.setAttribute("route", route);
         return route;
     }
 
