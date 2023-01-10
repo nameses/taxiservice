@@ -20,7 +20,8 @@
         <div class="md" id="map" style="height: 50vh;width: 40vw;margin-top: 5px"></div>
         <div class="d-flex justify-content-center">
             <form method="POST" id="form-post" action="${pageContext.request.contextPath}/client?command=deleteOrder">
-                <button class="btn btn-outline-dark" type="submit" id="redirect-button" disabled>Delete</button>
+                <input type="hidden" value="${sessionScope.order.}">
+                <button class="btn btn-outline-danger" type="submit" id="delete-button">Delete</button>
             </form>
 
         </div>
