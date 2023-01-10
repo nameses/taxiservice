@@ -1,7 +1,7 @@
-create type carCategory as enum ('Budget', 'Standart', 'Comfort', 'Premium');
+create type carCategory as enum ('budget', 'standart', 'comfort', 'premium');
 create type userRole as enum ('client', 'driver', 'admin');
 create type driverStatus as enum ('active', 'inactive', 'on route');
-create type clientStatus as enum ('processing', 'confirmation', 'on route', 'completed');
+create type clientStatus as enum ('processing', 'confirmation', 'on route', 'completed','canceled');
 
 create table taxi
 (
