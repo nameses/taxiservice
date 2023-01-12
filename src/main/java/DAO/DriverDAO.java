@@ -3,7 +3,10 @@ package DAO;
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
 import entity.User.Driver;
+import entity.enums.DriverStatus;
+import entity.enums.OrderStatus;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,10 +18,22 @@ public class DriverDAO extends DAO<Driver> {
     private static final String SELECT_BY_USER_ID =
             "SELECT * FROM driver join \"user\" on driver.userid=\"user\".userid " +
                     "WHERE driver.userid=? ";
+    private static final String UPDATE_ENUM_TO_STATUS =
+            "UPDATE driver SET \"driverStatus\"=?::driverstatus WHERE userid=?";
 
-    @Override
-    protected Driver buildEntity(ResultSet resultSet) {
-        return EntityBuilder.buildDriver(resultSet);
+    public Boolean updateDriverStatus(Integer id, DriverStatus driverStatus) {
+        Connection connection = connectionPool.getConnection();
+        try {
+            PreparedStatement preparedStatement =
+                    this.prepareStatement(connection,
+                            UPDATE_ENUM_TO_STATUS,
+                            List.of(driverStatus.toString(), String.valueOf(id)));
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
     }
 
     public Driver getByUserID(Integer userID) {
@@ -30,6 +45,11 @@ public class DriverDAO extends DAO<Driver> {
                 List.of(
                         String.valueOf(driver.getUserID())
                 ));
+    }
+
+    @Override
+    protected Driver buildEntity(ResultSet resultSet) {
+        return EntityBuilder.buildDriver(resultSet);
     }
 
     @Override
