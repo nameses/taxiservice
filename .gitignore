@@ -3,3 +3,4 @@ out/
 target/
 src/main/resources/database.properties
 web/static/js/config.js
+web/static/js/jstl_sql_setDataSource.jsp

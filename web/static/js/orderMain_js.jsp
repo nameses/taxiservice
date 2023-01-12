@@ -1,13 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+
+<jsp:include page="../../static/js/jstl_sql_setDataSource.jsp"/>
+<sql:query dataSource="${sessionScope.sql_database}" var="resultRoute"
+           sql="SELECT * FROM route WHERE orderid=${sessionScope.order.orderID}"/>
+
 <script>
     const apiKey = config.apiTomtom
     const passengerInitCoordinates = [30.515614, 50.447339]
-    // convert arrays of coordinates from java session to js
-    let startMarkerCoord = Array.of(${sessionScope.order.route.startMarker[0]},
-        ${sessionScope.order.route.startMarker[1]});
-    let finalMarkerCoord = Array.of(${sessionScope.order.route.finalMarker[0]},
-        ${sessionScope.order.route.finalMarker[1]});
+
+    // convert arrays of coordinates from sql query to js
+    <c:forEach var="route" items="${resultRoute.rows}">
+    let startMarkerCoord = ("${route.startMarker}").replaceAll("{","").replaceAll("}","").split(",")
+    let finalMarkerCoord = ("${route.finalMarker}").replaceAll("{","").replaceAll("}","").split(",")
+    </c:forEach>
     //map
     const map = tt.map({
         key: apiKey,
