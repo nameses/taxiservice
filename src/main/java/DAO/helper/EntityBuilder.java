@@ -75,6 +75,9 @@ public class EntityBuilder {
             route.setRouteID(resultSet.getInt("routeid"));
             route.setStartMarker((Double[])resultSet.getArray("startmarker").getArray());
             route.setFinalMarker((Double[])resultSet.getArray("finalmarker").getArray());
+            route.setLength(resultSet.getInt("length"));
+            route.setOrderID(resultSet.getInt("orderid"));
+            route.setOrder(buildOrder(resultSet));
             return route;
         } catch (SQLException e) {
             throw new RuntimeException(e);

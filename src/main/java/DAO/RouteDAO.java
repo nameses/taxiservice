@@ -10,8 +10,18 @@ import java.sql.*;
 import java.util.List;
 
 public class RouteDAO extends DAO<Route> {
+    private static final String UPDATE_ORDERID_BY_ROUTEID =
+            "UPDATE route SET orderid=? WHERE routeid=?";
     private static final String INSERT =
             "INSERT INTO route(startmarker,finalmarker,length) VALUES(?,?,?)";
+
+    public Boolean updateOrderIDbyRouteID(Integer routeID,Integer orderID) {
+        return executeQuery(UPDATE_ORDERID_BY_ROUTEID,
+                List.of(
+                        String.valueOf(orderID),
+                        String.valueOf(routeID)
+                ));
+    }
 
     public Integer insert(Route route) {
         return insert(INSERT, route);

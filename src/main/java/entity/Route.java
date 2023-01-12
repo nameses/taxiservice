@@ -9,6 +9,8 @@ public class Route {
     private Double[] startMarker;
     private Double[] finalMarker;
     private Integer length;
+    private Integer orderID;
+    private Order order;
 
     public Integer getRouteID() {
         return routeID;
@@ -42,17 +44,33 @@ public class Route {
         this.length = length;
     }
 
+    public Integer getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(Integer orderID) {
+        this.orderID = orderID;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Route route = (Route) o;
-        return Objects.equals(routeID, route.routeID) && Arrays.equals(startMarker, route.startMarker) && Arrays.equals(finalMarker, route.finalMarker) && Objects.equals(length, route.length);
+        return Objects.equals(routeID, route.routeID) && Arrays.equals(startMarker, route.startMarker) && Arrays.equals(finalMarker, route.finalMarker) && Objects.equals(length, route.length) && Objects.equals(orderID, route.orderID) && Objects.equals(order, route.order);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(routeID, length);
+        int result = Objects.hash(routeID, length, orderID, order);
         result = 31 * result + Arrays.hashCode(startMarker);
         result = 31 * result + Arrays.hashCode(finalMarker);
         return result;

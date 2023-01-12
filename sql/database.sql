@@ -57,6 +57,8 @@ create table route
 (
     routeid serial primary key,
     startMarker real[],
-    finalMarker real[]
+    finalMarker real[],
+    length integer,
+    orderid integer,
 )
 
