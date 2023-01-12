@@ -18,7 +18,7 @@ public class Logout implements Command {
         if(order!=null){
             OrderService orderService = new OrderService();
             orderService.cancelOrder(order.getOrderID());
-        };
+        }
         session.invalidate();
         return new PageUrl(PageConstants.MAIN_PAGE, true);
     }
