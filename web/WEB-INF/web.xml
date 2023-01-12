@@ -8,4 +8,13 @@
         <exception-type>java.lang.Exception</exception-type>
         <location>/Error.jsp</location>
     </error-page>
+
+
+
+    <listener>
+        <listener-class>listeners.AppContextListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>listeners.SessionListener</listener-class>
+    </listener>
 </web-app>
