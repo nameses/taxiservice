@@ -1,6 +1,7 @@
 package service;
 
 import DAO.OrderDAO;
+import DAO.RouteDAO;
 import entity.Order;
 import entity.Route;
 import entity.User.Client;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();
+    private final RouteDAO routeDAO = new RouteDAO();
 
     public Boolean cancelOrder(Integer id) {
         try{
@@ -32,6 +34,10 @@ public class OrderService {
                 Order order = (Order) session.getAttribute("order");
                 order.setOrderID(id);
                 session.setAttribute("order",order);
+
+                Integer routeID = ((Route) session.getAttribute("route")).getRouteID();
+                session.removeAttribute("route");
+                routeDAO.updateOrderIDbyRouteID(routeID,id);
                 return true;
             }
         }catch (Exception e){
@@ -48,26 +54,23 @@ public class OrderService {
         order.setCarCapacity(Integer.valueOf(request.getParameter("carCapacity")));
         order.setCarCategory(CarCategory.valueOf(request.getParameter("carCategory")));
         order.setOrderStatus(OrderStatus.processing);
-        order.setRouteID(((Route) session.getAttribute("route")).getRouteID());
-        order.setRoute((Route) session.getAttribute("route"));
-        session.removeAttribute("route");
         session.setAttribute("order",order);
         return order;
     }
 
-    public List<Order> getList(HttpServletRequest request) {
-        try {
-            HttpSession session = request.getSession();
-            String orderByString = request.getParameter("orderByString");
-            String orderBySort = request.getParameter("orderBySort");
-            session.setAttribute("orderByString", orderByString);
-            session.setAttribute("orderBySort", orderBySort);
-            String filterBy = request.getParameter("filterBy");
-            String filterValue = request.getParameter("filterValue");
-            return orderDAO.selectAllByString(orderByString, orderBySort, filterBy, filterValue);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public List<Order> getList(HttpServletRequest request) {
+//        try {
+//            HttpSession session = request.getSession();
+//            String orderByString = request.getParameter("orderByString");
+//            String orderBySort = request.getParameter("orderBySort");
+//            session.setAttribute("orderByString", orderByString);
+//            session.setAttribute("orderBySort", orderBySort);
+//            String filterBy = request.getParameter("filterBy");
+//            String filterValue = request.getParameter("filterValue");
+//            return orderDAO.selectAllByString(orderByString, orderBySort, filterBy, filterValue);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }
