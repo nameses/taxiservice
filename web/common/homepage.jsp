@@ -27,7 +27,8 @@
                href="${pageContext.request.contextPath}/admin?command=listOrders">List of orders</a>
         </c:when>
         <c:otherwise>
-            <p>${sessionScope.driver.user.role}</p>
+            <a class="btn btn-outline-dark btn-sm"
+               href="${pageContext.request.contextPath}/driver?command=showOrders">Show list of available orders</a>
         </c:otherwise>
     </c:choose>
 </div>

@@ -26,7 +26,6 @@ public class SessionListener implements HttpSessionListener {
         if (userSessions == null) userSessions = new HashMap<>();
 
         userSessions.put(session.getId(), session);
-        context.setAttribute("userSessions", userSessions);
         System.out.println("Session Started:: ID=" + sessionEvent.getSession().getId());
     }
 

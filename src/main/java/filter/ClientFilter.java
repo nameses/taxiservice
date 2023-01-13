@@ -1,7 +1,9 @@
 package filter;
 
 import command.page.PageConstants;
+import entity.User.Client;
 import entity.User.User;
+import entity.enums.UserRole;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -10,22 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/login")
-public class LoginFilter implements Filter {
+@WebFilter("/client")
+public class ClientFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("login");
+        System.out.println("client");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user != null) {
-            response.sendRedirect(PageConstants.HOME_PAGE);
-        } else {
+        Client client = (Client) session.getAttribute("client");
+        if (user.getRole() == UserRole.client && client != null) {
             filterChain.doFilter(request, response);
+        } else {
+            response.sendRedirect(PageConstants.HOME_PAGE);
         }
     }
 }
-
-

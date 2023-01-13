@@ -10,6 +10,54 @@
     </error-page>
 
 
+    <filter>
+        <filter-name>LoggedInFilter</filter-name>
+        <filter-class>filter.LoggedInFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoggedInFilter</filter-name>
+        <url-pattern>/app</url-pattern>
+        <url-pattern>/admin</url-pattern>
+        <url-pattern>/driver</url-pattern>
+        <url-pattern>/client</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/login</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>filter.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/admin</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>ClientFilter</filter-name>
+        <filter-class>filter.ClientFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ClientFilter</filter-name>
+        <url-pattern>/client</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>DriverFilter</filter-name>
+        <filter-class>filter.DriverFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DriverFilter</filter-name>
+        <url-pattern>/driver</url-pattern>
+    </filter-mapping>
+
 
     <listener>
         <listener-class>listeners.AppContextListener</listener-class>

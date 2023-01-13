@@ -24,7 +24,6 @@ public class AppContextListener implements ServletContextListener {
         HashMap<String, HttpSession> userSessions =
                 (HashMap<String, HttpSession>) ctx.getAttribute("userSessions");
         if (userSessions != null){
-            System.out.println("session invalidated");
             userSessions.forEach((k,v)-> v.invalidate());
         }
         ctx.removeAttribute("userSessions");
