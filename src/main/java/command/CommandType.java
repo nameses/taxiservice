@@ -5,6 +5,7 @@ import command.authorization.*;
 import command.authorization.registration.Registration;
 import command.authorization.registration.RegistrationClient;
 import command.authorization.registration.RegistrationDriver;
+import command.driver.ShowOrders;
 import command.pageRender.*;
 import command.user.OrderDetails;
 import command.user.OrderRoute;
@@ -41,6 +42,8 @@ public class CommandType {
         //user order process
         commandMap.put("orderRoute", new OrderRoute());
         commandMap.put("orderDetails", new OrderDetails());
+        //driver orders process
+        commandMap.put("showOrders", new ShowOrders());
     }
     public static Command getCommand(String command){
         return commandMap.get(command);

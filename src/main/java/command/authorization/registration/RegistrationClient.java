@@ -15,9 +15,9 @@ public class RegistrationClient extends Registration implements Command {
         ClientService clientService = new ClientService();
         Client client = getClient(request);
         if(!clientService.register(client)){
-            return new PageUrl(PageConstants.REGISTRATION, false, "Unknown error.");
+            return new PageUrl(PageConstants.REG_PAGE, false, "Unknown error.");
         }
-        return new PageUrl(PageConstants.LOGIN, true);
+        return new PageUrl(PageConstants.LOGIN_PAGE, true);
     }
     private Client getClient(HttpServletRequest request){
         Client client = new Client();

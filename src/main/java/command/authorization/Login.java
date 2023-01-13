@@ -19,7 +19,7 @@ public class Login implements Command {
         String password = EncryptionUtil.getEncrypted(request.getParameter("password"));
         boolean ifValid = userService.login(session, username, password);
         if (!ifValid) {
-            return new PageUrl(PageConstants.LOGIN, false, "Wrong login or password");
+            return new PageUrl(PageConstants.LOGIN_PAGE, false, "Wrong login or password");
         }
         return new PageUrl(PageConstants.HOME_PAGE, true);
     }

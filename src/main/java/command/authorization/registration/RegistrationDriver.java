@@ -18,9 +18,9 @@ public class RegistrationDriver extends Registration implements Command {
         Driver driver = getDriver(request);
         // String error = driverService.validate(driver);
         if (!driverService.register(driver)) {
-            return new PageUrl(PageConstants.REGISTRATION, false, "Unknown error.");
+            return new PageUrl(PageConstants.REG_PAGE, false, "Unknown error.");
         }
-        return new PageUrl(PageConstants.LOGIN, true);
+        return new PageUrl(PageConstants.LOGIN_PAGE, true);
     }
 
     private Driver getDriver(HttpServletRequest request) {

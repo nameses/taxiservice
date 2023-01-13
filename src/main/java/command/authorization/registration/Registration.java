@@ -19,7 +19,7 @@ public class Registration implements Command {
         HttpSession session = request.getSession();
         session.setAttribute("user",user);
         if(user==null){
-            return new PageUrl(PageConstants.REGISTRATION, false, "Unknown error.");
+            return new PageUrl(PageConstants.REG_PAGE, false, "Unknown error.");
         }
         return new PageUrl(PageConstants.HOME_PAGE, true);
 //        if(role==UserRole.client){
