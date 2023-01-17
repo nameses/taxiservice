@@ -1,9 +1,7 @@
 package service;
 
 import DAO.ClientDAO;
-import DAO.DriverDAO;
-import entity.User.Client;
-import entity.User.Driver;
+import models.entity.User.Client;
 
 public class ClientService {
     private final ClientDAO clientDAO = new ClientDAO();

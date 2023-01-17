@@ -6,6 +6,7 @@ import command.authorization.registration.Registration;
 import command.authorization.registration.RegistrationClient;
 import command.authorization.registration.RegistrationDriver;
 import command.driver.ShowOrders;
+import command.driver.taxi.NewTaxi;
 import command.pageRender.*;
 import command.user.OrderDetails;
 import command.user.OrderRoute;
@@ -29,6 +30,7 @@ public class CommandType {
         commandMap.put("orderOpenedPage", new OrderOpenedPage());
         commandMap.put("orderDetailsPage", new OrderDetailsPage());
         commandMap.put("orderMainPage", new OrderMainPage());
+        commandMap.put("newTaxiPage", new NewTaxiPage());
         //authentication
         commandMap.put("registration", new Registration());
         commandMap.put("registrationClient", new RegistrationClient());
@@ -37,6 +39,7 @@ public class CommandType {
         commandMap.put("logout", new Logout());
         //taxis
         commandMap.put("listTaxis", new ListTaxis());
+        commandMap.put("newTaxi", new NewTaxi());
         //orders
         commandMap.put("listOrders", new ListOrders());
         //user order process

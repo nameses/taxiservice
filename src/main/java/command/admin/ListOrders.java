@@ -3,12 +3,8 @@ package command.admin;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import entity.Order;
-import service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 public class ListOrders implements Command {
     @Override

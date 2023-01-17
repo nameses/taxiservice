@@ -3,8 +3,8 @@ package command.authorization.registration;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import entity.User.User;
-import entity.enums.UserRole;
+import models.entity.User.User;
+import models.entity.enums.UserRole;
 import service.UserService;
 import utils.EncryptionUtil;
 
@@ -13,22 +13,15 @@ import javax.servlet.http.HttpSession;
 
 public class Registration implements Command {
     @Override
-    public PageUrl execute(HttpServletRequest request){
+    public PageUrl execute(HttpServletRequest request) {
+        HttpSession session = request.getSession();
         UserService userService = new UserService();
         User user = userService.register(getUser(request));
-        HttpSession session = request.getSession();
-        session.setAttribute("user",user);
-        if(user==null){
+        if (user == null) {
             return new PageUrl(PageConstants.REG_PAGE, false, "Unknown error.");
         }
+        session.setAttribute("user", user);
         return new PageUrl(PageConstants.HOME_PAGE, true);
-//        if(role==UserRole.client){
-//            return new PageUrl(PageConstants.REGISTRATION_CLIENT, false);
-//        } else if(role==UserRole.driver){
-//            return new PageUrl(PageConstants.REGISTRATION_DRIVER, false);
-//        } else{
-//            return new PageUrl(PageConstants.REGISTRATION, false,"Unknown error");
-//        }
     }
 
     protected User getUser(HttpServletRequest request) {

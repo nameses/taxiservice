@@ -1,4 +1,4 @@
-package entity.User;
+package models.entity.User;
 
 import java.util.Objects;
 

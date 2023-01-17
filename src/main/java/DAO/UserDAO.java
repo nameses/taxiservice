@@ -2,7 +2,7 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
-import entity.User.User;
+import models.entity.User.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -3,10 +3,9 @@ package command.authorization;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import entity.Order;
+import models.entity.Order;
 import service.OrderService;
 
-import javax.jms.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 

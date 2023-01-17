@@ -6,10 +6,12 @@ create type clientStatus as enum ('processing', 'confirmation', 'on route', 'com
 create table taxi
 (
     taxiID       serial      not null primary key,
+    driverID     integer,
     capacity     integer     not null,
     category     carCategory not null,
     fare         integer     not null,
-    licensePlate varchar(8)  not null
+    licensePlate varchar(8)  not null,
+    FOREIGN KEY (driverID) REFERENCES driver (driverID)
 );
 create table "user"
 (
@@ -32,17 +34,15 @@ create table driver
 (
     driverID serial                          not null primary key,
     userID   integer                         not null,
-    taxiID   integer,
     status   driverStatus default 'inactive' not null,
-    FOREIGN KEY (userID) REFERENCES "user" (userID),
-    FOREIGN KEY (TaxiID) REFERENCES Taxi (TaxiID)
+    FOREIGN KEY (userID) REFERENCES "user" (userID)
 );
 create table "order"
 (
     orderID       serial       not null primary key,
     clientID      integer      not null,
     driverID      integer      not null,
-    routeID      integer      not null,
+    routeID       integer      not null,
     orderOpened   timestamp    not null,
     orderAccepted timestamp    not null,
     "cost"        integer      not null,
@@ -55,10 +55,10 @@ create table "order"
 );
 create table route
 (
-    routeid serial primary key,
+    routeid     serial primary key,
     startMarker real[],
     finalMarker real[],
-    length integer,
-    orderid integer,
+    length      integer,
+    orderid     integer,
 )
 

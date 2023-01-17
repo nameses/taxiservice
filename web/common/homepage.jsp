@@ -10,7 +10,7 @@
 <jsp:include page="/common/header.jsp"/>
 <div class="border-bottom pb-3 m-3 small lh-sm">
     <c:choose>
-        <c:when test="${sessionScope.client.user.role=='client'}">
+        <c:when test="${sessionScope.user.role=='client'}">
             <c:if test="${sessionScope.order==null}">
                 <a href="${pageContext.request.contextPath}/client?command=orderMapPage"
                    class="btn btn-outline-dark btn-sm">Order taxi</a>

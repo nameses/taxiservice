@@ -1,14 +1,13 @@
 package listeners;
 
-import entity.Order;
-import entity.User.User;
-import entity.enums.UserRole;
+import models.entity.Order;
+import models.entity.User.User;
+import models.entity.enums.DriverStatus;
+import models.entity.enums.UserRole;
 import service.DriverService;
 import service.OrderService;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -41,7 +40,7 @@ public class SessionListener implements HttpSessionListener {
         User user = (User) session.getAttribute("user");
         if (user != null && user.getRole() == UserRole.driver) {
             DriverService driverService = new DriverService();
-            driverService.setToInactiveStatus(user.getUserID());
+            driverService.updateDriverStatus(user.getUserID(), DriverStatus.inactive);
         }
         //session invalidate
         session.invalidate();

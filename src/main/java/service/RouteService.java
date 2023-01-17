@@ -1,7 +1,7 @@
 package service;
 
 import DAO.RouteDAO;
-import entity.Route;
+import models.entity.Route;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

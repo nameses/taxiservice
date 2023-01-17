@@ -3,10 +3,10 @@ package service;
 import DAO.ClientDAO;
 import DAO.DriverDAO;
 import DAO.UserDAO;
-import entity.User.Client;
-import entity.User.Driver;
-import entity.User.User;
-import entity.enums.UserRole;
+import models.entity.User.Client;
+import models.entity.User.Driver;
+import models.entity.User.User;
+import models.entity.enums.UserRole;
 
 import javax.servlet.http.HttpSession;
 

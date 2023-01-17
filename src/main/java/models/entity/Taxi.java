@@ -1,11 +1,12 @@
-package entity;
+package models.entity;
 
-import entity.enums.CarCategory;
+import models.entity.enums.CarCategory;
 
 import java.util.Objects;
 
 public class Taxi {
     private Integer taxiID;
+    private Integer driverID;
     private Integer capacity;
     private CarCategory category;
     private Integer fare;
@@ -51,16 +52,11 @@ public class Taxi {
         this.licensePlate = licensePlate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Taxi taxi = (Taxi) o;
-        return Objects.equals(taxiID, taxi.taxiID) && Objects.equals(capacity, taxi.capacity) && category == taxi.category && Objects.equals(fare, taxi.fare) && Objects.equals(licensePlate, taxi.licensePlate);
+    public Integer getDriverID() {
+        return this.driverID;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(taxiID, capacity, category, fare, licensePlate);
+    public void setDriverID(Integer driverID) {
+        this.driverID = driverID;
     }
 }

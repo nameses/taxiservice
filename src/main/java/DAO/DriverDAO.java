@@ -2,9 +2,10 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
-import entity.User.Driver;
-import entity.enums.DriverStatus;
-import entity.enums.OrderStatus;
+import models.DTO.DriverDTO;
+import models.DTO.TaxiDTO;
+import models.entity.User.Driver;
+import models.entity.enums.DriverStatus;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,8 +17,7 @@ public class DriverDAO extends DAO<Driver> {
     private static final String INSERT =
             "INSERT INTO driver(userid) VALUES(?)";
     private static final String SELECT_BY_USER_ID =
-            "SELECT * FROM driver join \"user\" on driver.userid=\"user\".userid " +
-                    "WHERE driver.userid=? ";
+            "SELECT * FROM driver WHERE driver.userid=?";
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE driver SET \"driverStatus\"=?::driverstatus WHERE userid=?";
 

@@ -1,6 +1,6 @@
-package entity.User;
+package models.entity.User;
 
-import entity.enums.UserRole;
+import models.entity.enums.UserRole;
 
 import java.util.Objects;
 

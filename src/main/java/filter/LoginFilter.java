@@ -1,7 +1,7 @@
 package filter;
 
 import command.page.PageConstants;
-import entity.User.User;
+import models.entity.User.User;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

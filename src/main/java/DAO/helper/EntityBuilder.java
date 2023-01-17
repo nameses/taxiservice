@@ -1,15 +1,15 @@
 package DAO.helper;
 
-import entity.Order;
-import entity.Route;
-import entity.Taxi;
-import entity.User.Client;
-import entity.User.Driver;
-import entity.User.User;
-import entity.enums.CarCategory;
-import entity.enums.OrderStatus;
-import entity.enums.DriverStatus;
-import entity.enums.UserRole;
+import models.entity.Order;
+import models.entity.Route;
+import models.entity.Taxi;
+import models.entity.User.Client;
+import models.entity.User.Driver;
+import models.entity.User.User;
+import models.entity.enums.CarCategory;
+import models.entity.enums.OrderStatus;
+import models.entity.enums.DriverStatus;
+import models.entity.enums.UserRole;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +20,6 @@ public class EntityBuilder {
             Client client = new Client();
             client.setClientID(resultSet.getInt("clientid"));
             client.setUserID(resultSet.getInt("userid"));
-            client.setUser(buildUser(resultSet));
             client.setBonusPoints(resultSet.getInt("bonusPoints"));
             return client;
         } catch (SQLException e) {
@@ -34,15 +33,7 @@ public class EntityBuilder {
             Driver driver = new Driver();
             driver.setDriverID(resultSet.getInt("driverid"));
             driver.setUserID(resultSet.getInt("userid"));
-            driver.setUser(buildUser(resultSet));
             driver.setDriverStatus(DriverStatus.valueOf(resultSet.getString("driverStatus")));
-            try {
-            driver.setTaxiID(resultSet.getInt("taxiid"));
-            driver.setTaxi(buildTaxi(resultSet));
-            }catch(Exception ignored){
-                driver.setTaxiID(null);
-                driver.setTaxi(null);
-            }
             return driver;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -89,8 +80,9 @@ public class EntityBuilder {
         try {
             Taxi taxi = new Taxi();
             taxi.setTaxiID(resultSet.getInt("taxiid"));
+            taxi.setDriverID(resultSet.getInt("driverid"));
             taxi.setCapacity(resultSet.getInt("capacity"));
-            taxi.setCategory(CarCategory.valueOf(resultSet.getString("category")));
+            taxi.setCategory(CarCategory.valueOf(resultSet.getString("carcategory")));
             taxi.setFare(resultSet.getInt("fare"));
             taxi.setLicensePlate(resultSet.getString("licensePlate"));
             return taxi;

@@ -2,17 +2,15 @@ package service;
 
 import DAO.OrderDAO;
 import DAO.RouteDAO;
-import entity.Order;
-import entity.Route;
-import entity.User.Client;
-import entity.enums.CarCategory;
-import entity.enums.OrderStatus;
+import models.entity.Order;
+import models.entity.Route;
+import models.entity.User.Client;
+import models.entity.enums.CarCategory;
+import models.entity.enums.OrderStatus;
 
-import javax.jms.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
-import java.util.List;
 
 public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();

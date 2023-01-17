@@ -2,14 +2,13 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
-import entity.Order;
-import entity.enums.OrderStatus;
+import models.entity.Order;
+import models.entity.enums.OrderStatus;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO extends DAO<Order> {

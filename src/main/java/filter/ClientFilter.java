@@ -1,9 +1,9 @@
 package filter;
 
 import command.page.PageConstants;
-import entity.User.Client;
-import entity.User.User;
-import entity.enums.UserRole;
+import models.entity.User.Client;
+import models.entity.User.User;
+import models.entity.enums.UserRole;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

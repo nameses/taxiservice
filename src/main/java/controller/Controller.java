@@ -4,7 +4,7 @@ import command.Command;
 import command.CommandFactory;
 import command.CommandType;
 import command.page.PageUrl;
-import entity.enums.UserRole;
+import models.entity.enums.UserRole;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

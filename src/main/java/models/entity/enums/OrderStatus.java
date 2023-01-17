@@ -1,4 +1,4 @@
-package entity.enums;
+package models.entity.enums;
 
 public enum OrderStatus {
     processing,

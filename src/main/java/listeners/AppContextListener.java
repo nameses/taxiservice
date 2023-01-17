@@ -1,10 +1,5 @@
 package listeners;
 
-import entity.Order;
-import pool.ConnectionPool;
-import service.DriverService;
-import service.OrderService;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

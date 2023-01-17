@@ -2,9 +2,7 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
-import entity.Order;
-import entity.Route;
-import entity.User.User;
+import models.entity.Route;
 
 import java.sql.*;
 import java.util.List;

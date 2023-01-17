@@ -11,10 +11,10 @@ public class ShowOrders implements Command {
     @Override
     public PageUrl execute(HttpServletRequest request) {
 //        OrderService orderService = new OrderService();
-//        if (!orderService.saveOrder(request)) {
-//            return new PageUrl(PageConstants.ORDER_DETAILS_PAGE, false, "Error during saving order");
+//        if (!orderService.show(request)) {
+//            return new PageUrl(PageConstants.LIST_ORDERS, false, "Error during saving order");
 //        }
-//        return new PageUrl(PageConstants.ORDER_OPENED_PAGE_GET, true);
+//        return new PageUrl(PageConstants.LIST_ORDERS, false);
         return null;
     }
 }

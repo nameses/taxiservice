@@ -2,52 +2,44 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
-import entity.Taxi;
+import models.DTO.TaxiDTO;
+import models.converters.TaxiConverter;
+import models.entity.Taxi;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class TaxiDAO extends DAO<Taxi> {
-    private static final String SELECT_ALL =
-            "SELECT * FROM taxi";
-    private static final String UPDATE_STATUS =
-            "UPDATE taxi SET status=? where taxiid=?";
+    private static final String SELECT_BY_DRIVER =
+            "SELECT * FROM taxi WHERE driverid=?";
     private static final String INSERT =
-            "INSERT INTO taxi(capacity,category,fare,\"licensePlate\",\"driverName\") VALUES(?,?,?,?,?,?)";
-    private final static String DELETE_BY_ID =
-            "DELETE FROM taxi WHERE taxiid=?";
+            "INSERT INTO taxi(capacity,fare,\"licenseplate\",carcategory,driverid) " +
+                    "VALUES(?,?,?,?::carcategory,?)";
 
-//    public void deleteTaxi(Integer id) {
-//        try {
-//            Connection connection = connectionPool.getConnection();
-//            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID);
-//            preparedStatement.setInt(1, id);
-//            preparedStatement.executeUpdate();
-//            connectionPool.returnConnection(connection);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    public Boolean insertTaxi(Taxi taxi) {
-//        return this.executeQuery(INSERT,
-//                List.of(
-//                        String.valueOf(taxi.getCapacity()),
-//                        String.valueOf(taxi.getCategory()),
-//                        String.valueOf(taxi.getFare()),
-//                        taxi.getLicensePlate()
-//                ));
-//    }
-//
-//    public List<Taxi> selectAllByString(String orderByString, String orderBySort) {
-//        if (orderByString == null || orderBySort == null) {
-//            return selectList(SELECT_ALL, null);
-//        } else return selectList(SELECT_ALL + " ORDER BY " + orderByString + " " + orderBySort, null);
-//    }
+    public TaxiDTO selectByDriver(Integer driverID) {
+        Taxi taxi = getEntity(SELECT_BY_DRIVER, List.of(String.valueOf(driverID)));
+        if (taxi == null)
+            return new TaxiDTO(false, "You don't have a taxi");
+        else {
+            TaxiDTO taxiDTO = TaxiConverter.toDTO(taxi);
+            taxiDTO.setSuccess(true);
+            return taxiDTO;
+        }
+    }
 
+    public TaxiDTO insert(Taxi taxi) {
+        Integer id = this.insert(INSERT, taxi);
+        TaxiDTO response;
+        if (id != null) {
+            response = new TaxiDTO(true);
+            response.setTaxiID(id);
+        } else {
+            response = new TaxiDTO(false, "Unknown error. Try again later.");
+        }
+        return response;
+    }
 
     @Override
     protected Taxi buildEntity(ResultSet resultSet) {
@@ -56,10 +48,11 @@ public class TaxiDAO extends DAO<Taxi> {
 
     @Override
     protected void setStatement(PreparedStatement preparedStatement, Taxi entity) throws SQLException {
-        preparedStatement.setInt(1,entity.getCapacity());
-        preparedStatement.setString(2,entity.getCategory().toString());
-        preparedStatement.setInt(3,entity.getFare());
-        preparedStatement.setString(4,entity.getLicensePlate());
+        preparedStatement.setInt(1, entity.getCapacity());
+        preparedStatement.setInt(2, entity.getFare());
+        preparedStatement.setString(3, entity.getLicensePlate());
+        preparedStatement.setString(4, entity.getCategory().toString());
+        preparedStatement.setInt(5, entity.getDriverID());
     }
 
 

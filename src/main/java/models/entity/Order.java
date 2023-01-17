@@ -1,9 +1,9 @@
-package entity;
+package models.entity;
 
-import entity.User.Client;
-import entity.User.Driver;
-import entity.enums.CarCategory;
-import entity.enums.OrderStatus;
+import models.entity.User.Client;
+import models.entity.User.Driver;
+import models.entity.enums.CarCategory;
+import models.entity.enums.OrderStatus;
 
 import java.sql.Timestamp;
 import java.util.Objects;
