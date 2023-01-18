@@ -6,18 +6,18 @@ public class ClientDTO {
     private Integer clientID;
     private Integer userID;
     private Integer bonusPoints;
-    private Boolean status;
+    private Boolean success;
     private String message;
 
     public ClientDTO() {
     }
 
-    public ClientDTO(Boolean status) {
-        this.status = status;
+    public ClientDTO(Boolean success) {
+        this.success = success;
     }
 
-    public ClientDTO(Boolean status, String message) {
-        this.status = status;
+    public ClientDTO(Boolean success, String message) {
+        this.success = success;
         this.message = message;
     }
 
@@ -45,12 +45,12 @@ public class ClientDTO {
         this.bonusPoints = bonusPoints;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean getSuccess() {
+        return success;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 
     public String getMessage() {

@@ -20,7 +20,7 @@ public class TaxiDAO extends DAO<Taxi> {
                     "VALUES(?,?,?,?::carcategory,?)";
 
     public TaxiDTO selectByDriver(Integer driverID) {
-        Taxi taxi = getEntity(SELECT_BY_DRIVER, List.of(String.valueOf(driverID)));
+        Taxi taxi = select(SELECT_BY_DRIVER, List.of(String.valueOf(driverID)));
         if (taxi == null)
             return new TaxiDTO(false, "You don't have a taxi");
         else {

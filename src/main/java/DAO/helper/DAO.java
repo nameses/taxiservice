@@ -33,7 +33,7 @@ public abstract class DAO<T> {
         }
     }
 
-    protected T selectEntityByID(String query, Integer id) {
+    protected T selectByID(String query, Integer id) {
         Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -49,17 +49,48 @@ public abstract class DAO<T> {
         }
     }
 
+    protected T select(String query, List<String> params) {
+        Connection connection = connectionPool.getConnection();
+        try (PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return this.buildEntity(resultSet);
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    protected Integer insert(String query, Object... objects) throws DAOException {
+        Connection connection = connectionPool.getConnection();
+        try {
+            PreparedStatement preparedStatement = this.prepareStatement(connection, query, objects);
+            boolean res = preparedStatement.executeUpdate() > 0;
+            if (!res) return null;
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) return generatedKeys.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage(), e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return null;
+    }
     protected Integer insert(String query, T entity) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = this.prepareStatement(connection, query, entity);
             boolean res = preparedStatement.executeUpdate() > 0;
-            if(!res) return null;
-            try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()){
-                if(generatedKeys.next()) return generatedKeys.getInt(1);
+            if (!res) return null;
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) return generatedKeys.getInt(1);
             }
         } catch (SQLException e) {
-            throw new DAOException(e.getMessage(),e);
+            throw new DAOException(e.getMessage(), e);
         } finally {
             connectionPool.returnConnection(connection);
         }
@@ -72,22 +103,7 @@ public abstract class DAO<T> {
             PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DAOException(e.getMessage(),e);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
-    protected T getEntity(String query, List<String> params) {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-            if (resultSet.next()) {
-                return this.buildEntity(resultSet);
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(), e);
         } finally {
             connectionPool.returnConnection(connection);
         }
@@ -103,6 +119,20 @@ public abstract class DAO<T> {
         }
     }
 
+    protected PreparedStatement prepareStatement(Connection connection, String query, Object... objects) throws DAOException {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            if (objects != null) {
+                int index = 1;
+                for (Object o : objects) {
+                    preparedStatement.setObject(index++, o);
+                }
+            }
+            return preparedStatement;
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage(),e);
+        }
+    }
     protected PreparedStatement prepareStatement(Connection connection, String query, List<String> params) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);

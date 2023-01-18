@@ -32,16 +32,16 @@ public class UserDAO extends DAO<User> {
 
     public UserDTO validateData(User user) throws DAOException {
         UserDTO userDTO = new UserDTO();
-        if (this.getEntity(SELECT_BY_USERNAME, List.of(user.getUsername())) != null) {
+        if (this.select(SELECT_BY_USERNAME, List.of(user.getUsername())) != null) {
             userDTO.addMessages("Username already exists");
         }
-        if (this.getEntity(SELECT_BY_FULLNAME, List.of(user.getFullname())) != null) {
+        if (this.select(SELECT_BY_FULLNAME, List.of(user.getFullname())) != null) {
             userDTO.addMessages("Fullname already exists");
         }
-        if (this.getEntity(SELECT_BY_PHONE, List.of(user.getPhone())) != null) {
+        if (this.select(SELECT_BY_PHONE, List.of(user.getPhone())) != null) {
             userDTO.addMessages("Phone already exists");
         }
-        if (this.getEntity(SELECT_BY_EMAIL, List.of(user.getEmail())) != null) {
+        if (this.select(SELECT_BY_EMAIL, List.of(user.getEmail())) != null) {
             userDTO.addMessages("Email already exists");
         }
         if (userDTO.getMessages() != null) {
@@ -51,22 +51,17 @@ public class UserDAO extends DAO<User> {
     }
 
     public UserDTO insert(User user) throws DAOException {
-        Boolean res = this.executeQuery(INSERT,
-                List.of(user.getUsername(),
-                        user.getPassword(),
-                        user.getFullname(),
-                        user.getPhone(),
-                        user.getEmail(),
-                        user.getRole().toString()));
-        if (res) {
+        Integer id = this.insert(INSERT,user);
+        if (id!=null) {
             UserDTO userDTO = UserConverter.toDTO(user);
             userDTO.setStatus(true);
+            userDTO.setUserID(id);
             return userDTO;
         } else return new UserDTO(false);
     }
 
     public User login(String username, String password) {
-        return getEntity(SELECT_LOGIN, List.of(username, password));
+        return select(SELECT_LOGIN, List.of(username, password));
     }
 
     protected void setStatement(PreparedStatement preparedStatement, User entity) throws SQLException {

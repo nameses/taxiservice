@@ -1,6 +1,10 @@
 package service;
 
 import DAO.DriverDAO;
+import exceptions.DAOException;
+import exceptions.ServiceException;
+import models.DTO.DriverDTO;
+import models.converters.DriverConverter;
 import models.entity.Driver;
 import models.entity.enums.DriverStatus;
 
@@ -11,11 +15,11 @@ public class DriverService {
         return driverDAO.updateDriverStatus(userID, driverStatus);
     }
 
-    public Boolean register(Driver driver) {
+    public DriverDTO register(DriverDTO driverDTO) throws ServiceException {
         try {
-            return driverDAO.insert(driver);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            return driverDAO.insert(driverDTO.getUserID());
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(),e);
         }
     }
 }

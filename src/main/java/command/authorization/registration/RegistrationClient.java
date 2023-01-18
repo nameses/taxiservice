@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 public class RegistrationClient extends Registration implements Command {
     @Override
     public PageUrl execute(HttpServletRequest request){
-        ClientService clientService = new ClientService();
-        Client client = getClient(request);
-        if(!clientService.register(client)){
-            return new PageUrl(PageConstants.REG_PAGE, false, "Unknown error.");
-        }
+//        ClientService clientService = new ClientService();
+//        Client client = getClient(request);
+//        if(!clientService.register(client)){
+//            return new PageUrl(PageConstants.REG_PAGE, false, "Unknown error.");
+//        }
         return new PageUrl(PageConstants.LOGIN_PAGE, true);
     }
     private Client getClient(HttpServletRequest request){
