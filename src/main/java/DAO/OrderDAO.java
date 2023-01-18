@@ -2,6 +2,8 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
+import models.DTO.OrderDTO;
+import models.converters.OrderConverter;
 import models.entity.Order;
 import models.entity.enums.OrderStatus;
 
@@ -12,7 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class OrderDAO extends DAO<Order> {
-//    private static final String SELECT_ALL =
+    //    private static final String SELECT_ALL =
 //            "SELECT orderid,orderopened,orderaccepted,cost,\"licensePlate\",username from order " +
 //                    "JOIN driver ON driver.driverid=\"order\".driverid " +
 //                    "JOIN taxi ON taxi.taxiid=driver.taxiid " +
@@ -23,13 +25,14 @@ public class OrderDAO extends DAO<Order> {
                     "VALUES(?,?,?,?::carcategory,?::orderstatus)";
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE \"order\" SET status=?::orderstatus WHERE \"order\".orderid=?";
-    public Boolean updateEnumToStatus(Integer id, OrderStatus orderStatus){
+
+    public Boolean updateEnumToStatus(Integer id, OrderStatus orderStatus) {
         Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement =
                     this.prepareStatement(connection,
                             UPDATE_ENUM_TO_STATUS,
-                            List.of(orderStatus.toString(),String.valueOf(id)));
+                            List.of(orderStatus.toString(), String.valueOf(id)));
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -37,9 +40,16 @@ public class OrderDAO extends DAO<Order> {
             connectionPool.returnConnection(connection);
         }
     }
-    public Integer insert(Order order){
-        return insert(INSERT,order);
+
+    public OrderDTO insert(Order order) {
+        Integer id = insert(INSERT, order);
+        if(id!=null){
+            return new OrderDTO(id,true);
+        } else{
+            return new OrderDTO(false,"Try again.");
+        }
     }
+
 //    public List<Order> selectAllByString(String orderByString, String orderBySort,
 //                                         String filterBy, String filterValue) {
 //        String resultQuery = SELECT_ALL;
@@ -63,7 +73,7 @@ public class OrderDAO extends DAO<Order> {
 
     @Override
     protected void setStatement(PreparedStatement preparedStatement, Order entity) throws SQLException {
-        if(entity.getOrderStatus().equals(OrderStatus.processing)){
+        if (entity.getOrderStatus().equals(OrderStatus.processing)) {
             preparedStatement.setInt(1, entity.getClientID());
             preparedStatement.setTimestamp(2, entity.getOrderOpened());
             preparedStatement.setInt(3, entity.getCarCapacity());

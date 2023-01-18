@@ -1,5 +1,6 @@
 package DAO.helper;
 
+import exceptions.DAOException;
 import pool.ConnectionPool;
 
 import java.sql.*;
@@ -65,13 +66,13 @@ public abstract class DAO<T> {
         return null;
     }
 
-    protected Boolean executeQuery(String query, List<String> params) {
+    protected Boolean executeQuery(String query, List<String> params) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(),e);
         } finally {
             connectionPool.returnConnection(connection);
         }

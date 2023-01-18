@@ -1,14 +1,20 @@
-package models.entity;
+package models.view;
 
-import java.util.Arrays;
-import java.util.Objects;
-
-public class Route {
+public class RouteView {
     private Integer routeID;
     private Double[] startMarker;
     private Double[] finalMarker;
     private Integer length;
-    private Integer orderID;
+
+    public RouteView() {
+    }
+
+    public RouteView(Integer routeID, Double[] startMarker, Double[] finalMarker, Integer length) {
+        this.routeID = routeID;
+        this.startMarker = startMarker;
+        this.finalMarker = finalMarker;
+        this.length = length;
+    }
 
     public Integer getRouteID() {
         return routeID;
@@ -40,13 +46,5 @@ public class Route {
 
     public void setLength(Integer length) {
         this.length = length;
-    }
-
-    public Integer getOrderID() {
-        return orderID;
-    }
-
-    public void setOrderID(Integer orderID) {
-        this.orderID = orderID;
     }
 }

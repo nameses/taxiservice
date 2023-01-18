@@ -2,6 +2,8 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
+import exceptions.DAOException;
+import models.DTO.RouteDTO;
 import models.entity.Route;
 
 import java.sql.*;
@@ -13,12 +15,12 @@ public class RouteDAO extends DAO<Route> {
     private static final String INSERT =
             "INSERT INTO route(startmarker,finalmarker,length) VALUES(?,?,?)";
 
-    public Boolean updateOrderIDbyRouteID(Integer routeID,Integer orderID) {
-        return executeQuery(UPDATE_ORDERID_BY_ROUTEID,
-                List.of(
-                        String.valueOf(orderID),
-                        String.valueOf(routeID)
-                ));
+    public RouteDTO updateOrderIDbyRouteID(Route route) throws DAOException {
+            return new RouteDTO(executeQuery(UPDATE_ORDERID_BY_ROUTEID,
+                    List.of(
+                            String.valueOf(route.getOrderID()),
+                            String.valueOf(route.getRouteID())
+                    )));
     }
 
     public Integer insert(Route route) {
@@ -33,8 +35,10 @@ public class RouteDAO extends DAO<Route> {
     @Override
     protected void setStatement(PreparedStatement preparedStatement, Route entity) throws SQLException {
         Connection connection = connectionPool.getConnection();
-        preparedStatement.setArray(1, connection.createArrayOf("DOUBLE",entity.getStartMarker()));
-        preparedStatement.setArray(2, connection.createArrayOf("DOUBLE",entity.getFinalMarker()));
+        preparedStatement.setArray(1,
+                connection.createArrayOf("DOUBLE", entity.getStartMarker()));
+        preparedStatement.setArray(2,
+                connection.createArrayOf("DOUBLE", entity.getFinalMarker()));
         preparedStatement.setInt(3, entity.getLength());
         connectionPool.returnConnection(connection);
     }

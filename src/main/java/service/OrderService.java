@@ -2,6 +2,12 @@ package service;
 
 import DAO.OrderDAO;
 import DAO.RouteDAO;
+import exceptions.DAOException;
+import exceptions.ServiceException;
+import models.DTO.OrderDTO;
+import models.DTO.RouteDTO;
+import models.converters.OrderConverter;
+import models.converters.RouteConverter;
 import models.entity.Order;
 import models.entity.Route;
 import models.entity.User.Client;
@@ -17,43 +23,26 @@ public class OrderService {
     private final RouteDAO routeDAO = new RouteDAO();
 
     public Boolean cancelOrder(Integer id) {
-        try{
-            return orderDAO.updateEnumToStatus(id,OrderStatus.canceled);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-    public Boolean saveOrder(HttpServletRequest request) {
         try {
-            Integer id = orderDAO.insert(buildOrder(request));
-            if(id!=null && id > 0) {
-                HttpSession session = request.getSession();
-                Order order = (Order) session.getAttribute("order");
-                order.setOrderID(id);
-                session.setAttribute("order",order);
-
-                Integer routeID = ((Route) session.getAttribute("route")).getRouteID();
-                session.removeAttribute("route");
-                routeDAO.updateOrderIDbyRouteID(routeID,id);
-                return true;
-            }
-        }catch (Exception e){
+            return orderDAO.updateEnumToStatus(id, OrderStatus.canceled);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    private Order buildOrder(HttpServletRequest request) {
-        Order order = new Order();
-        HttpSession session = request.getSession();
-        order.setClientID(((Client) session.getAttribute("client")).getClientID());
-        order.setOrderOpened(new Timestamp(System.currentTimeMillis()));
-        order.setCarCapacity(Integer.valueOf(request.getParameter("carCapacity")));
-        order.setCarCategory(CarCategory.valueOf(request.getParameter("carCategory")));
-        order.setOrderStatus(OrderStatus.processing);
-        session.setAttribute("order",order);
-        return order;
+    public OrderDTO saveOrder(OrderDTO orderDTO, RouteDTO routeDTO) throws ServiceException {
+        try {
+            OrderDTO responseOrderDTO = orderDAO.insert(OrderConverter.toEntity(orderDTO));
+            if (responseOrderDTO.getStatus()) {
+                RouteDTO response = new RouteDTO(routeDTO.getRouteID(), responseOrderDTO.getOrderID());
+                return new OrderDTO(
+                        routeDAO.updateOrderIDbyRouteID(RouteConverter.toEntity(response)).getStatus());
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(),e);
+        }
+        return new OrderDTO(false);
     }
 
 //    public List<Order> getList(HttpServletRequest request) {
