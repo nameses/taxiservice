@@ -1,10 +1,11 @@
-package models.entity;
+package models.DTO;
 
 import models.entity.enums.UserRole;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
-public class User {
+public class UserDTO {
     private Integer userID;
     private String username;
     private String password;
@@ -12,15 +13,15 @@ public class User {
     private String phone;
     private String email;
     private UserRole role;
+    private ArrayList<String> messages;
+    private Boolean status;
 
-    public User() {
+
+    public UserDTO() {
     }
 
-    public User(String username, String fullname, String phone, String email) {
-        this.username = username;
-        this.fullname = fullname;
-        this.phone = phone;
-        this.email = email;
+    public UserDTO(Boolean status) {
+        this.status = status;
     }
 
     public Integer getUserID() {
@@ -79,16 +80,19 @@ public class User {
         this.role = role;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(userID, user.userID) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(fullname, user.fullname) && Objects.equals(phone, user.phone) && Objects.equals(email, user.email) && role == user.role;
+    public void addMessages(String message){
+        if(messages==null) messages = new ArrayList<>();
+        this.messages.add(message);
+    }
+    public ArrayList<String> getMessages() {
+        return messages;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userID, username, password, fullname, phone, email, role);
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

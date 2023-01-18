@@ -3,6 +3,10 @@ package service;
 import DAO.ClientDAO;
 import DAO.DriverDAO;
 import DAO.UserDAO;
+import exceptions.DAOException;
+import exceptions.ServiceException;
+import models.DTO.UserDTO;
+import models.converters.UserConverter;
 import models.entity.Client;
 import models.entity.Driver;
 import models.entity.User;
@@ -15,12 +19,19 @@ public class UserService {
     private final DriverDAO driverDAO = new DriverDAO();
     private final ClientDAO clientDAO = new ClientDAO();
 
-    public User register(User user) {
+    public UserDTO register(UserDTO userDTO) throws ServiceException {
         try {
-            userDAO.insert(user);
-            return userDAO.login(user.getUsername(), user.getPassword());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            UserDTO response = userDAO.validateData(
+                    new User(
+                            userDTO.getUsername(),
+                            userDTO.getFullname(),
+                            userDTO.getPhone(),
+                            userDTO.getEmail()
+                    ));
+            if(!response.getStatus()) return response;
+            return userDAO.insert(UserConverter.toEntity(userDTO));
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(),e);
         }
     }
 

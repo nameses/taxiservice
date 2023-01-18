@@ -3,6 +3,9 @@ package command.authorization.registration;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
+import exceptions.ServiceException;
+import models.DTO.UserDTO;
+import models.converters.UserConverter;
 import models.entity.User;
 import models.entity.enums.UserRole;
 import service.UserService;
@@ -12,33 +15,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class Registration implements Command {
+    UserService userService = new UserService();
+
     @Override
-    public PageUrl execute(HttpServletRequest request) {
+    public PageUrl execute(HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
-        UserService userService = new UserService();
-        User user = userService.register(getUser(request));
-        if (user == null) {
-            return new PageUrl(PageConstants.REG_PAGE, false, "Unknown error.");
-        }
-        session.setAttribute("user", user);
-        return new PageUrl(PageConstants.HOME_PAGE, true);
+        UserDTO userDTO = userService.register(buildUser(request));
+        if (!userDTO.getStatus())
+            return new PageUrl(PageConstants.REG_PAGE,
+                    false,
+                    "Unknown error.");
+        session.setAttribute("user", UserConverter.toView(userDTO));
+        return new PageUrl(PageConstants.LOGIN_PAGE_GET, true);
     }
 
-    protected User getUser(HttpServletRequest request) {
-        User user = new User();
-        String fullname = request.getParameter("fullname");
-        String username = request.getParameter("username");
-        String password = EncryptionUtil.getEncrypted(request.getParameter("password"));
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String role = request.getParameter("role");
-        //TODO validation
-        user.setFullname(fullname);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setPhone(phone);
-        user.setEmail(email);
-        user.setRole(UserRole.valueOf(role));
-        return user;
+    protected UserDTO buildUser(HttpServletRequest request) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFullname(request.getParameter("fullname"));
+        userDTO.setUsername(request.getParameter("username"));
+        userDTO.setPassword(EncryptionUtil.getEncrypted(request.getParameter("password")));
+        userDTO.setPhone(request.getParameter("phone"));
+        userDTO.setEmail(request.getParameter("email"));
+        userDTO.setRole(UserRole.valueOf(request.getParameter("role")));
+        return userDTO;
     }
 }

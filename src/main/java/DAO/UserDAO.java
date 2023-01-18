@@ -3,6 +3,8 @@ package DAO;
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
 import exceptions.DAOException;
+import models.DTO.UserDTO;
+import models.converters.UserConverter;
 import models.entity.User;
 
 import java.sql.PreparedStatement;
@@ -18,17 +20,49 @@ public class UserDAO extends DAO<User> {
             "SELECT * FROM \"user\" WHERE username=? AND password=?";
     private final static String SELECT_USERNAME_BY_ID =
             "SELECT username FROM user WHERE userid=?";
+    private final static String SELECT_BY_USERNAME =
+            "SELECT * FROM \"user\" WHERE username=?";
+    private final static String SELECT_BY_FULLNAME =
+            "SELECT * FROM \"user\" WHERE fullname=?";
+    private final static String SELECT_BY_PHONE =
+            "SELECT * FROM \"user\" WHERE phone=?";
+    private final static String SELECT_BY_EMAIL =
+            "SELECT * FROM \"user\" WHERE email=?";
 
-    public Boolean insert(User user) throws DAOException {
-        return this.executeQuery(INSERT,
-                List.of(
-                        user.getUsername(),
+
+    public UserDTO validateData(User user) throws DAOException {
+        UserDTO userDTO = new UserDTO();
+        if (this.getEntity(SELECT_BY_USERNAME, List.of(user.getUsername())) != null) {
+            userDTO.addMessages("Username already exists");
+        }
+        if (this.getEntity(SELECT_BY_FULLNAME, List.of(user.getFullname())) != null) {
+            userDTO.addMessages("Fullname already exists");
+        }
+        if (this.getEntity(SELECT_BY_PHONE, List.of(user.getPhone())) != null) {
+            userDTO.addMessages("Phone already exists");
+        }
+        if (this.getEntity(SELECT_BY_EMAIL, List.of(user.getEmail())) != null) {
+            userDTO.addMessages("Email already exists");
+        }
+        if (userDTO.getMessages() != null) {
+            userDTO.setStatus(false);
+            return userDTO;
+        } else return new UserDTO(true);
+    }
+
+    public UserDTO insert(User user) throws DAOException {
+        Boolean res = this.executeQuery(INSERT,
+                List.of(user.getUsername(),
                         user.getPassword(),
                         user.getFullname(),
                         user.getPhone(),
                         user.getEmail(),
-                        user.getRole().toString()
-                ));
+                        user.getRole().toString()));
+        if (res) {
+            UserDTO userDTO = UserConverter.toDTO(user);
+            userDTO.setStatus(true);
+            return userDTO;
+        } else return new UserDTO(false);
     }
 
     public User login(String username, String password) {
@@ -43,6 +77,7 @@ public class UserDAO extends DAO<User> {
         preparedStatement.setString(5, entity.getEmail());
         preparedStatement.setString(6, entity.getRole().toString());
     }
+
     @Override
     protected User buildEntity(ResultSet resultSet) {
         return EntityBuilder.buildUser(resultSet);

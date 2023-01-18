@@ -96,7 +96,6 @@ public class EntityBuilder {
             user.setUserID(resultSet.getInt("userid"));
             user.setFullname(resultSet.getString("fullname"));
             user.setUsername(resultSet.getString("username"));
-            user.setPassword(resultSet.getString("password"));
             user.setPhone(resultSet.getString("phone"));
             user.setEmail(resultSet.getString("email"));
             user.setRole(UserRole.valueOf(resultSet.getString("role")));
