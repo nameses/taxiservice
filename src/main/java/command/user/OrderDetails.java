@@ -5,16 +5,13 @@ import command.page.PageConstants;
 import command.page.PageUrl;
 import exceptions.ServiceException;
 import models.DTO.OrderDTO;
-import models.DTO.RouteDTO;
 import models.converters.RouteConverter;
-import models.entity.Order;
-import models.entity.Route;
-import models.entity.User.Client;
+import models.entity.Client;
 import models.entity.enums.CarCategory;
 import models.entity.enums.OrderStatus;
+import models.view.ClientView;
 import models.view.RouteView;
 import service.OrderService;
-import service.RouteService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

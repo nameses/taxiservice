@@ -3,8 +3,8 @@ package command.authorization.registration;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import models.entity.User.Client;
-import models.entity.User.User;
+import models.entity.Client;
+import models.entity.User;
 import service.ClientService;
 
 import javax.servlet.http.HttpServletRequest;

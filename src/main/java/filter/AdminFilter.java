@@ -1,7 +1,7 @@
 package filter;
 
 import command.page.PageConstants;
-import models.entity.User.User;
+import models.entity.User;
 import models.entity.enums.UserRole;
 
 import javax.servlet.Filter;

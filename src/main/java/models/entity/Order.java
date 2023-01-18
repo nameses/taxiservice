@@ -1,7 +1,5 @@
 package models.entity;
 
-import models.entity.User.Client;
-import models.entity.User.Driver;
 import models.entity.enums.CarCategory;
 import models.entity.enums.OrderStatus;
 

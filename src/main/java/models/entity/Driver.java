@@ -1,4 +1,4 @@
-package models.entity.User;
+package models.entity;
 
 import models.entity.Taxi;
 import models.entity.enums.DriverStatus;

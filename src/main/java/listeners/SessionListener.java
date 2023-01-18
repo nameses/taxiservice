@@ -1,7 +1,7 @@
 package listeners;
 
 import models.entity.Order;
-import models.entity.User.User;
+import models.entity.User;
 import models.entity.enums.DriverStatus;
 import models.entity.enums.UserRole;
 import service.DriverService;

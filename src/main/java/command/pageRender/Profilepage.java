@@ -3,11 +3,10 @@ package command.pageRender;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import models.DTO.DriverDTO;
 import models.DTO.TaxiDTO;
 import models.converters.TaxiConverter;
-import models.entity.User.Driver;
-import models.entity.User.User;
+import models.entity.Driver;
+import models.entity.User;
 import models.entity.enums.UserRole;
 import service.TaxiService;
 

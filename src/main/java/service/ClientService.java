@@ -1,7 +1,7 @@
 package service;
 
 import DAO.ClientDAO;
-import models.entity.User.Client;
+import models.entity.Client;
 
 public class ClientService {
     private final ClientDAO clientDAO = new ClientDAO();

@@ -8,15 +8,7 @@ import models.DTO.OrderDTO;
 import models.DTO.RouteDTO;
 import models.converters.OrderConverter;
 import models.converters.RouteConverter;
-import models.entity.Order;
-import models.entity.Route;
-import models.entity.User.Client;
-import models.entity.enums.CarCategory;
 import models.entity.enums.OrderStatus;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
 
 public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();

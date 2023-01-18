@@ -3,9 +3,8 @@ package command.authorization.registration;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import models.entity.User.Driver;
-import models.entity.User.User;
-import models.entity.enums.DriverStatus;
+import models.entity.Driver;
+import models.entity.User;
 import service.DriverService;
 
 import javax.servlet.http.HttpServletRequest;

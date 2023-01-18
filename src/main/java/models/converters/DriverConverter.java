@@ -1,9 +1,7 @@
 package models.converters;
 
 import models.DTO.DriverDTO;
-import models.DTO.TaxiDTO;
-import models.entity.Taxi;
-import models.entity.User.Driver;
+import models.entity.Driver;
 
 public class DriverConverter {
     public static Driver toEntity(DriverDTO driverDTO) {

@@ -1,4 +1,4 @@
-package models.entity.User;
+package models.entity;
 
 import models.entity.enums.UserRole;
 

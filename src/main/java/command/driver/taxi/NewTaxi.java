@@ -1,16 +1,12 @@
 package command.driver.taxi;
 
-import models.DTO.DriverDTO;
 import models.DTO.TaxiDTO;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import models.converters.DriverConverter;
-import models.entity.User.Driver;
+import models.entity.Driver;
 import models.entity.enums.CarCategory;
-import service.DriverService;
 import service.TaxiService;
-import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

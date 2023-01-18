@@ -1,11 +1,9 @@
 package service;
 
-import DAO.DriverDAO;
 import DAO.TaxiDAO;
-import models.DTO.DriverDTO;
 import models.DTO.TaxiDTO;
 import models.converters.TaxiConverter;
-import models.entity.User.Driver;
+import models.entity.Driver;
 
 public class TaxiService {
     private final TaxiDAO taxiDAO = new TaxiDAO();

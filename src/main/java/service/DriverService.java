@@ -1,9 +1,7 @@
 package service;
 
 import DAO.DriverDAO;
-import models.DTO.DriverDTO;
-import models.DTO.TaxiDTO;
-import models.entity.User.Driver;
+import models.entity.Driver;
 import models.entity.enums.DriverStatus;
 
 public class DriverService {

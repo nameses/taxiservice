@@ -18,6 +18,15 @@ public class RouteConverter {
         return route;
     }
 
+    public static RouteDTO toDTO(RouteView routeView) {
+        RouteDTO routeDTO = new RouteDTO();
+        routeDTO.setRouteID(routeView.getRouteID());
+        routeDTO.setStartMarker(routeView.getStartMarker());
+        routeDTO.setFinalMarker(routeView.getFinalMarker());
+        routeDTO.setLength(routeView.getLength());
+        return routeDTO;
+    }
+
     public static RouteDTO toDTO(Route route) {
         RouteDTO routeDTO = new RouteDTO();
         routeDTO.setRouteID(route.getRouteID());

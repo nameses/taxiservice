@@ -3,7 +3,7 @@ package command.authorization.registration;
 import command.Command;
 import command.page.PageConstants;
 import command.page.PageUrl;
-import models.entity.User.User;
+import models.entity.User;
 import models.entity.enums.UserRole;
 import service.UserService;
 import utils.EncryptionUtil;

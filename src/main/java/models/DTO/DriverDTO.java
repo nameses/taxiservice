@@ -1,7 +1,5 @@
 package models.DTO;
 
-import models.entity.Taxi;
-import models.entity.User.User;
 import models.entity.enums.DriverStatus;
 
 public class DriverDTO {

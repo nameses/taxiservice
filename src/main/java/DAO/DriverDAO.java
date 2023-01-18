@@ -2,9 +2,7 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
-import models.DTO.DriverDTO;
-import models.DTO.TaxiDTO;
-import models.entity.User.Driver;
+import models.entity.Driver;
 import models.entity.enums.DriverStatus;
 
 import java.sql.Connection;
