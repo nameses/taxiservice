@@ -2,6 +2,7 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
+import exceptions.DAOException;
 import models.DTO.OrderDTO;
 import models.converters.OrderConverter;
 import models.entity.Order;
@@ -41,7 +42,7 @@ public class OrderDAO extends DAO<Order> {
         }
     }
 
-    public OrderDTO insert(Order order) {
+    public OrderDTO insert(Order order) throws DAOException {
         Integer id = insert(INSERT, order);
         if(id!=null){
             return new OrderDTO(id,true);

@@ -25,7 +25,6 @@ public class RegistrationClient extends Registration implements Command {
         client.setBonusPoints(0);
         User user = (User) request.getSession().getAttribute("user");
         request.getSession().removeAttribute("user");
-        client.setUser(user);
         client.setUserID(user.getUserID());
         return client;
     }

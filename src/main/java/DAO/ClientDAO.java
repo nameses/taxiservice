@@ -2,6 +2,7 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
+import exceptions.DAOException;
 import models.entity.Client;
 
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ public class ClientDAO extends DAO<Client> {
         return selectEntityByID(SELECT_BY_USER_ID, userID);
     }
 
-    public Boolean insert(Client client) {
+    public Boolean insert(Client client) throws DAOException {
         return this.executeQuery(INSERT,
                 List.of(
                         String.valueOf(client.getUserID()),

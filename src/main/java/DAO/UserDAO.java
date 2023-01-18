@@ -2,6 +2,7 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
+import exceptions.DAOException;
 import models.entity.User;
 
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ public class UserDAO extends DAO<User> {
     private final static String SELECT_USERNAME_BY_ID =
             "SELECT username FROM user WHERE userid=?";
 
-    public Boolean insert(User user) {
+    public Boolean insert(User user) throws DAOException {
         return this.executeQuery(INSERT,
                 List.of(
                         user.getUsername(),

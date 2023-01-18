@@ -34,9 +34,9 @@ public class OrderDetails implements Command {
         return new PageUrl(PageConstants.ORDER_OPENED_PAGE_GET, true);
     }
 
-    private OrderDTO buildOrder(HttpServletRequest request, Client client) {
+    private OrderDTO buildOrder(HttpServletRequest request, ClientView clientView) {
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setClientID(client.getClientID());
+        orderDTO.setClientID(clientView.getClientID());
         orderDTO.setOrderOpened(new Timestamp(System.currentTimeMillis()));
         orderDTO.setCarCapacity(Integer.valueOf(request.getParameter("carCapacity")));
         orderDTO.setCarCategory(CarCategory.valueOf(request.getParameter("carCategory")));

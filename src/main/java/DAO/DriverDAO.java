@@ -2,6 +2,7 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
+import exceptions.DAOException;
 import models.entity.Driver;
 import models.entity.enums.DriverStatus;
 
@@ -38,7 +39,7 @@ public class DriverDAO extends DAO<Driver> {
         return selectEntityByID(SELECT_BY_USER_ID, userID);
     }
 
-    public Boolean insert(Driver driver) {
+    public Boolean insert(Driver driver) throws DAOException {
         return this.executeQuery(INSERT,
                 List.of(
                         String.valueOf(driver.getUserID())

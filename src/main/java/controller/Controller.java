@@ -4,6 +4,7 @@ import command.Command;
 import command.CommandFactory;
 import command.CommandType;
 import command.page.PageUrl;
+import exceptions.ServiceException;
 import models.entity.enums.UserRole;
 
 import javax.servlet.RequestDispatcher;
@@ -20,15 +21,18 @@ public class Controller extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         process(request, response);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         process(request, response);
     }
 
-    public void process(HttpServletRequest request, HttpServletResponse response) {
+    public void process(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             CommandFactory factory = new CommandFactory();
             Command command = factory.getCommand(request);
@@ -45,8 +49,8 @@ public class Controller extends HttpServlet {
                 redirect(page, request, response);
             else
                 forward(page, request, response);
-        } catch (ServletException | IOException e) {
-            throw new RuntimeException(e);
+        } catch (ServiceException e) {
+            throw new ServletException(e);
         }
     }
 

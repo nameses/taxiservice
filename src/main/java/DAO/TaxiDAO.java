@@ -2,6 +2,7 @@ package DAO;
 
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
+import exceptions.DAOException;
 import models.DTO.TaxiDTO;
 import models.converters.TaxiConverter;
 import models.entity.Taxi;
@@ -29,7 +30,7 @@ public class TaxiDAO extends DAO<Taxi> {
         }
     }
 
-    public TaxiDTO insert(Taxi taxi) {
+    public TaxiDTO insert(Taxi taxi) throws DAOException {
         Integer id = this.insert(INSERT, taxi);
         TaxiDTO response;
         if (id != null) {
