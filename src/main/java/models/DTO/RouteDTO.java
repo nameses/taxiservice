@@ -17,6 +17,11 @@ public class RouteDTO {
     public RouteDTO() {
     }
 
+    public RouteDTO(Boolean status, Integer routeID) {
+        this.status = status;
+        this.routeID = routeID;
+    }
+
     public RouteDTO(Boolean status) {
         this.status = status;
     }

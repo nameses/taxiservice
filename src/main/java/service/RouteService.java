@@ -1,6 +1,12 @@
 package service;
 
 import DAO.RouteDAO;
+import command.page.PageConstants;
+import command.page.PageUrl;
+import exceptions.DAOException;
+import exceptions.ServiceException;
+import models.DTO.RouteDTO;
+import models.converters.RouteConverter;
 import models.entity.Route;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,40 +18,30 @@ public class RouteService {
 
     /**
      * saving Route model to DB and generated routeid to session
-     *
-     * @param request
-     * @return
      */
-    public Boolean saveRoute(HttpServletRequest request) {
+    public RouteDTO saveRoute(RouteDTO routeDTO) throws ServiceException {
         try {
-            HttpSession session = request.getSession();
-            Integer id = routeDAO.insert(buildRoute(request, session));
+            //validating length of route
+            RouteDTO response = validate(routeDTO.getLength());
+            if (!response.getStatus()) return response;
+
+            Integer id = routeDAO.insert(RouteConverter.toEntity(routeDTO));
+
             if (id != null && id > 0) {
-                Route route = (Route) session.getAttribute("route");
-                route.setRouteID(id);
-                session.setAttribute("route",route);
-                return true;
+                return new RouteDTO(true, id);
+            } else {
+                return new RouteDTO(false, "Route was not saved. Try again later.");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(), e);
         }
-        return false;
     }
 
-    private Route buildRoute(HttpServletRequest request, HttpSession session) {
-        Route route = new Route();
-        route.setStartMarker(castArrayToDouble(request.getParameterValues("startMarker[]")));
-        route.setFinalMarker(castArrayToDouble(request.getParameterValues("finalMarker[]")));
-        route.setLength(Integer.parseInt(request.getParameter("routeLength")));
-        session.setAttribute("route", route);
-        return route;
+    private RouteDTO validate(Integer routeLength) {
+        if (routeLength < 3000)
+            return new RouteDTO(false, "Minimal order is at least 3km");
+        else if (routeLength > 30000)
+            return new RouteDTO(false, "Maximum order is 30km");
+        return new RouteDTO(true);
     }
-
-    private Double[] castArrayToDouble(String[] array) {
-        return Arrays.stream(array)
-                .map(Double::valueOf)
-                .toArray(Double[]::new);
-    }
-
-
 }

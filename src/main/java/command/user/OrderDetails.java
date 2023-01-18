@@ -8,6 +8,7 @@ import models.DTO.OrderDTO;
 import models.DTO.RouteDTO;
 import models.converters.RouteConverter;
 import models.entity.Order;
+import models.entity.Route;
 import models.entity.User.Client;
 import models.entity.enums.CarCategory;
 import models.entity.enums.OrderStatus;
@@ -20,11 +21,13 @@ import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 
 public class OrderDetails implements Command {
+    OrderService orderService = new OrderService();
+
     @Override
     public PageUrl execute(HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
-        OrderService orderService = new OrderService();
-        OrderDTO response = orderService.saveOrder(buildOrder(request),
+        OrderDTO response = orderService.saveOrder(
+                buildOrder(request, (ClientView) session.getAttribute("client")),
                 RouteConverter.toDTO((RouteView) session.getAttribute("route")));
         if (!response.getStatus()) {
             return new PageUrl(PageConstants.ORDER_DETAILS_PAGE,
@@ -34,10 +37,9 @@ public class OrderDetails implements Command {
         return new PageUrl(PageConstants.ORDER_OPENED_PAGE_GET, true);
     }
 
-    private OrderDTO buildOrder(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    private OrderDTO buildOrder(HttpServletRequest request, Client client) {
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setClientID(((Client) session.getAttribute("client")).getClientID());
+        orderDTO.setClientID(client.getClientID());
         orderDTO.setOrderOpened(new Timestamp(System.currentTimeMillis()));
         orderDTO.setCarCapacity(Integer.valueOf(request.getParameter("carCapacity")));
         orderDTO.setCarCategory(CarCategory.valueOf(request.getParameter("carCategory")));

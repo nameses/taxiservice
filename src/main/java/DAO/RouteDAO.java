@@ -23,7 +23,7 @@ public class RouteDAO extends DAO<Route> {
                     )));
     }
 
-    public Integer insert(Route route) {
+    public Integer insert(Route route) throws DAOException {
         return insert(INSERT, route);
     }
 

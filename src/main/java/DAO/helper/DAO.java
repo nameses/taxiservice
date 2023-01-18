@@ -49,7 +49,7 @@ public abstract class DAO<T> {
         }
     }
 
-    protected Integer insert(String query, T entity) {
+    protected Integer insert(String query, T entity) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = this.prepareStatement(connection, query, entity);
@@ -59,7 +59,7 @@ public abstract class DAO<T> {
                 if(generatedKeys.next()) return generatedKeys.getInt(1);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(),e);
         } finally {
             connectionPool.returnConnection(connection);
         }
