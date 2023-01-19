@@ -36,15 +36,7 @@ public class Controller extends HttpServlet {
         try {
             CommandFactory factory = new CommandFactory();
             Command command = factory.getCommand(request);
-            PageUrl page = null;
-            if (command == CommandType.getCommand("registration")) {
-                page = command.execute(request);
-                if (UserRole.valueOf(request.getParameter("role")) == UserRole.client) {
-                    command = CommandType.getCommand("registrationClient");
-                } else
-                    command = CommandType.getCommand("registrationDriver");
-            }
-            page = command.execute(request);
+            PageUrl page = command.execute(request);
             if (page.isRedirection())
                 redirect(page, request, response);
             else

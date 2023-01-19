@@ -22,7 +22,7 @@ public class OrderRoute implements Command {
         //saving route in service
         RouteDTO response = routeService.saveRoute(routeDTO);
         //response failing processing
-        if (!response.getStatus()) {
+        if (!response.getSuccess()) {
             return new PageUrl(PageConstants.ORDER_MAP,
                     false,
                     response.getMessage());

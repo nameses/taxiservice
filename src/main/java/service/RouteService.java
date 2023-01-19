@@ -23,7 +23,7 @@ public class RouteService {
         try {
             //validating length of route
             RouteDTO response = validate(routeDTO.getLength());
-            if (!response.getStatus()) return response;
+            if (!response.getSuccess()) return response;
 
             Integer id = routeDAO.insert(RouteConverter.toEntity(routeDTO));
 

@@ -15,7 +15,7 @@
 <div class="container col-md-5">
     <div>
         <h3 id="main-text">Order details page</h3>
-        <p>Wait for driver... Don't logout from app, this leads to canceling of current order.<br/>
+        <p>Wait for driver... Don't log out from app, this leads to canceling of current order.<br/>
             Your order route:</p>
         <div class="md" id="map" style="height: 50vh;width: 40vw;margin-top: 5px"></div>
         <div class="d-flex justify-content-center">
@@ -27,8 +27,7 @@
         </div>
     </div>
     <script src="../../static/js/config.js"></script>
-    <%--    <script src="../../static/js/orderMain.js"></script>--%>
-    <jsp:include page="../../static/js/orderMain_js.jsp" />
+    <jsp:include page="../../static/js/orderMain_js.jsp"/>
 </div>
 </body>
 </html>

@@ -4,6 +4,8 @@ import command.page.PageConstants;
 import models.entity.Client;
 import models.entity.User;
 import models.entity.enums.UserRole;
+import models.view.ClientView;
+import models.view.UserView;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -21,9 +23,9 @@ public class ClientFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        Client client = (Client) session.getAttribute("client");
-        if (user.getRole() == UserRole.client && client != null) {
+        UserView userView = (UserView) session.getAttribute("user");
+        ClientView clientView = (ClientView) session.getAttribute("client");
+        if (userView.getRole() == UserRole.client && clientView != null) {
             filterChain.doFilter(request, response);
         } else {
             response.sendRedirect(PageConstants.HOME_PAGE);

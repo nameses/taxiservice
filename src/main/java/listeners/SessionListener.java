@@ -4,6 +4,8 @@ import models.entity.Order;
 import models.entity.User;
 import models.entity.enums.DriverStatus;
 import models.entity.enums.UserRole;
+import models.view.OrderView;
+import models.view.UserView;
 import service.DriverService;
 import service.OrderService;
 
@@ -31,16 +33,16 @@ public class SessionListener implements HttpSessionListener {
     public void sessionDestroyed(HttpSessionEvent sessionEvent) {
         HttpSession session = sessionEvent.getSession();
         //cancel current order, if exists
-        Order order = (Order) session.getAttribute("order");
-        if (order != null) {
+        OrderView orderView = (OrderView) session.getAttribute("order");
+        if (orderView != null) {
             OrderService orderService = new OrderService();
-            orderService.cancelOrder(order.getOrderID());
+            orderService.cancelOrder(orderView.getOrderID());
         }
         //set driver status to inactive
-        User user = (User) session.getAttribute("user");
-        if (user != null && user.getRole() == UserRole.driver) {
+        UserView userView = (UserView) session.getAttribute("user");
+        if (userView != null && userView.getRole() == UserRole.driver) {
             DriverService driverService = new DriverService();
-            driverService.updateDriverStatus(user.getUserID(), DriverStatus.inactive);
+            driverService.updateDriverStatus(userView.getUserID(), DriverStatus.inactive);
         }
         //session invalidate
         session.invalidate();

@@ -4,6 +4,7 @@ import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
 import exceptions.DAOException;
 import models.DTO.ClientDTO;
+import models.converters.ClientConverter;
 import models.entity.Client;
 
 import java.sql.PreparedStatement;
@@ -22,13 +23,13 @@ public class ClientDAO extends DAO<Client> {
         return EntityBuilder.buildClient(resultSet);
     }
 
-    public Client getByUserID(Integer userID) {
-        return selectByID(SELECT_BY_USER_ID, userID);
+    public ClientDTO getByUserID(Integer userID) throws DAOException{
+        return ClientConverter.toDTO(selectByID(SELECT_BY_USER_ID, userID));
     }
 
     public ClientDTO insert(Client client) throws DAOException {
         Integer id = this.insert(INSERT, client.getUserID());
-        return new ClientDTO(id!=null);
+        return new ClientDTO(id!=null && id>0);
     }
 
     @Override

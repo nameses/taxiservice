@@ -3,6 +3,7 @@ package filter;
 
 import command.page.PageConstants;
 import models.entity.User;
+import models.view.UserView;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -20,8 +21,8 @@ public class LoggedInFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if (user != null && user.getRole()!=null) {
+        UserView userView = (UserView) session.getAttribute("user");
+        if (userView != null && userView.getRole()!=null) {
             filterChain.doFilter(request, response);
         } else {
             response.sendRedirect(PageConstants.LOGIN_PAGE_GET);

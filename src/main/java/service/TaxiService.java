@@ -1,6 +1,9 @@
 package service;
 
 import DAO.TaxiDAO;
+import exceptions.DAOException;
+import exceptions.ServiceException;
+import models.DTO.DriverDTO;
 import models.DTO.TaxiDTO;
 import models.converters.TaxiConverter;
 import models.entity.Driver;
@@ -8,8 +11,12 @@ import models.entity.Driver;
 public class TaxiService {
     private final TaxiDAO taxiDAO = new TaxiDAO();
 
-    public TaxiDTO findByDriver(Driver driver) {
-        return taxiDAO.selectByDriver(driver.getDriverID());
+    public TaxiDTO findByDriver(DriverDTO driverDTO) throws ServiceException {
+        try {
+            return taxiDAO.selectByDriver(driverDTO.getDriverID());
+        }catch (DAOException e){
+            throw new ServiceException(e.getMessage(),e);
+        }
     }
     public TaxiDTO validate(TaxiDTO taxiDTO) {
         try {

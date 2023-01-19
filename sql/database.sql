@@ -59,6 +59,6 @@ create table route
     startMarker real[],
     finalMarker real[],
     length      integer,
-    orderid     integer,
+    orderid     integer
 )
 

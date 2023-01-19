@@ -16,24 +16,24 @@ public class OrderDTO {
     private CarCategory carCategory;
     private OrderStatus orderStatus;
     private String message;
-    private Boolean status;
+    private Boolean success;
 
-    public OrderDTO(Integer orderID,Boolean status, String message) {
+    public OrderDTO(Integer orderID, Boolean success, String message) {
         this.orderID = orderID;
         this.message = message;
-        this.status = status;
+        this.success = success;
     }
     public OrderDTO(Boolean status, String message) {
         this.message = message;
-        this.status = status;
+        this.success = status;
     }
 
-    public OrderDTO(Integer orderID,Boolean status) {
+    public OrderDTO(Integer orderID,Boolean success) {
         this.orderID = orderID;
-        this.status = status;
+        this.success = success;
     }
-    public OrderDTO(Boolean status) {
-        this.status = status;
+    public OrderDTO(Boolean success) {
+        this.success = success;
     }
 
     public OrderDTO() {
@@ -119,11 +119,11 @@ public class OrderDTO {
         this.message = message;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean getSuccess() {
+        return success;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 }

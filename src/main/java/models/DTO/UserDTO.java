@@ -14,14 +14,19 @@ public class UserDTO {
     private String email;
     private UserRole role;
     private ArrayList<String> messages;
-    private Boolean status;
+    private Boolean success;
 
+
+    public UserDTO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public UserDTO() {
     }
 
-    public UserDTO(Boolean status) {
-        this.status = status;
+    public UserDTO(Boolean success) {
+        this.success = success;
     }
 
     public Integer getUserID() {
@@ -80,19 +85,20 @@ public class UserDTO {
         this.role = role;
     }
 
-    public void addMessages(String message){
-        if(messages==null) messages = new ArrayList<>();
+    public void addMessages(String message) {
+        if (messages == null) messages = new ArrayList<>();
         this.messages.add(message);
     }
+
     public ArrayList<String> getMessages() {
         return messages;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean getSuccess() {
+        return success;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 }

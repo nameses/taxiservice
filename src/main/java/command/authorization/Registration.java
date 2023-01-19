@@ -1,4 +1,4 @@
-package command.authorization.registration;
+package command.authorization;
 
 import command.Command;
 import command.page.PageConstants;
@@ -24,10 +24,8 @@ public class Registration implements Command {
 
     @Override
     public PageUrl execute(HttpServletRequest request) throws ServiceException {
-        HttpSession session = request.getSession();
-
         UserDTO userDTO = userService.register(buildUser(request));
-        if (!userDTO.getStatus())
+        if (!userDTO.getSuccess())
             return new PageUrl(PageConstants.REG_PAGE,
                     false,
                     String.join("\n", userDTO.getMessages()));
@@ -56,7 +54,6 @@ public class Registration implements Command {
             }
         }
 
-        session.setAttribute("user", UserConverter.toView(userDTO));
         return new PageUrl(PageConstants.LOGIN_PAGE_GET, true);
     }
 

@@ -6,11 +6,16 @@ import DAO.UserDAO;
 import exceptions.DAOException;
 import exceptions.ServiceException;
 import models.DTO.UserDTO;
+import models.converters.ClientConverter;
+import models.converters.DriverConverter;
 import models.converters.UserConverter;
 import models.entity.Client;
 import models.entity.Driver;
 import models.entity.User;
 import models.entity.enums.UserRole;
+import models.view.ClientView;
+import models.view.DriverView;
+import org.checkerframework.checker.units.qual.C;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,30 +33,29 @@ public class UserService {
                             userDTO.getPhone(),
                             userDTO.getEmail()
                     ));
-            if(!response.getStatus()) return response;
+            if(!response.getSuccess()) return response;
             return userDAO.insert(UserConverter.toEntity(userDTO));
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage(),e);
         }
     }
 
-    public boolean login(HttpSession session, String username, String password) {
+    public UserDTO login(HttpSession session, UserDTO userDTO) throws ServiceException {
         try {
-            User user = userDAO.login(username, password);
-            if (user != null) {
-                session.setAttribute("user", user);
-//                if (user.getRole() == UserRole.admin)else
-                if (user.getRole() == UserRole.driver) {
-                    Driver driver = driverDAO.getByUserID(user.getUserID());
-                    session.setAttribute("driver", driver);
+            UserDTO responseUserDTO = userDAO.login(UserConverter.toEntity(userDTO));
+            if (responseUserDTO != null) {
+                session.setAttribute("user", UserConverter.toView(responseUserDTO));
+                if (responseUserDTO.getRole() == UserRole.driver) {
+                    DriverView driverView = DriverConverter.toView(driverDAO.getByUserID(responseUserDTO.getUserID()));
+                    session.setAttribute("driver", driverView);
                 } else {//client
-                    Client client = clientDAO.getByUserID(user.getUserID());
-                    session.setAttribute("client", client);
+                    ClientView clientView = ClientConverter.toView(clientDAO.getByUserID(responseUserDTO.getUserID()));
+                    session.setAttribute("client", clientView);
                 }
-                return true;
-            } else return false;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                return responseUserDTO;
+            } else return new UserDTO(false);
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(),e);
         }
     }
 }

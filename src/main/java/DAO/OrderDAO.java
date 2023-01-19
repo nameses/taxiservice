@@ -45,7 +45,10 @@ public class OrderDAO extends DAO<Order> {
     public OrderDTO insert(Order order) throws DAOException {
         Integer id = insert(INSERT, order);
         if(id!=null){
-            return new OrderDTO(id,true);
+            OrderDTO orderDTO = OrderConverter.toDTO(order);
+            orderDTO.setOrderID(id);
+            orderDTO.setSuccess(true);
+            return orderDTO;
         } else{
             return new OrderDTO(false,"Try again.");
         }

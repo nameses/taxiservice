@@ -39,15 +39,16 @@
                     <label for="Premium">Premium</label>
                 </div>
             </div>
+
+
+            <button class="btn btn-outline-dark" type="submit">Submit</button>
+            <c:if test="${pageScope.MESSAGE!=null}">
+                <h3>${pageScope.MESSAGE}</h3>
+            </c:if>
+        </form>
     </div>
-    <button class="btn btn-outline-dark" type="submit">Submit</button>
-    <c:if test="${pageScope.MESSAGE!=null}">
-        <h3>${pageScope.MESSAGE}</h3>
-    </c:if>
-    </form>
 </div>
-<script src="../../static/js/config.js"></script>
-<script src="../../static/js/order.js"></script>
-</div>
+<%--<script src="../../static/js/config.js"></script>--%>
+<%--<script src="../../static/js/order.js"></script>--%>
 </body>
 </html>

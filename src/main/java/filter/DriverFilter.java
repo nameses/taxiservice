@@ -4,6 +4,8 @@ import command.page.PageConstants;
 import models.entity.Driver;
 import models.entity.User;
 import models.entity.enums.UserRole;
+import models.view.DriverView;
+import models.view.UserView;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -21,9 +23,9 @@ public class DriverFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        Driver driver = (Driver) session.getAttribute("driver");
-        if (user.getRole() == UserRole.driver && driver != null) {
+        UserView userView = (UserView) session.getAttribute("user");
+        DriverView driverView = (DriverView) session.getAttribute("driver");
+        if (userView.getRole() == UserRole.driver && driverView != null) {
             filterChain.doFilter(request, response);
         } else {
             response.sendRedirect(PageConstants.HOME_PAGE);

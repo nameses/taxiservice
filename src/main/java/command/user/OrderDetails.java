@@ -5,8 +5,8 @@ import command.page.PageConstants;
 import command.page.PageUrl;
 import exceptions.ServiceException;
 import models.DTO.OrderDTO;
+import models.converters.OrderConverter;
 import models.converters.RouteConverter;
-import models.entity.Client;
 import models.entity.enums.CarCategory;
 import models.entity.enums.OrderStatus;
 import models.view.ClientView;
@@ -26,11 +26,12 @@ public class OrderDetails implements Command {
         OrderDTO response = orderService.saveOrder(
                 buildOrder(request, (ClientView) session.getAttribute("client")),
                 RouteConverter.toDTO((RouteView) session.getAttribute("route")));
-        if (!response.getStatus()) {
+        if (!response.getSuccess()) {
             return new PageUrl(PageConstants.ORDER_DETAILS_PAGE,
                     false,
                     "Error during saving order");
         }
+        session.setAttribute("order", OrderConverter.toView(response));
         return new PageUrl(PageConstants.ORDER_OPENED_PAGE_GET, true);
     }
 

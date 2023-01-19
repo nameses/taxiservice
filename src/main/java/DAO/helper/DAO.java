@@ -9,13 +9,13 @@ import java.util.List;
 
 public abstract class DAO<T> {
 
-    protected abstract T buildEntity(ResultSet resultSet);
+    protected abstract T buildEntity(ResultSet resultSet) throws DAOException;
 
     protected abstract void setStatement(PreparedStatement preparedStatement, T entity) throws SQLException;
 
     protected final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
-    protected List<T> selectList(String query, List<String> params) {
+    protected List<T> selectList(String query, List<String> params) throws DAOException {
         Connection connection = connectionPool.getConnection();
         List<T> entities = new ArrayList<>();
         try {
@@ -33,7 +33,7 @@ public abstract class DAO<T> {
         }
     }
 
-    protected T selectByID(String query, Integer id) {
+    protected T selectByID(String query, Integer id) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -49,7 +49,22 @@ public abstract class DAO<T> {
         }
     }
 
-    protected T select(String query, List<String> params) {
+    protected T select(String query, Object... params) throws DAOException {
+        Connection connection = connectionPool.getConnection();
+        try (PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return this.buildEntity(resultSet);
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage(), e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    protected T select(String query, List<String> params) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -80,6 +95,7 @@ public abstract class DAO<T> {
         }
         return null;
     }
+
     protected Integer insert(String query, T entity) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try {
@@ -121,7 +137,7 @@ public abstract class DAO<T> {
 
     protected PreparedStatement prepareStatement(Connection connection, String query, Object... objects) throws DAOException {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             if (objects != null) {
                 int index = 1;
                 for (Object o : objects) {
@@ -130,12 +146,13 @@ public abstract class DAO<T> {
             }
             return preparedStatement;
         } catch (SQLException e) {
-            throw new DAOException(e.getMessage(),e);
+            throw new DAOException(e.getMessage(), e);
         }
     }
+
     protected PreparedStatement prepareStatement(Connection connection, String query, List<String> params) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             if (params != null) {
                 int index = 1;
                 for (String p : params) {

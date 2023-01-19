@@ -7,7 +7,7 @@ public class RouteDTO {
     private Integer length;
     private Integer orderID;
     private String message;
-    private Boolean status;
+    private Boolean success;
 
     public RouteDTO(Integer routeID, Integer orderID) {
         this.routeID = routeID;
@@ -17,18 +17,18 @@ public class RouteDTO {
     public RouteDTO() {
     }
 
-    public RouteDTO(Boolean status, Integer routeID) {
-        this.status = status;
+    public RouteDTO(Boolean success, Integer routeID) {
+        this.success = success;
         this.routeID = routeID;
     }
 
-    public RouteDTO(Boolean status) {
-        this.status = status;
+    public RouteDTO(Boolean success) {
+        this.success = success;
     }
 
-    public RouteDTO(Boolean status, String message) {
+    public RouteDTO(Boolean success, String message) {
         this.message = message;
-        this.status = status;
+        this.success = success;
     }
 
     public Integer getRouteID() {
@@ -79,11 +79,11 @@ public class RouteDTO {
         this.message = message;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean getSuccess() {
+        return success;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 }

@@ -5,7 +5,6 @@ import models.entity.enums.DriverStatus;
 public class DriverDTO {
     private Integer driverID;
     private Integer userID;
-    private Integer taxiID;
     private DriverStatus driverStatus;
     private Boolean success;
     private String message;
@@ -22,16 +21,20 @@ public class DriverDTO {
     public DriverDTO() {
     }
 
-    public DriverDTO(Integer driverID, Integer userID, Integer taxiID, DriverStatus driverStatus) {
+    public DriverDTO(Boolean success, Integer driverID, Integer userID) {
+        this.success = success;
         this.driverID = driverID;
         this.userID = userID;
-        this.taxiID = taxiID;
-        this.driverStatus = driverStatus;
     }
 
-    public DriverDTO(Integer userID, Integer taxiID, DriverStatus driverStatus) {
+    public DriverDTO(Integer driverID, Integer userID) {
+        this.driverID = driverID;
         this.userID = userID;
-        this.taxiID = taxiID;
+    }
+
+    public DriverDTO(Integer driverID, Integer userID, DriverStatus driverStatus) {
+        this.driverID = driverID;
+        this.userID = userID;
         this.driverStatus = driverStatus;
     }
 
@@ -51,13 +54,6 @@ public class DriverDTO {
         this.userID = userID;
     }
 
-    public Integer getTaxiID() {
-        return taxiID;
-    }
-
-    public void setTaxiID(Integer taxiID) {
-        this.taxiID = taxiID;
-    }
 
     public DriverStatus getDriverStatus() {
         return driverStatus;

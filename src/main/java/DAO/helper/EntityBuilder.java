@@ -1,5 +1,6 @@
 package DAO.helper;
 
+import exceptions.DAOException;
 import models.entity.Order;
 import models.entity.Route;
 import models.entity.Taxi;
@@ -90,18 +91,18 @@ public class EntityBuilder {
         }
     }
 
-    public static User buildUser(ResultSet resultSet) {
+    public static User buildUser(ResultSet resultSet) throws DAOException {
         try {
             User user = new User();
             user.setUserID(resultSet.getInt("userid"));
-            user.setFullname(resultSet.getString("fullname"));
             user.setUsername(resultSet.getString("username"));
+            user.setFullname(resultSet.getString("fullname"));
             user.setPhone(resultSet.getString("phone"));
             user.setEmail(resultSet.getString("email"));
             user.setRole(UserRole.valueOf(resultSet.getString("role")));
             return user;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(),e);
         }
     }
 

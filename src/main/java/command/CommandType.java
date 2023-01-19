@@ -2,9 +2,7 @@ package command;
 
 import command.admin.*;
 import command.authorization.*;
-import command.authorization.registration.Registration;
-import command.authorization.registration.RegistrationClient;
-import command.authorization.registration.RegistrationDriver;
+import command.authorization.Registration;
 import command.driver.ShowOrders;
 import command.driver.taxi.NewTaxi;
 import command.pageRender.*;
@@ -33,8 +31,6 @@ public class CommandType {
         commandMap.put("newTaxiPage", new NewTaxiPage());
         //authentication
         commandMap.put("registration", new Registration());
-        commandMap.put("registrationClient", new RegistrationClient());
-        commandMap.put("registrationDriver", new RegistrationDriver());
         commandMap.put("login", new Login());
         commandMap.put("logout", new Logout());
         //taxis

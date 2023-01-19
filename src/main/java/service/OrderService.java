@@ -26,10 +26,11 @@ public class OrderService {
     public OrderDTO saveOrder(OrderDTO orderDTO, RouteDTO routeDTO) throws ServiceException {
         try {
             OrderDTO responseOrderDTO = orderDAO.insert(OrderConverter.toEntity(orderDTO));
-            if (responseOrderDTO.getStatus()) {
+            if (responseOrderDTO.getSuccess()) {
                 RouteDTO response = new RouteDTO(routeDTO.getRouteID(), responseOrderDTO.getOrderID());
-                return new OrderDTO(
-                        routeDAO.updateOrderIDbyRouteID(RouteConverter.toEntity(response)).getStatus());
+                if(routeDAO.updateOrderIDbyRouteID(RouteConverter.toEntity(response)).getSuccess()) {
+                    return responseOrderDTO;
+                }
             }
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage(),e);
