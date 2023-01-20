@@ -2,14 +2,14 @@ package models.view;
 
 public class RouteView {
     private Integer routeID;
-    private Double[] startMarker;
-    private Double[] finalMarker;
+    private Float[] startMarker;
+    private Float[] finalMarker;
     private Integer length;
 
     public RouteView() {
     }
 
-    public RouteView(Integer routeID, Double[] startMarker, Double[] finalMarker, Integer length) {
+    public RouteView(Integer routeID, Float[] startMarker, Float[] finalMarker, Integer length) {
         this.routeID = routeID;
         this.startMarker = startMarker;
         this.finalMarker = finalMarker;
@@ -24,19 +24,19 @@ public class RouteView {
         this.routeID = routeID;
     }
 
-    public Double[] getStartMarker() {
+    public Float[] getStartMarker() {
         return startMarker;
     }
 
-    public void setStartMarker(Double[] startMarker) {
+    public void setStartMarker(Float[] startMarker) {
         this.startMarker = startMarker;
     }
 
-    public Double[] getFinalMarker() {
+    public Float[] getFinalMarker() {
         return finalMarker;
     }
 
-    public void setFinalMarker(Double[] finalMarker) {
+    public void setFinalMarker(Float[] finalMarker) {
         this.finalMarker = finalMarker;
     }
 

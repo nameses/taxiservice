@@ -2,8 +2,8 @@ package models.DTO;
 
 public class RouteDTO {
     private Integer routeID;
-    private Double[] startMarker;
-    private Double[] finalMarker;
+    private Float[] startMarker;
+    private Float[] finalMarker;
     private Integer length;
     private Integer orderID;
     private String message;
@@ -39,19 +39,19 @@ public class RouteDTO {
         this.routeID = routeID;
     }
 
-    public Double[] getStartMarker() {
+    public Float[] getStartMarker() {
         return startMarker;
     }
 
-    public void setStartMarker(Double[] startMarker) {
+    public void setStartMarker(Float[] startMarker) {
         this.startMarker = startMarker;
     }
 
-    public Double[] getFinalMarker() {
+    public Float[] getFinalMarker() {
         return finalMarker;
     }
 
-    public void setFinalMarker(Double[] finalMarker) {
+    public void setFinalMarker(Float[] finalMarker) {
         this.finalMarker = finalMarker;
     }
 

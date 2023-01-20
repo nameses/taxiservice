@@ -36,16 +36,16 @@ public class OrderRoute implements Command {
 
     private RouteDTO buildRoute(HttpServletRequest request) {
         RouteDTO routeDTO = new RouteDTO();
-        routeDTO.setStartMarker(castArrayToDouble(request.getParameterValues("startMarker[]")));
-        routeDTO.setFinalMarker(castArrayToDouble(request.getParameterValues("finalMarker[]")));
+        routeDTO.setStartMarker(castArrayToFloat(request.getParameterValues("startMarker[]")));
+        routeDTO.setFinalMarker(castArrayToFloat(request.getParameterValues("finalMarker[]")));
         routeDTO.setLength(Integer.parseInt(request.getParameter("routeLength")));
         request.getSession().setAttribute("route", routeDTO);
         return routeDTO;
     }
 
-    private Double[] castArrayToDouble(String[] array) {
+    private Float[] castArrayToFloat(String[] array) {
         return Arrays.stream(array)
-                .map(Double::valueOf)
-                .toArray(Double[]::new);
+                .map(Float::valueOf)
+                .toArray(Float[]::new);
     }
 }

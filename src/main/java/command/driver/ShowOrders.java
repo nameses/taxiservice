@@ -5,19 +5,16 @@ import command.page.PageConstants;
 import command.page.PageUrl;
 import exceptions.ServiceException;
 import models.DTO.DriverDTO;
-import models.DTO.OrderDTO;
 import models.DTO.TaxiDTO;
 import models.converters.DriverConverter;
 import models.entity.enums.OrderStatus;
 import models.view.DriverView;
-import models.view.OrderView;
+import models.view.OrderRouteView;
 import service.OrderService;
 import service.TaxiService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ShowOrders implements Command {
     OrderService orderService = new OrderService();
@@ -30,16 +27,17 @@ public class ShowOrders implements Command {
                 (DriverView) session.getAttribute("driver"));
         //check if driver has a registered car
         TaxiDTO taxiDTO = taxiService.findByDriver(driverDTO);
-        if(!taxiDTO.getSuccess())
+        if (!taxiDTO.getSuccess())
             return new PageUrl(PageConstants.SHOW_ORDERS_PAGE,
                     false,
                     "You need to register car first!");
 
-        List<OrderView> responseOrderDTO = orderService.showOrders(
+        OrderRouteView response = orderService.showOrders(
                 OrderStatus.processing,
                 driverDTO,
                 taxiDTO);
-        request.setAttribute("orderList",responseOrderDTO);
+        request.setAttribute("orderList", response.getOrders());
+        request.setAttribute("mapOrderIDToRoute", response.getRouteViewMap());
 //        if (!) {
 //            return new PageUrl(PageConstants.SHOW_ORDERS_PAGE,
 //                    false,

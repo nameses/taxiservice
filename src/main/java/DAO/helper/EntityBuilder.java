@@ -66,8 +66,8 @@ public class EntityBuilder {
         try {
             Route route = new Route();
             route.setRouteID(resultSet.getInt("routeid"));
-            route.setStartMarker((Double[]) resultSet.getArray("startmarker").getArray());
-            route.setFinalMarker((Double[]) resultSet.getArray("finalmarker").getArray());
+            route.setStartMarker((Float[]) resultSet.getArray("startmarker").getArray());
+            route.setFinalMarker((Float[]) resultSet.getArray("finalmarker").getArray());
             route.setLength(resultSet.getInt("length"));
             route.setOrderID(resultSet.getInt("orderid"));
             return route;

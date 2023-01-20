@@ -4,47 +4,56 @@ import DAO.OrderDAO;
 import DAO.RouteDAO;
 import exceptions.DAOException;
 import exceptions.ServiceException;
-import models.DTO.DriverDTO;
-import models.DTO.OrderDTO;
-import models.DTO.RouteDTO;
-import models.DTO.TaxiDTO;
+import models.DTO.*;
 import models.converters.DriverConverter;
 import models.converters.OrderConverter;
 import models.converters.RouteConverter;
 import models.converters.TaxiConverter;
-import models.entity.Order;
 import models.entity.enums.OrderStatus;
+import models.view.OrderRouteView;
 import models.view.OrderView;
+import models.view.RouteView;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();
     private final RouteDAO routeDAO = new RouteDAO();
 
-    public List<OrderView> showOrders(OrderStatus orderStatus, DriverDTO driverDTO, TaxiDTO taxiDTO)
+    public OrderRouteView showOrders(OrderStatus orderStatus, DriverDTO driverDTO, TaxiDTO taxiDTO)
             throws ServiceException {
         try {
-            List<OrderDTO> orderDTOs = orderDAO.selectList(
-                    orderStatus,
-                    DriverConverter.toEntity(driverDTO),
-                    TaxiConverter.toEntity(taxiDTO)
-            );
-            return orderDTOs.stream()
+            //select list of orderDTO and convert it to orderView
+            List<OrderView> orderViews = orderDAO.selectList(
+                            orderStatus,
+                            DriverConverter.toEntity(driverDTO),
+                            TaxiConverter.toEntity(taxiDTO)
+                    ).stream()
                     .map(OrderConverter::toView)
                     .toList();
+            // get all orderIDs
+            List<Integer> orderIDs = orderViews.stream()
+                    .map(OrderView::getOrderID)
+                    .toList();
+            //get map (orderID to RouteDTO) and convert it to another map (orderID to RouteView)
+            Map<Integer, RouteView> mapRouteView = routeDAO.selectRouteByOrderID(orderIDs)
+                    .entrySet().stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey,
+                            e -> RouteConverter.toView(e.getValue())));
+            return new OrderRouteView(orderViews, mapRouteView);
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage(), e);
         }
 
     }
 
-    public Boolean cancelOrder(Integer id) throws ServiceException{
+    public Boolean cancelOrder(Integer id) throws ServiceException {
         try {
             return orderDAO.updateEnumToStatus(id, OrderStatus.canceled);
         } catch (DAOException e) {
-            throw new ServiceException(e.getMessage(),e);
+            throw new ServiceException(e.getMessage(), e);
         }
     }
 
