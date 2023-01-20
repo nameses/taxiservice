@@ -22,7 +22,7 @@ public class DriverDAO extends DAO<Driver> {
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE driver SET \"driverStatus\"=?::driverstatus WHERE userid=?";
 
-    public Boolean updateDriverStatus(Integer id, DriverStatus driverStatus) {
+    public Boolean updateDriverStatus(Integer id, DriverStatus driverStatus) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement =
@@ -43,11 +43,11 @@ public class DriverDAO extends DAO<Driver> {
 
     public DriverDTO insert(Integer userID) throws DAOException {
         Integer id = this.insert(INSERT, userID);
-        return new DriverDTO(id!=null && id>0);
+        return new DriverDTO(id != null && id > 0);
     }
 
     @Override
-    protected Driver buildEntity(ResultSet resultSet) {
+    protected Driver buildEntity(ResultSet resultSet) throws DAOException {
         return EntityBuilder.buildDriver(resultSet);
     }
 

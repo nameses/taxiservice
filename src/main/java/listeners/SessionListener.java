@@ -1,5 +1,6 @@
 package listeners;
 
+import exceptions.ServiceException;
 import models.entity.Order;
 import models.entity.User;
 import models.entity.enums.DriverStatus;
@@ -31,22 +32,27 @@ public class SessionListener implements HttpSessionListener {
     }
 
     public void sessionDestroyed(HttpSessionEvent sessionEvent) {
-        HttpSession session = sessionEvent.getSession();
-        //cancel current order, if exists
-        OrderView orderView = (OrderView) session.getAttribute("order");
-        if (orderView != null) {
-            OrderService orderService = new OrderService();
-            orderService.cancelOrder(orderView.getOrderID());
+        try {
+            HttpSession session = sessionEvent.getSession();
+            //cancel current order, if exists
+            OrderView orderView = (OrderView) session.getAttribute("order");
+            if (orderView != null) {
+                OrderService orderService = new OrderService();
+                orderService.cancelOrder(orderView.getOrderID());
+            }
+            //set driver status to inactive
+            UserView userView = (UserView) session.getAttribute("user");
+            if (userView != null && userView.getRole() == UserRole.driver) {
+                DriverService driverService = new DriverService();
+                driverService.updateDriverStatus(userView.getUserID(), DriverStatus.inactive);
+            }
+            //session invalidate
+            session.invalidate();
+            System.out.println("Session Destroyed:: ID=" + sessionEvent.getSession().getId());
+        }catch (ServiceException e){
+            throw new RuntimeException(e.getMessage(),e);
         }
-        //set driver status to inactive
-        UserView userView = (UserView) session.getAttribute("user");
-        if (userView != null && userView.getRole() == UserRole.driver) {
-            DriverService driverService = new DriverService();
-            driverService.updateDriverStatus(userView.getUserID(), DriverStatus.inactive);
-        }
-        //session invalidate
-        session.invalidate();
-        System.out.println("Session Destroyed:: ID=" + sessionEvent.getSession().getId());
+
     }
 
 }

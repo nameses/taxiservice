@@ -16,4 +16,7 @@ public class PageConstants {
     public static final String ORDER_OPENED_PAGE = "/user/order/orderOpened.jsp";
     public static final String ORDER_MAIN_PAGE = "/user/order/orderMain.jsp";
     public static final String NEW_TAXI = "/driver/taxi/newTaxi.jsp";
+    public static final String SHOW_ORDERS_PAGE_GET = "/driver?command=showOrders";
+    public static final String SHOW_ORDERS_PAGE = "/driver/showOrders.jsp";
+
 }

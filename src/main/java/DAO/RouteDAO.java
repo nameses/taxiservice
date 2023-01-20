@@ -28,7 +28,7 @@ public class RouteDAO extends DAO<Route> {
     }
 
     @Override
-    protected Route buildEntity(ResultSet resultSet) {
+    protected Route buildEntity(ResultSet resultSet) throws DAOException {
         return EntityBuilder.buildRoute(resultSet);
     }
 

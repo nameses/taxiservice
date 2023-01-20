@@ -15,11 +15,11 @@ public abstract class DAO<T> {
 
     protected final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
-    protected List<T> selectList(String query, List<String> params) throws DAOException {
+    protected List<T> selectList(String query, Object... objects) throws DAOException {
         Connection connection = connectionPool.getConnection();
-        List<T> entities = new ArrayList<>();
+        ArrayList<T> entities = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = prepareStatement(connection, query, params);
+            PreparedStatement preparedStatement = prepareStatement(connection, query, objects);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 T entity = buildEntity(resultSet);
@@ -125,13 +125,13 @@ public abstract class DAO<T> {
         }
     }
 
-    protected PreparedStatement prepareStatement(Connection connection, String query, T entity) {
+    protected PreparedStatement prepareStatement(Connection connection, String query, T entity) throws DAOException {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             setStatement(preparedStatement, entity);
             return preparedStatement;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(), e);
         }
     }
 
@@ -141,6 +141,8 @@ public abstract class DAO<T> {
             if (objects != null) {
                 int index = 1;
                 for (Object o : objects) {
+                    if (o instanceof Enum)
+                        o = o.toString();
                     preparedStatement.setObject(index++, o);
                 }
             }
@@ -150,7 +152,7 @@ public abstract class DAO<T> {
         }
     }
 
-    protected PreparedStatement prepareStatement(Connection connection, String query, List<String> params) {
+    protected PreparedStatement prepareStatement(Connection connection, String query, List<String> params) throws DAOException {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             if (params != null) {
@@ -161,7 +163,7 @@ public abstract class DAO<T> {
             }
             return preparedStatement;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(), e);
         }
     }
 

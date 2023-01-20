@@ -16,6 +16,9 @@ public class AppContextListener implements ServletContextListener {
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         ServletContext ctx = servletContextEvent.getServletContext();
+
+        //TODO delete all routes that are without orderid.
+
         HashMap<String, HttpSession> userSessions =
                 (HashMap<String, HttpSession>) ctx.getAttribute("userSessions");
         if (userSessions != null){

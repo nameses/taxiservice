@@ -43,7 +43,7 @@ public class TaxiDAO extends DAO<Taxi> {
     }
 
     @Override
-    protected Taxi buildEntity(ResultSet resultSet) {
+    protected Taxi buildEntity(ResultSet resultSet) throws DAOException {
         return EntityBuilder.buildTaxi(resultSet);
     }
 

@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EntityBuilder {
-    public static Client buildClient(ResultSet resultSet) {
+    public static Client buildClient(ResultSet resultSet) throws DAOException {
         try {
             Client client = new Client();
             client.setClientID(resultSet.getInt("clientid"));
@@ -24,12 +24,12 @@ public class EntityBuilder {
             client.setBonusPoints(resultSet.getInt("bonusPoints"));
             return client;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(), e);
         }
     }
 
 
-    public static Driver buildDriver(ResultSet resultSet) {
+    public static Driver buildDriver(ResultSet resultSet) throws DAOException {
         try {
             Driver driver = new Driver();
             driver.setDriverID(resultSet.getInt("driverid"));
@@ -37,46 +37,47 @@ public class EntityBuilder {
             driver.setDriverStatus(DriverStatus.valueOf(resultSet.getString("driverStatus")));
             return driver;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(), e);
         }
     }
 
 
-    public static Order buildOrder(ResultSet resultSet) {
+    public static Order buildOrder(ResultSet resultSet) throws DAOException {
         try {
             Order order = new Order();
             order.setOrderID(resultSet.getInt("orderid"));
             order.setClientID(resultSet.getInt("clientid"));
-            order.setDriverID(resultSet.getInt("driverid"));
-            order.setDriver(buildDriver(resultSet));
-            order.setClient(buildClient(resultSet));
             order.setOrderOpened(resultSet.getTimestamp("orderopened"));
-            order.setOrderAccepted(resultSet.getTimestamp("orderaccepted"));
-            order.setCost(resultSet.getInt("cost"));
             order.setCarCapacity(resultSet.getInt("carCapacity"));
-            order.setCarCategory(CarCategory.valueOf(resultSet.getString("username")));
-            order.setOrderStatus(OrderStatus.valueOf(resultSet.getString("orderStatus")));
+            order.setOrderStatus(OrderStatus.valueOf(resultSet.getString("status")));
+            order.setCarCategory(CarCategory.valueOf(resultSet.getString("carcategory")));
+            if (order.getOrderStatus() != OrderStatus.processing) {
+                order.setDriverID(resultSet.getInt("driverid"));
+                order.setOrderAccepted(resultSet.getTimestamp("orderaccepted"));
+                order.setCost(resultSet.getInt("cost"));
+            }
             return order;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(), e);
         }
     }
-    public static Route buildRoute(ResultSet resultSet) {
+
+    public static Route buildRoute(ResultSet resultSet) throws DAOException {
         try {
             Route route = new Route();
             route.setRouteID(resultSet.getInt("routeid"));
-            route.setStartMarker((Double[])resultSet.getArray("startmarker").getArray());
-            route.setFinalMarker((Double[])resultSet.getArray("finalmarker").getArray());
+            route.setStartMarker((Double[]) resultSet.getArray("startmarker").getArray());
+            route.setFinalMarker((Double[]) resultSet.getArray("finalmarker").getArray());
             route.setLength(resultSet.getInt("length"));
             route.setOrderID(resultSet.getInt("orderid"));
             return route;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(), e);
         }
     }
 
 
-    public static Taxi buildTaxi(ResultSet resultSet) {
+    public static Taxi buildTaxi(ResultSet resultSet) throws DAOException {
         try {
             Taxi taxi = new Taxi();
             taxi.setTaxiID(resultSet.getInt("taxiid"));
@@ -87,7 +88,7 @@ public class EntityBuilder {
             taxi.setLicensePlate(resultSet.getString("licensePlate"));
             return taxi;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(), e);
         }
     }
 
@@ -102,7 +103,7 @@ public class EntityBuilder {
             user.setRole(UserRole.valueOf(resultSet.getString("role")));
             return user;
         } catch (SQLException e) {
-            throw new DAOException(e.getMessage(),e);
+            throw new DAOException(e.getMessage(), e);
         }
     }
 

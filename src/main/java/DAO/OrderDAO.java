@@ -3,31 +3,34 @@ package DAO;
 import DAO.helper.DAO;
 import DAO.helper.EntityBuilder;
 import exceptions.DAOException;
+import models.DTO.DriverDTO;
 import models.DTO.OrderDTO;
+import models.DTO.TaxiDTO;
 import models.converters.OrderConverter;
+import models.entity.Driver;
 import models.entity.Order;
+import models.entity.Taxi;
 import models.entity.enums.OrderStatus;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderDAO extends DAO<Order> {
-    //    private static final String SELECT_ALL =
-//            "SELECT orderid,orderopened,orderaccepted,cost,\"licensePlate\",username from order " +
-//                    "JOIN driver ON driver.driverid=\"order\".driverid " +
-//                    "JOIN taxi ON taxi.taxiid=driver.taxiid " +
-//                    "JOIN client ON \"order\".clientid=client.clientid " +
-//                    "JOIN \"user\" ON client.userid=\"user\".userid ";
+    private static final String SELECT_ALL_BY_STATUS =
+            "SELECT * from \"order\" WHERE status=?::orderstatus " +
+                    "AND \"carCapacity\"<=? AND carcategory<=?::carcategory";
     private static final String INSERT =
             "INSERT INTO \"order\"(clientid,orderopened,\"carCapacity\",carcategory,status) " +
                     "VALUES(?,?,?,?::carcategory,?::orderstatus)";
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE \"order\" SET status=?::orderstatus WHERE \"order\".orderid=?";
 
-    public Boolean updateEnumToStatus(Integer id, OrderStatus orderStatus) {
+    public Boolean updateEnumToStatus(Integer id, OrderStatus orderStatus) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement =
@@ -36,21 +39,33 @@ public class OrderDAO extends DAO<Order> {
                             List.of(orderStatus.toString(), String.valueOf(id)));
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(),e);
         } finally {
             connectionPool.returnConnection(connection);
         }
     }
 
+    public List<OrderDTO> selectList(OrderStatus orderStatus, Driver driver, Taxi taxi) throws DAOException {
+        List<Order> orders = this.selectList(
+                SELECT_ALL_BY_STATUS,
+                orderStatus,
+                taxi.getCapacity(),
+                taxi.getCategory()
+        );
+        return orders.stream()
+                .map(OrderConverter::toDTO)
+                .toList();
+    }
+
     public OrderDTO insert(Order order) throws DAOException {
         Integer id = insert(INSERT, order);
-        if(id!=null){
+        if (id != null) {
             OrderDTO orderDTO = OrderConverter.toDTO(order);
             orderDTO.setOrderID(id);
             orderDTO.setSuccess(true);
             return orderDTO;
-        } else{
-            return new OrderDTO(false,"Try again.");
+        } else {
+            return new OrderDTO(false, "Try again.");
         }
     }
 
@@ -71,7 +86,7 @@ public class OrderDAO extends DAO<Order> {
 
 
     @Override
-    protected Order buildEntity(ResultSet resultSet) {
+    protected Order buildEntity(ResultSet resultSet) throws DAOException {
         return EntityBuilder.buildOrder(resultSet);
     }
 

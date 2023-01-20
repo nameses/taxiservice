@@ -11,8 +11,12 @@ import models.entity.enums.DriverStatus;
 public class DriverService {
     private final DriverDAO driverDAO = new DriverDAO();
 
-    public Boolean updateDriverStatus(Integer userID, DriverStatus driverStatus) {
-        return driverDAO.updateDriverStatus(userID, driverStatus);
+    public Boolean updateDriverStatus(Integer userID, DriverStatus driverStatus) throws ServiceException {
+        try {
+            return driverDAO.updateDriverStatus(userID, driverStatus);
+        } catch(DAOException e){
+            throw new ServiceException(e.getMessage(),e);
+        }
     }
 
     public DriverDTO register(DriverDTO driverDTO) throws ServiceException {

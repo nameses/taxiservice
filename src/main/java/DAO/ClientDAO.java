@@ -19,7 +19,7 @@ public class ClientDAO extends DAO<Client> {
             "SELECT * FROM client join \"user\" on client.userid=\"user\".userid WHERE \"user\".userid=? ";
 
     @Override
-    protected Client buildEntity(ResultSet resultSet) {
+    protected Client buildEntity(ResultSet resultSet) throws DAOException {
         return EntityBuilder.buildClient(resultSet);
     }
 
