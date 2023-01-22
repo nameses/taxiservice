@@ -39,28 +39,18 @@
     <div class="container col-md-8">
         <h3 class="text-center">List of Orders</h3>
         <table class="table table-bordered">
-            <%--            <%--%>
-            <%--                if (session.getAttribute("ifASC") == null) session.setAttribute("ifASC", true);--%>
-            <%--                session.setAttribute("ifASC", !(Boolean) session.getAttribute("ifASC"));--%>
-            <%--            %>--%>
-            <%--            <%--%>
-            <%--                String str = null;--%>
-            <%--                String sort = null;--%>
-            <%--                try {--%>
-            <%--                    str = session.getAttribute("orderByString").toString();--%>
-            <%--                    sort = session.getAttribute("orderBySort").toString();--%>
-            <%--                    sort = sort.equals("ASC") ? "▲" : "▼";--%>
-            <%--                } catch (Exception e) {--%>
-            <%--                    e.printStackTrace();--%>
-            <%--                }--%>
-            <%--            %>--%>
             <thead>
             <tr>
-                <th>Time, order opened</th>
-                <%--                    <a href="${pageContext.request.contextPath}/controller?command=listOrders&orderByString=orderopened&orderBySort=${sessionScope.ifASC?"ASC":"DESC"}">--%>
-                <%--                        Time, order opened <%out.print(Objects.equals(str, "orderopened") ? sort : "");%>--%>
-                <%--                    </a>--%>
-                <%--                </th>--%>
+                <%--                <th>Time, order opened</th>--%>
+                <th>
+                    <form method="get" action="${pageContext.request.contextPath}/driver">
+                        <input type="hidden" name="command" value="showOrders"/>
+                        <input type="hidden" name="orderByElement" value="orderopened"/>
+                        <input type="hidden" name="orderBySorting"
+                               value="${sessionScope.sortFilterDTO.orderBy.value}"/>
+                        <a type="submit">Ordeer</a>
+                    </form>
+                </th>
                 <th>Capacity</th>
                 <th>Category</th>
                 <th>Length</th>

@@ -1,6 +1,7 @@
 package DAO.helper;
 
 import exceptions.DAOException;
+import models.DTO.SortFilterDTO;
 import pool.ConnectionPool;
 
 import java.sql.*;

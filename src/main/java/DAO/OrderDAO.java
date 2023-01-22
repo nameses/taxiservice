@@ -5,6 +5,7 @@ import DAO.helper.EntityBuilder;
 import exceptions.DAOException;
 import models.DTO.DriverDTO;
 import models.DTO.OrderDTO;
+import models.DTO.SortFilterDTO;
 import models.DTO.TaxiDTO;
 import models.converters.OrderConverter;
 import models.entity.Driver;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 public class OrderDAO extends DAO<Order> {
     private static final String SELECT_ALL_BY_STATUS =
             "SELECT * from \"order\" WHERE status=?::orderstatus " +
-                    "AND \"carCapacity\"<=? AND carcategory<=?::carcategory";
+                    "AND \"carCapacity\"<=? AND carcategory<=?::carcategory ";
     private static final String INSERT =
             "INSERT INTO \"order\"(clientid,orderopened,\"carCapacity\",carcategory,status) " +
                     "VALUES(?,?,?,?::carcategory,?::orderstatus)";
@@ -39,19 +40,30 @@ public class OrderDAO extends DAO<Order> {
                             List.of(orderStatus.toString(), String.valueOf(id)));
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DAOException(e.getMessage(),e);
+            throw new DAOException(e.getMessage(), e);
         } finally {
             connectionPool.returnConnection(connection);
         }
     }
 
-    public List<OrderDTO> selectList(OrderStatus orderStatus, Driver driver, Taxi taxi) throws DAOException {
+    public List<OrderDTO> selectList(OrderStatus orderStatus, Driver driver,
+                                     Taxi taxi, SortFilterDTO sortFilterDTO) throws DAOException {
+        StringBuilder sql_statement = new StringBuilder(SELECT_ALL_BY_STATUS);
+        // forming statement with filtering and sorting
+        if (sortFilterDTO.getFilter() != null) {
+            sql_statement.append(" AND ").append(sortFilterDTO.getFilter()).append(" ");
+        }
+        if (sortFilterDTO.getOrderBy() != null) {
+            sql_statement.append(sortFilterDTO.getOrderBy()).append(" ");
+        }
+
         List<Order> orders = this.selectList(
-                SELECT_ALL_BY_STATUS,
+                sql_statement.toString(),
                 orderStatus,
                 taxi.getCapacity(),
                 taxi.getCategory()
         );
+
         return orders.stream()
                 .map(OrderConverter::toDTO)
                 .toList();

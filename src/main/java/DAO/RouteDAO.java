@@ -36,6 +36,8 @@ public class RouteDAO extends DAO<Route> {
             rs.close();
         } catch (SQLException e) {
             throw new DAOException(e.getMessage(), e);
+        } finally {
+            connectionPool.returnConnection(connection);
         }
         return result;
     }

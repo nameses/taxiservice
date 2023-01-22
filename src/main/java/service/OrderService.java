@@ -22,15 +22,16 @@ public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();
     private final RouteDAO routeDAO = new RouteDAO();
 
-    public OrderRouteView showOrders(OrderStatus orderStatus, DriverDTO driverDTO, TaxiDTO taxiDTO)
-            throws ServiceException {
+    public OrderRouteView showOrders(OrderStatus orderStatus, DriverDTO driverDTO,
+                                     TaxiDTO taxiDTO, SortFilterDTO sortFilterDTO) throws ServiceException {
         try {
             //select list of orderDTO and convert it to orderView
             List<OrderView> orderViews = orderDAO.selectList(
                             orderStatus,
                             DriverConverter.toEntity(driverDTO),
-                            TaxiConverter.toEntity(taxiDTO)
-                    ).stream()
+                            TaxiConverter.toEntity(taxiDTO),
+                            sortFilterDTO)
+                    .stream()
                     .map(OrderConverter::toView)
                     .toList();
             // get all orderIDs
