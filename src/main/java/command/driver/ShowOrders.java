@@ -8,6 +8,7 @@ import models.DTO.DriverDTO;
 import models.DTO.SortFilterDTO;
 import models.DTO.TaxiDTO;
 import models.converters.DriverConverter;
+import models.entity.enums.CarCategory;
 import models.entity.enums.OrderStatus;
 import models.view.DriverView;
 import models.view.OrderRouteView;
@@ -16,6 +17,7 @@ import service.TaxiService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.Map;
 
 public class ShowOrders implements Command {
@@ -25,6 +27,7 @@ public class ShowOrders implements Command {
     @Override
     public PageUrl execute(HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
+        request.setAttribute("listCategories", Arrays.asList(CarCategory.values()));
 
         SortFilterDTO sortFilterDTO = this.processSorting(request, session);
 
@@ -53,19 +56,20 @@ public class ShowOrders implements Command {
     }
 
     private SortFilterDTO processSorting(HttpServletRequest request, HttpSession session) {
-        SortFilterDTO sortFilterDTO = (SortFilterDTO) session.getAttribute("sortFilterDTO");
-        if (sortFilterDTO == null) sortFilterDTO = new SortFilterDTO();
-        String orderByElement = request.getParameter("orderByElement");
-        String orderBySorting = request.getParameter("orderBySorting");
-        String filterByElement = request.getParameter("filterByElement");
-        String filterByValue = request.getParameter("filterByValue");
-        if (orderByElement != null && orderBySorting != null) {
-            sortFilterDTO.setFilter(new SortFilterDTO.Pair(orderByElement, orderBySorting));
+        // SortFilterDTO sortFilterDTO = (SortFilterDTO) session.getAttribute("sortFilterDTO");
+        // if (sortFilterDTO == null) sortFilterDTO = new SortFilterDTO();
+        SortFilterDTO sortFilterDTO = new SortFilterDTO();
+
+        String category = request.getParameter("category");
+        String maxCapacity = request.getParameter("maxCapacity");
+
+        if (category != null) {
+            sortFilterDTO.addFilter("carcategory", category);
         }
-        if (filterByElement != null && filterByValue != null) {
-            sortFilterDTO.setOrderBy(new SortFilterDTO.Pair(filterByElement, filterByValue));
+        if (maxCapacity != null) {
+            sortFilterDTO.addFilter("maxCapacity", Integer.valueOf(maxCapacity));
         }
-        session.setAttribute("sortFilterDTO",sortFilterDTO);
+        // session.setAttribute("sortFilterDTO", sortFilterDTO);
         return sortFilterDTO;
     }
 }

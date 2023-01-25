@@ -1,38 +1,28 @@
 package models.DTO;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SortFilterDTO {
-    private Pair orderBy;
-    private Pair filter;
+    private Map<String, String> orderBy; // first - column to sort, second - order
+    private Map<String, Object> filter;// = new HashMap<>();
 
-    public String getOrderBy() {
-        if (orderBy!=null && orderBy.key!=null && orderBy.value!=null)
-            return orderBy.key + " " + orderBy.value;
-        return null;
+    public void setOrderBy(String orderByName, String orderBySort) {
+        //order by statement can only be single
+        orderBy = new HashMap<>();
+        orderBy.put(orderByName, orderBySort);
     }
 
-    public void setOrderBy(Pair orderBy) {
-        this.orderBy = orderBy;
+    public void addFilter(String filterName, Object filterValue) {
+        if(filter==null) filter = new HashMap<>();
+        filter.put(filterName, filterValue);
     }
 
-    public String getFilter() {
-        if(filter!=null && filter.key!=null && filter.value!=null)
-            return filter.key + "=" + filter.value;
-        return null;
+    public Map<String, String> getOrderByMap() {
+        return orderBy;
     }
 
-    public void setFilter(Pair filter) {
-        this.filter = filter;
-    }
-
-    public static class Pair {
-        String key;
-        String value;
-
-        public Pair(String key, String value) {
-            this.key = key;
-            this.value = value;
-        }
+    public Map<String, Object> getFilterMap() {
+        return filter;
     }
 }

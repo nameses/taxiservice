@@ -10,50 +10,38 @@
 <body>
 <jsp:include page="../common/header.jsp"/>
 <div class="row">
-    <div class="col-sm">
-        <a class="btn btn-secondary"
-           href="${pageContext.request.contextPath}/driver?command=showOrdersPage">Reload</a>
-        <%--        <form action="${pageContext.request.contextPath}/driver?command=showOrdersPage" method="GET">--%>
-        <%--            <input type="hidden" name="command" value="listOrders"/>--%>
-        <%--            <input type="hidden" name="filterBy" value="username"/>--%>
-        <%--            <div class="form-group">--%>
-        <%--                <label for="filterValue_username">Filter by username:</label>--%>
-        <%--                <input type="text" class="form-control" id="filterValue_username" placeholder="username"--%>
-        <%--                       name="filterValue" required>--%>
-        <%--            </div>--%>
-        <%--            <button type="submit" class="btn btn-primary">Filter</button>--%>
-        <%--        </form>--%>
-        <%--        <form action="${pageContext.request.contextPath}/controller" method="POST">--%>
-        <%--            <input type="hidden" name="command" value="listOrders"/>--%>
-        <%--            <input type="hidden" name="filterBy" value="licensePlate"/>--%>
-        <%--            <div class="form-group">--%>
-        <%--                <label for="filterValue_licensePlate">Filter by taxi license:</label>--%>
-        <%--                <input type="text" class="form-control"--%>
-        <%--                       id="filterValue_licensePlate"--%>
-        <%--                       placeholder="license plate"--%>
-        <%--                       name="filterValue" required>--%>
-        <%--            </div>--%>
-        <%--            <button type="submit" class="btn btn-primary">Filter</button>--%>
-        <%--        </form>--%>
-    </div>
+    <div class="col-sm"></div>
     <div class="container col-md-8">
-        <h3 class="text-center">List of Orders</h3>
+        <h3 class="text-center mt-3 mb-3">List of Orders</h3>
+        <div class="" style="display: inline-block;">
+            <a class="btn btn-secondary"
+               href="${pageContext.request.contextPath}/driver?command=showOrdersPage">Reload</a>
+            <div class="dropdown ml-5" style="display: inline-block;">
+                <form action="${pageContext.request.contextPath}/driver" method="get">
+                    <input type="hidden" name="command" value="showOrders"/>
+
+                    <label>Car category: </label>
+                    <select name="category">
+                        <option name="category" value="" disabled selected>Select an option</option>
+                        <c:forEach var="category" items="${requestScope.listCategories}">
+                            <option name="category" value="${category.toString()}">${category.toString()}</option>
+                        </c:forEach>
+                    </select>
+
+                    <label>Maximum capacity: </label>
+                    <input type="number" name="maxCapacity" min="1" required/>
+
+                    <input type="submit" value="Submit"/>
+                </form>
+            </div>
+        </div>
         <table class="table table-bordered">
             <thead>
             <tr>
-                <%--                <th>Time, order opened</th>--%>
-                <th>
-                    <form method="get" action="${pageContext.request.contextPath}/driver">
-                        <input type="hidden" name="command" value="showOrders"/>
-                        <input type="hidden" name="orderByElement" value="orderopened"/>
-                        <input type="hidden" name="orderBySorting"
-                               value="${sessionScope.sortFilterDTO.orderBy.value}"/>
-                        <a type="submit">Ordeer</a>
-                    </form>
-                </th>
+                <th>Date and time, order opened</th>
                 <th>Capacity</th>
                 <th>Category</th>
-                <th>Length</th>
+                <th>Length, m</th>
                 <th>Actions</th>
             </tr>
             </thead>

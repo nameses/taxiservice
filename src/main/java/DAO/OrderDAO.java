@@ -49,19 +49,36 @@ public class OrderDAO extends DAO<Order> {
     public List<OrderDTO> selectList(OrderStatus orderStatus, Driver driver,
                                      Taxi taxi, SortFilterDTO sortFilterDTO) throws DAOException {
         StringBuilder sql_statement = new StringBuilder(SELECT_ALL_BY_STATUS);
+        List<Object> filterOrderByElements = new ArrayList<>();
         // forming statement with filtering and sorting
-        if (sortFilterDTO.getFilter() != null) {
-            sql_statement.append(" AND ").append(sortFilterDTO.getFilter()).append(" ");
-        }
-        if (sortFilterDTO.getOrderBy() != null) {
-            sql_statement.append(sortFilterDTO.getOrderBy()).append(" ");
-        }
+        if (sortFilterDTO.getFilterMap() != null) {
+            sortFilterDTO.getFilterMap()
+                    .forEach((key, value) -> {
+                        filterOrderByElements.add(value);
+                        if (key.equals("maxCapacity"))
+                            sql_statement.append(" AND " + "\"carCapacity\"<=?");
+                        else
+                            sql_statement.append(" AND ").append(key).append("=?");
+                        if (key.equals("carcategory"))
+                            sql_statement.append("::carcategory");
 
+                    });
+        }
+        //order by processing
+        if (sortFilterDTO.getOrderByMap() != null) {
+            sql_statement.append(sortFilterDTO.getOrderByMap()
+                    .entrySet().stream()
+                    .map(entry -> entry.getKey() + " " + entry.getValue())
+                    .findFirst().orElse("")
+            );
+        }
+        //get list of orders from DB
         List<Order> orders = this.selectList(
                 sql_statement.toString(),
                 orderStatus,
                 taxi.getCapacity(),
-                taxi.getCategory()
+                taxi.getCategory(),
+                filterOrderByElements.toArray()
         );
 
         return orders.stream()

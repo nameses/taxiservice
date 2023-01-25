@@ -6,6 +6,7 @@ import pool.ConnectionPool;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class DAO<T> {
@@ -28,7 +29,7 @@ public abstract class DAO<T> {
             }
             return entities;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e.getMessage(), e);
         } finally {
             connectionPool.returnConnection(connection);
         }
@@ -136,15 +137,24 @@ public abstract class DAO<T> {
         }
     }
 
-    protected PreparedStatement prepareStatement(Connection connection, String query, Object... objects) throws DAOException {
+    protected PreparedStatement prepareStatement(Connection connection, String query,
+                                                 Object... objects) throws DAOException {
+        //can pass array(Object[])
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(query,
+                    Statement.RETURN_GENERATED_KEYS);
             if (objects != null) {
                 int index = 1;
                 for (Object o : objects) {
-                    if (o instanceof Enum)
-                        o = o.toString();
-                    preparedStatement.setObject(index++, o);
+                    if (o instanceof Object[]) {
+                        for (Object obj : (Object[]) o) {
+                            if (obj instanceof Enum) obj = obj.toString();
+                            preparedStatement.setObject(index++, obj);
+                        }
+                    } else {
+                        if (o instanceof Enum) o = o.toString();
+                        preparedStatement.setObject(index++, o);
+                    }
                 }
             }
             return preparedStatement;
