@@ -1,6 +1,5 @@
-<%@ page import="java.util.Objects" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>List of Orders</title>
@@ -17,7 +16,7 @@
             <a class="btn btn-secondary"
                href="${pageContext.request.contextPath}/driver?command=showOrdersPage">Reload</a>
             <div class="dropdown ml-5" style="display: inline-block;">
-                <form action="${pageContext.request.contextPath}/driver" method="get">
+                <form action="${pageContext.request.contextPath}/driver" method="get" onsubmit="checkCapacity()">
                     <input type="hidden" name="command" value="showOrders"/>
 
                     <label>Car category: </label>
@@ -27,13 +26,37 @@
                             <option name="category" value="${category.toString()}">${category.toString()}</option>
                         </c:forEach>
                     </select>
-
                     <label>Maximum capacity: </label>
-                    <input type="number" name="maxCapacity" min="1" required/>
+                    <input type="number" id="maxCapacity" name="maxCapacity"/>
 
                     <input type="submit" value="Submit"/>
                 </form>
+                <script>
+                    function checkCapacity() {
+                        const maxCapacity = document.getElementById("maxCapacity")
+                        if (maxCapacity.value === "")
+                            maxCapacity.disabled = true
+                    }
+                </script>
             </div>
+            <form id="formOrderBy" action="${pageContext.request.contextPath}/driver" method="get">
+                <input type="hidden" name="command" value="showOrders"/>
+
+                <label>Car category: </label>
+                <select id="orderBy" onchange="updateAndSubmit()">
+                    <option disabled selected>Select an option</option>
+                    <option value="orderBy-time-asc">Time Ascending</option>
+                    <option value="orderBy-time-desc">Time Descending</option>
+                    <option value="orderBy-cap-asc">Capacity Ascending</option>
+                    <option value="orderBy-cap-desc">Capacity Descending</option>
+                    <option value="orderBy-length-asc">Length Ascending</option>
+                    <option value="orderBy-length-desc">Length Descending</option>
+                </select>
+                <input type="hidden" name="inputKey" id="input-key"/>
+                <input type="hidden" name="inputValue" id="input-value"/>
+                <input type="submit" value="Submit" hidden/>
+            </form>
+            <script src="../static/js/updateAndSubmitForm.js"></script>
         </div>
         <table class="table table-bordered">
             <thead>

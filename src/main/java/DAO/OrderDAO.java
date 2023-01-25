@@ -23,8 +23,9 @@ import java.util.stream.Collectors;
 
 public class OrderDAO extends DAO<Order> {
     private static final String SELECT_ALL_BY_STATUS =
-            "SELECT * from \"order\" WHERE status=?::orderstatus " +
-                    "AND \"carCapacity\"<=? AND carcategory<=?::carcategory ";
+            "SELECT * from \"order\" JOIN route ON route.orderid=\"order\".orderid " +
+                    "WHERE status=?::orderstatus AND \"carCapacity\"<=? " +
+                    "AND carcategory<=?::carcategory ";
     private static final String INSERT =
             "INSERT INTO \"order\"(clientid,orderopened,\"carCapacity\",carcategory,status) " +
                     "VALUES(?,?,?,?::carcategory,?::orderstatus)";
@@ -49,28 +50,27 @@ public class OrderDAO extends DAO<Order> {
     public List<OrderDTO> selectList(OrderStatus orderStatus, Driver driver,
                                      Taxi taxi, SortFilterDTO sortFilterDTO) throws DAOException {
         StringBuilder sql_statement = new StringBuilder(SELECT_ALL_BY_STATUS);
-        List<Object> filterOrderByElements = new ArrayList<>();
+        List<Object> filterElements = new ArrayList<>();
         // forming statement with filtering and sorting
         if (sortFilterDTO.getFilterMap() != null) {
             sortFilterDTO.getFilterMap()
                     .forEach((key, value) -> {
-                        filterOrderByElements.add(value);
+                        filterElements.add(value);
                         if (key.equals("maxCapacity"))
-                            sql_statement.append(" AND " + "\"carCapacity\"<=?");
+                            sql_statement.append("AND " + "\"carCapacity\"<=? ");
                         else
-                            sql_statement.append(" AND ").append(key).append("=?");
+                            sql_statement.append("AND ").append(key).append("=? ");
                         if (key.equals("carcategory"))
-                            sql_statement.append("::carcategory");
-
+                            sql_statement.append("::carcategory ");
                     });
         }
         //order by processing
         if (sortFilterDTO.getOrderByMap() != null) {
-            sql_statement.append(sortFilterDTO.getOrderByMap()
-                    .entrySet().stream()
-                    .map(entry -> entry.getKey() + " " + entry.getValue())
-                    .findFirst().orElse("")
-            );
+            sortFilterDTO.getOrderByMap().forEach((key, value) ->
+                    sql_statement.append(" ORDER BY ")
+                            .append(key)
+                            .append(" ")
+                            .append(value));
         }
         //get list of orders from DB
         List<Order> orders = this.selectList(
@@ -78,7 +78,7 @@ public class OrderDAO extends DAO<Order> {
                 orderStatus,
                 taxi.getCapacity(),
                 taxi.getCategory(),
-                filterOrderByElements.toArray()
+                filterElements.toArray()
         );
 
         return orders.stream()

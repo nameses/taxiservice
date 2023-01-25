@@ -56,20 +56,26 @@ public class ShowOrders implements Command {
     }
 
     private SortFilterDTO processSorting(HttpServletRequest request, HttpSession session) {
-        // SortFilterDTO sortFilterDTO = (SortFilterDTO) session.getAttribute("sortFilterDTO");
-        // if (sortFilterDTO == null) sortFilterDTO = new SortFilterDTO();
-        SortFilterDTO sortFilterDTO = new SortFilterDTO();
-
         String category = request.getParameter("category");
         String maxCapacity = request.getParameter("maxCapacity");
 
-        if (category != null) {
+        String orderByKey = request.getParameter("inputKey");
+        String orderByValue = request.getParameter("inputValue");
+
+        SortFilterDTO sortFilterDTO = (SortFilterDTO) session.getAttribute("sortFilter");
+        if (sortFilterDTO == null) sortFilterDTO = new SortFilterDTO();
+
+        //filters
+        if (category != null)
             sortFilterDTO.addFilter("carcategory", category);
-        }
-        if (maxCapacity != null) {
+        if (maxCapacity != null)
             sortFilterDTO.addFilter("maxCapacity", Integer.valueOf(maxCapacity));
+        //sorting
+        if (orderByKey != null && orderByValue != null) {
+            sortFilterDTO.setOrderBy(orderByKey, orderByValue);
         }
-        // session.setAttribute("sortFilterDTO", sortFilterDTO);
+
+        session.setAttribute("sortFilter", sortFilterDTO);
         return sortFilterDTO;
     }
 }
