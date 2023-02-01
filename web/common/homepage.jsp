@@ -28,7 +28,7 @@
         </c:when>
         <c:otherwise>
             <a class="btn btn-outline-dark btn-sm"
-               href="${pageContext.request.contextPath}/driver?command=showOrders">Show list of available orders</a>
+               href="${pageContext.request.contextPath}/driver?command=showOrdersPage">Show list of available orders</a>
         </c:otherwise>
     </c:choose>
 </div>
