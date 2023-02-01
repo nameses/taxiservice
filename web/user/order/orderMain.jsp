@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,8 +27,20 @@
 
         </div>
     </div>
+
+    <jsp:include page="../../static/js/jstl_sql_setDataSource.jsp"/>
+    <sql:query dataSource="${sessionScope.sql_database}" var="resultRoute"
+               sql="SELECT * FROM route WHERE orderid=${sessionScope.order.orderID}"/>
+
+    <script>
+        // convert arrays of coordinates from sql query to js
+        <c:forEach var="route" items="${resultRoute.rows}">
+        let startMarkerCoord = ("${route.startMarker}").replaceAll("{", "").replaceAll("}", "").split(",")
+        let finalMarkerCoord = ("${route.finalMarker}").replaceAll("{", "").replaceAll("}", "").split(",")
+        </c:forEach>
+    </script>
     <script src="../../static/js/config.js"></script>
-    <jsp:include page="../../static/js/orderMain_js.jsp"/>
+    <script src="../../static/js/mapRenderer.js"></script>
 </div>
 </body>
 </html>

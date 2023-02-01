@@ -45,8 +45,8 @@ public class ShowOrders implements Command {
                 driverDTO,
                 taxiDTO,
                 sortFilterDTO);
-        request.setAttribute("orderList", response.getOrders());
-        request.setAttribute("mapOrderIDToRoute", response.getRouteViewMap());
+        session.setAttribute("orderList", response.getOrders());
+        session.setAttribute("mapOrderIDToRoute", response.getRouteViewMap());
 //        if (!) {
 //            return new PageUrl(PageConstants.SHOW_ORDERS_PAGE,
 //                    false,

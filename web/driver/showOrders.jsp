@@ -31,13 +31,6 @@
 
                     <input type="submit" value="Submit"/>
                 </form>
-                <script>
-                    function checkCapacity() {
-                        const maxCapacity = document.getElementById("maxCapacity")
-                        if (maxCapacity.value === "")
-                            maxCapacity.disabled = true
-                    }
-                </script>
             </div>
             <form id="formOrderBy" action="${pageContext.request.contextPath}/driver" method="get">
                 <input type="hidden" name="command" value="showOrders"/>
@@ -56,7 +49,6 @@
                 <input type="hidden" name="inputValue" id="input-value"/>
                 <input type="submit" value="Submit" hidden/>
             </form>
-            <script src="../static/js/updateAndSubmitForm.js"></script>
         </div>
         <table class="table table-bordered">
             <thead>
@@ -69,15 +61,25 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="order" items="${requestScope.orderList}">
+            <c:forEach var="order" items="${sessionScope.orderList}">
                 <tr>
                     <td><c:out value="${order.orderOpened}"/></td>
                     <td><c:out value="${order.carCapacity}"/></td>
                     <td><c:out value="${order.carCategory}"/></td>
-                    <td><c:out value="${requestScope.mapOrderIDToRoute[order.orderID].length}"/></td>
+                    <td><c:out value="${sessionScope.mapOrderIDToRoute[order.orderID].length}"/></td>
                     <td>
-                        <a href="/driver?command=viewOrderDetails&orderid=<c:out value='${order.orderID}' />">View</a>
-                        <a href="/driver?command=confirmOrder&orderid=<c:out value='${order.orderID}' />">Confirm</a>
+                        <div style="display: inline-flex">
+                            <form action="${pageContext.request.contextPath}/driver">
+                                <input type="hidden" name="command" value="viewOrder"/>
+                                <input type="hidden" name="orderid" value="${order.orderID}"/>
+                                <input type="submit" value="View">
+                            </form>
+                            <form action="${pageContext.request.contextPath}/driver">
+                                <input type="hidden" name="command" value="confirmOrder"/>
+                                <input type="hidden" name="orderid" value="${order.orderID}"/>
+                                <input type="submit" value="Confirm">
+                            </form>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>
@@ -86,5 +88,7 @@
     </div>
     <div class="col-sm"></div>
 </div>
+<script src="../static/js/updateAndSubmitForm.js"></script>
+<script src="../static/js/checkCapacity.js"></script>
 </body>
 </html>

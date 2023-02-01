@@ -7,6 +7,8 @@ import models.entity.Taxi;
 import models.view.RouteView;
 import models.view.TaxiView;
 
+import java.util.Arrays;
+
 public class RouteConverter {
     public static Route toEntity(RouteDTO routeDTO) {
         Route route = new Route();
@@ -21,10 +23,18 @@ public class RouteConverter {
     public static RouteDTO toDTO(RouteView routeView) {
         RouteDTO routeDTO = new RouteDTO();
         routeDTO.setRouteID(routeView.getRouteID());
-        routeDTO.setStartMarker(routeView.getStartMarker());
-        routeDTO.setFinalMarker(routeView.getFinalMarker());
+        routeDTO.setStartMarker(
+                convertStringToFloatArray(routeView.getStartMarker()));
+        routeDTO.setFinalMarker(
+                convertStringToFloatArray(routeView.getFinalMarker()));
         routeDTO.setLength(routeView.getLength());
         return routeDTO;
+    }
+    private static Float[] convertStringToFloatArray(String str){
+        return Arrays.stream(str.replaceAll("\\[|\\]", "").split(","))
+                .map(String::trim)
+                .map(Float::parseFloat)
+                .toArray(Float[]::new);
     }
 
     public static RouteDTO toDTO(Route route) {

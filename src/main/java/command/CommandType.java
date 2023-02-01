@@ -3,7 +3,9 @@ package command;
 import command.admin.*;
 import command.authorization.*;
 import command.authorization.Registration;
+import command.driver.ConfirmOrder;
 import command.driver.ShowOrders;
+import command.driver.ViewOrder;
 import command.driver.taxi.NewTaxi;
 import command.pageRender.*;
 import command.user.OrderDetails;
@@ -30,6 +32,7 @@ public class CommandType {
         commandMap.put("orderMainPage", new OrderMainPage());
         commandMap.put("newTaxiPage", new NewTaxiPage());
         commandMap.put("showOrdersPage", new ShowOrdersPage());
+        commandMap.put("confirmOrderPage", new ConfirmOrderPage());
         //authentication
         commandMap.put("registration", new Registration());
         commandMap.put("login", new Login());
@@ -44,6 +47,8 @@ public class CommandType {
         commandMap.put("orderDetails", new OrderDetails());
         //driver orders process
         commandMap.put("showOrders", new ShowOrders());
+        commandMap.put("viewOrder", new ViewOrder());
+        commandMap.put("confirmOrder", new ConfirmOrder());
     }
     public static Command getCommand(String command){
         return commandMap.get(command);

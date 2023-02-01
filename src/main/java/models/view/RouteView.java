@@ -1,9 +1,15 @@
 package models.view;
 
-public class RouteView {
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class RouteView implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private Integer routeID;
-    private Float[] startMarker;
-    private Float[] finalMarker;
+    private String startMarker;
+    private String finalMarker;
     private Integer length;
 
     public RouteView() {
@@ -11,8 +17,8 @@ public class RouteView {
 
     public RouteView(Integer routeID, Float[] startMarker, Float[] finalMarker, Integer length) {
         this.routeID = routeID;
-        this.startMarker = startMarker;
-        this.finalMarker = finalMarker;
+        this.startMarker = Arrays.toString(startMarker);
+        this.finalMarker = Arrays.toString(finalMarker);
         this.length = length;
     }
 
@@ -24,20 +30,20 @@ public class RouteView {
         this.routeID = routeID;
     }
 
-    public Float[] getStartMarker() {
+    public String getStartMarker() {
         return startMarker;
     }
 
     public void setStartMarker(Float[] startMarker) {
-        this.startMarker = startMarker;
+        this.startMarker = Arrays.toString(startMarker);
     }
 
-    public Float[] getFinalMarker() {
+    public String getFinalMarker() {
         return finalMarker;
     }
 
     public void setFinalMarker(Float[] finalMarker) {
-        this.finalMarker = finalMarker;
+        this.finalMarker = Arrays.toString(finalMarker);
     }
 
     public Integer getLength() {

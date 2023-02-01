@@ -3,9 +3,13 @@ package models.view;
 import models.entity.enums.CarCategory;
 import models.entity.enums.OrderStatus;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class OrderView {
+public class OrderView implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private Integer orderID;
     private Integer driverID;
     private Integer clientID;
