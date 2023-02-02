@@ -73,6 +73,19 @@ public class OrderService {
         return new OrderDTO(false);
     }
 
+    public OrderDTO updateOrderStatus(OrderDTO orderDTO) throws ServiceException {
+        try {
+            OrderDTO response = new OrderDTO(
+                    orderDAO.updateEnumToStatus(orderDTO.getOrderID(), orderDTO.getOrderStatus()));
+            if(!response.getSuccess()){
+                response.setMessage("Can't update order status. Try again later!");
+            }
+            return response;
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
 //    public List<Order> getList(HttpServletRequest request) {
 //        try {
 //            HttpSession session = request.getSession();

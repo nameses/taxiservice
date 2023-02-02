@@ -27,8 +27,18 @@
                href="${pageContext.request.contextPath}/admin?command=listOrders">List of orders</a>
         </c:when>
         <c:otherwise>
-            <a class="btn btn-outline-dark btn-sm"
-               href="${pageContext.request.contextPath}/driver?command=showOrdersPage">Show list of available orders</a>
+            <c:if test="${sessionScope.isDriverBusy==false}">
+                <a class="btn btn-outline-dark btn-sm"
+                   href="${pageContext.request.contextPath}/driver?command=showOrdersPage">Show list of available
+                    orders</a>
+            </c:if>
+            <c:if test="${sessionScope.isDriverBusy==true}">
+                <p>You already sent a proposition for an order, so you can't search for new ones.</p>
+                <a class="btn btn-outline-dark btn-sm"
+                   href="${pageContext.request.contextPath}/driver?command=viewOrder&orderid=${sessionScope.currentOrderID}">
+                    Show current order
+                </a>
+            </c:if>
         </c:otherwise>
     </c:choose>
 </div>

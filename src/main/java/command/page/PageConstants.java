@@ -21,5 +21,6 @@ public class PageConstants {
     public static final String CONFIRM_ORDER_PAGE = "/driver/confirmOrder.jsp";
     public static final String CONFIRM_ORDER_PAGE_GET = "/driver?command=confirmOrderPage";
     public static final String VIEW_ORDER_PAGE = "/driver/viewOrder.jsp";
+    public static final String DRIVER_IS_BUSY_ALERT = "/driver/viewOrder.jsp";
 
 }

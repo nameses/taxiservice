@@ -26,7 +26,14 @@ public class DriverFilter implements Filter {
         UserView userView = (UserView) session.getAttribute("user");
         DriverView driverView = (DriverView) session.getAttribute("driver");
         if (userView.getRole() == UserRole.driver && driverView != null) {
-            filterChain.doFilter(request, response);
+
+            String commandName = request.getParameter("command");
+            if(commandName.equals("showOrders")){
+                Boolean isBusy = (Boolean) session.getAttribute("isDriverBusy");
+                if (isBusy != null && isBusy) {
+                    response.sendRedirect(PageConstants.DRIVER_IS_BUSY_ALERT);
+                }
+            } else filterChain.doFilter(request, response);
         } else {
             response.sendRedirect(PageConstants.HOME_PAGE);
         }
