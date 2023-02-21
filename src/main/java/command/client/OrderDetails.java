@@ -1,4 +1,4 @@
-package command.user;
+package command.client;
 
 import command.Command;
 import command.page.PageConstants;
@@ -25,7 +25,8 @@ public class OrderDetails implements Command {
         HttpSession session = request.getSession();
         OrderDTO response = orderService.saveOrder(
                 buildOrder(request, (ClientView) session.getAttribute("client")),
-                RouteConverter.toDTO((RouteView) session.getAttribute("route")));
+                RouteConverter.toDTO((RouteView) session.getAttribute("route"))
+        );
         if (!response.getSuccess()) {
             return new PageUrl(PageConstants.ORDER_DETAILS_PAGE,
                     false,

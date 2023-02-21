@@ -1,4 +1,4 @@
-package command.user;
+package command.client;
 
 import command.Command;
 import command.page.PageConstants;
@@ -9,7 +9,6 @@ import models.converters.RouteConverter;
 import service.RouteService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 
 public class OrderRoute implements Command {

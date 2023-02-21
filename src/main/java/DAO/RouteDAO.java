@@ -8,7 +8,6 @@ import models.converters.RouteConverter;
 import models.entity.Route;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +15,17 @@ import java.util.Map;
 public class RouteDAO extends DAO<Route> {
     private static final String UPDATE_ORDERID_BY_ROUTEID =
             "UPDATE route SET orderid=? WHERE routeid=?";
+    private static final String SELECT_BY_ORDER_ID =
+            "SELECT * FROM route WHERE orderid=?";
     private static final String INSERT =
             "INSERT INTO route(startmarker,finalmarker,length) VALUES(?,?,?)";
 
-    public Map<Integer, RouteDTO> selectRouteByOrderID(List<Integer> orderIDs) throws DAOException {
-        Map<Integer,RouteDTO> result = new HashMap<>();
+    public RouteDTO selectByOrderID(Integer id) throws DAOException {
+        return RouteConverter.toDTO(select(SELECT_BY_ORDER_ID, id));
+    }
+
+    public Map<Integer, RouteDTO> selectMapByOrderIDs(List<Integer> orderIDs) throws DAOException {
+        Map<Integer, RouteDTO> result = new HashMap<>();
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(
                 "SELECT * FROM route WHERE orderid=any(?)")) {
@@ -44,11 +49,7 @@ public class RouteDAO extends DAO<Route> {
 
 
     public RouteDTO updateOrderIDbyRouteID(Route route) throws DAOException {
-        return new RouteDTO(executeQuery(UPDATE_ORDERID_BY_ROUTEID,
-                List.of(
-                        String.valueOf(route.getOrderID()),
-                        String.valueOf(route.getRouteID())
-                )));
+        return new RouteDTO(executeQuery(UPDATE_ORDERID_BY_ROUTEID, route.getOrderID(), route.getRouteID()));
     }
 
     public Integer insert(Route route) throws DAOException {

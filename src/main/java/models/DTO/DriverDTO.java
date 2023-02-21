@@ -27,6 +27,9 @@ public class DriverDTO {
         this.userID = userID;
     }
 
+    public DriverDTO(Integer driverID) {
+        this.driverID=driverID;
+    }
     public DriverDTO(Integer driverID, Integer userID) {
         this.driverID = driverID;
         this.userID = userID;

@@ -34,9 +34,6 @@
     </div>
     <script src="../static/js/config.js"></script>
     <script>
-        console.log("${requestScope.route.startMarker}")
-        console.log("${requestScope.route.finalMarker}")
-
         let startMarkerCoord = (${requestScope.route.startMarker})
         let finalMarkerCoord = (${requestScope.route.finalMarker})
     </script>

@@ -16,16 +16,34 @@
 <div class="container col-md-5">
     <div>
         <h3 id="main-text">Order details page</h3>
-        <p>Wait for driver... Don't log out from app, this leads to canceling of current order.<br/>
-            Your order route:</p>
+        <c:choose>
+            <c:when test="${sessionScope.orderStatus=='confirmation'}">
+                <a class="btn btn-outline-dark"
+                href="${pageContext.request.contextPath}/client?command=viewProposition">View driver's proposition</a>
+            </c:when>
+            <c:otherwise>
+                <p><b>Wait for driver...</b> Don't log out from app, this will lead to canceling of current order.</p>
+                <br/>
+            </c:otherwise>
+        </c:choose>
+        <p>Your order route:</p>
         <div class="md" id="map" style="height: 50vh;width: 40vw;margin-top: 5px"></div>
-        <div class="d-flex justify-content-center">
-            <form method="POST" id="form-post" action="${pageContext.request.contextPath}/client?command=deleteOrder">
+        <div class="w-100 d-flex justify-content-between">
+            <p>
+                <b>Order opened: </b>${sessionScope.order.orderOpened}<br/>
+                <b>Declared car capacity: </b>${sessionScope.order.carCapacity}<br/>
+                <b>Minimum car category: </b>${sessionScope.order.carCategory}<br/>
+                <b>Total route length: </b>${sessionScope.route.length}<br/>
+            </p>
+        </div>
+        <div class="d-flex mt-3 justify-content-center">
+            <form method="POST" id="form-post"
+                  action="${pageContext.request.contextPath}/client?command=deleteOrder">
                 <input type="hidden" value="${sessionScope.order.orderID}">
                 <button class="btn btn-outline-danger" type="submit" id="delete-button">Delete</button>
             </form>
-
         </div>
+        <
     </div>
 
     <jsp:include page="../../static/js/jstl_sql_setDataSource.jsp"/>

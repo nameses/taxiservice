@@ -1,20 +1,22 @@
 package service;
 
 import DAO.RouteDAO;
-import command.page.PageConstants;
-import command.page.PageUrl;
 import exceptions.DAOException;
 import exceptions.ServiceException;
 import models.DTO.RouteDTO;
 import models.converters.RouteConverter;
-import models.entity.Route;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 
 public class RouteService {
     RouteDAO routeDAO = new RouteDAO();
+
+    public RouteDTO selectByOrderID(Integer orderID) throws ServiceException {
+        try {
+            return routeDAO.selectByOrderID(orderID);
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
 
     /**
      * saving Route model to DB and generated routeid to session

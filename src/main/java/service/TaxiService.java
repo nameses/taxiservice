@@ -13,14 +13,14 @@ public class TaxiService {
 
     public TaxiDTO findByDriver(DriverDTO driverDTO) throws ServiceException {
         try {
-            return taxiDAO.selectByDriver(driverDTO.getDriverID());
+            return taxiDAO.selectByDriverID(driverDTO.getDriverID());
         }catch (DAOException e){
             throw new ServiceException(e.getMessage(),e);
         }
     }
     public TaxiDTO validate(TaxiDTO taxiDTO) {
         try {
-            TaxiDTO responseTaxi = taxiDAO.selectByDriver(taxiDTO.getDriverID());
+            TaxiDTO responseTaxi = taxiDAO.selectByDriverID(taxiDTO.getDriverID());
             if(!responseTaxi.getSuccess()) return new TaxiDTO(true);
             else return new TaxiDTO(false,"You already have a taxi");
         }catch(Exception e){

@@ -24,7 +24,7 @@ public class ClientDAO extends DAO<Client> {
     }
 
     public ClientDTO getByUserID(Integer userID) throws DAOException{
-        return ClientConverter.toDTO(selectByID(SELECT_BY_USER_ID, userID));
+        return ClientConverter.toDTO(select(SELECT_BY_USER_ID, userID));
     }
 
     public ClientDTO insert(Client client) throws DAOException {

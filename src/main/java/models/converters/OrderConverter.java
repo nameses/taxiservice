@@ -22,6 +22,20 @@ public class OrderConverter {
         return order;
     }
 
+    public static OrderDTO toDTO(OrderView order) {
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrderID(order.getOrderID());
+        orderDTO.setClientID(order.getClientID());
+        orderDTO.setDriverID(order.getDriverID());
+        orderDTO.setOrderOpened(order.getOrderOpened());
+        orderDTO.setOrderAccepted(order.getOrderAccepted());
+        orderDTO.setCost(order.getCost());
+        orderDTO.setCarCapacity(order.getCarCapacity());
+        orderDTO.setOrderStatus(order.getOrderStatus());
+        orderDTO.setCarCategory(order.getCarCategory());
+        return orderDTO;
+    }
+
     public static OrderDTO toDTO(Order order) {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setOrderID(order.getOrderID());

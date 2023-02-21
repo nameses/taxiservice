@@ -35,22 +35,6 @@ public abstract class DAO<T> {
         }
     }
 
-    protected T selectByID(String query, Integer id) throws DAOException {
-        Connection connection = connectionPool.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next())
-                return buildEntity(resultSet);
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
     protected T select(String query, Object... params) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
@@ -66,20 +50,20 @@ public abstract class DAO<T> {
         }
     }
 
-    protected T select(String query, List<String> params) throws DAOException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-            if (resultSet.next()) {
-                return this.buildEntity(resultSet);
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
+//    protected T select(String query, List<String> params) throws DAOException {
+//        Connection connection = connectionPool.getConnection();
+//        try (PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);
+//             ResultSet resultSet = preparedStatement.executeQuery()) {
+//            if (resultSet.next()) {
+//                return this.buildEntity(resultSet);
+//            }
+//            return null;
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
     protected Integer insert(String query, Object... objects) throws DAOException {
         Connection connection = connectionPool.getConnection();
@@ -115,7 +99,7 @@ public abstract class DAO<T> {
         return null;
     }
 
-    protected Boolean executeQuery(String query, List<String> params) throws DAOException {
+    protected Boolean executeQuery(String query, Object... params) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = this.prepareStatement(connection, query, params);

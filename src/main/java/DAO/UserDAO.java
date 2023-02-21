@@ -18,8 +18,8 @@ public class UserDAO extends DAO<User> {
                     "VALUES(?,?,?,?,?,?::userrole)";
     private final static String SELECT_LOGIN =
             "SELECT userid,username,fullname,phone,email,role FROM \"user\" WHERE username=? AND password=?";
-    private final static String SELECT_USERNAME_BY_ID =
-            "SELECT username FROM user WHERE userid=?";
+    private final static String SELECT_BY_USER_ID =
+            "SELECT userid,username,fullname,phone,email,role FROM \"user\" WHERE userid=?";
     private final static String SELECT_BY_USERNAME =
             "SELECT * FROM \"user\" WHERE username=?";
     private final static String SELECT_BY_FULLNAME =
@@ -29,6 +29,10 @@ public class UserDAO extends DAO<User> {
     private final static String SELECT_BY_EMAIL =
             "SELECT * FROM \"user\" WHERE email=?";
 
+
+    public UserDTO selectByUserID(Integer id) throws DAOException {
+        return UserConverter.toDTO(select(SELECT_BY_USER_ID, id));
+    }
 
     public UserDTO validateData(User user) throws DAOException {
         UserDTO userDTO = new UserDTO();
@@ -52,7 +56,7 @@ public class UserDAO extends DAO<User> {
 
     public UserDTO insert(User user) throws DAOException {
         Integer id = this.insert(INSERT, user);
-        if (id != null && id>0) {
+        if (id != null && id > 0) {
             UserDTO userDTO = UserConverter.toDTO(user);
             userDTO.setSuccess(true);
             userDTO.setUserID(id);

@@ -6,6 +6,7 @@ import models.view.DriverView;
 
 public class DriverConverter {
     public static Driver toEntity(DriverDTO driverDTO) {
+        if(driverDTO==null) return null;
         Driver driver = new Driver();
         driver.setDriverID(driverDTO.getDriverID());
         driver.setUserID(driverDTO.getUserID());
@@ -14,6 +15,7 @@ public class DriverConverter {
     }
 
     public static DriverDTO toDTO(DriverView driverView) {
+        if(driverView==null) return null;
         DriverDTO driverDTO = new DriverDTO();
         driverDTO.setDriverID(driverView.getDriverID());
         driverDTO.setUserID(driverView.getUserID());
@@ -21,6 +23,7 @@ public class DriverConverter {
         return driverDTO;
     }
     public static DriverDTO toDTO(Driver driver) {
+        if(driver==null) return null;
         DriverDTO driverDTO = new DriverDTO();
         driverDTO.setDriverID(driver.getDriverID());
         driverDTO.setUserID(driver.getUserID());
@@ -29,6 +32,7 @@ public class DriverConverter {
     }
 
     public static DriverView toView(DriverDTO driverDTO) {
+        if(driverDTO==null) return null;
         DriverView driverView = new DriverView();
         driverView.setDriverID(driverDTO.getDriverID());
         driverView.setUserID(driverDTO.getUserID());

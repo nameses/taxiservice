@@ -39,7 +39,7 @@ public class OrderService {
                     .map(OrderView::getOrderID)
                     .toList();
             //get map (orderID to RouteDTO) and convert it to another map (orderID to RouteView)
-            Map<Integer, RouteView> mapRouteView = routeDAO.selectRouteByOrderID(orderIDs)
+            Map<Integer, RouteView> mapRouteView = routeDAO.selectMapByOrderIDs(orderIDs)
                     .entrySet().stream()
                     .collect(Collectors.toMap(Map.Entry::getKey,
                             e -> RouteConverter.toView(e.getValue())));
@@ -73,6 +73,17 @@ public class OrderService {
         return new OrderDTO(false);
     }
 
+    public OrderDTO updateDriverID(OrderDTO orderDTO) throws ServiceException {
+        try {
+            OrderDTO response = new OrderDTO(orderDAO.updateDriverID(orderDTO.getOrderID(),orderDTO.getDriverID()));
+            if(!response.getSuccess()){
+                throw new DAOException("error during driver id saving to order");
+            }
+            return response;
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
     public OrderDTO updateOrderStatus(OrderDTO orderDTO) throws ServiceException {
         try {
             OrderDTO response = new OrderDTO(
@@ -81,6 +92,14 @@ public class OrderService {
                 response.setMessage("Can't update order status. Try again later!");
             }
             return response;
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    public OrderView selectByID(OrderDTO orderDTO) throws ServiceException {
+        try{
+            return OrderConverter.toView(orderDAO.selectByID(orderDTO.getOrderID()));
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage(), e);
         }

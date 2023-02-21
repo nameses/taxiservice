@@ -29,8 +29,20 @@ public class OrderDAO extends DAO<Order> {
     private static final String INSERT =
             "INSERT INTO \"order\"(clientid,orderopened,\"carCapacity\",carcategory,status) " +
                     "VALUES(?,?,?,?::carcategory,?::orderstatus)";
+    private static final String SELECT_BY_ID =
+            "SELECT * from \"order\" WHERE orderid=?";
+    private static final String UPDATE_DRIVER_ID =
+            "UPDATE \"order\" SET driverid=? WHERE \"order\".orderid=?";
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE \"order\" SET status=?::orderstatus WHERE \"order\".orderid=?";
+
+    public OrderDTO selectByID(Integer id) throws DAOException {
+        return OrderConverter.toDTO(select(SELECT_BY_ID, id));
+    }
+
+    public Boolean updateDriverID(Integer orderID, Integer driverID) throws DAOException {
+        return this.executeQuery(UPDATE_DRIVER_ID, driverID, orderID);
+    }
 
     public Boolean updateEnumToStatus(Integer id, OrderStatus orderStatus) throws DAOException {
         Connection connection = connectionPool.getConnection();

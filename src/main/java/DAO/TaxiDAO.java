@@ -19,7 +19,7 @@ public class TaxiDAO extends DAO<Taxi> {
             "INSERT INTO taxi(capacity,fare,\"licenseplate\",carcategory,driverid) " +
                     "VALUES(?,?,?,?::carcategory,?)";
 
-    public TaxiDTO selectByDriver(Integer driverID) throws DAOException {
+    public TaxiDTO selectByDriverID(Integer driverID) throws DAOException {
         Taxi taxi = select(SELECT_BY_DRIVER, driverID);
         if (taxi == null)
             return new TaxiDTO(false, "You don't have a taxi");

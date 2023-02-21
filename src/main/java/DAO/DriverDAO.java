@@ -17,6 +17,8 @@ import java.util.List;
 public class DriverDAO extends DAO<Driver> {
     private static final String INSERT =
             "INSERT INTO driver(userid) VALUES(?)";
+    private static final String SELECT_BY_DRIVER_ID =
+            "SELECT * FROM driver WHERE driver.driverid=?";
     private static final String SELECT_BY_USER_ID =
             "SELECT * FROM driver WHERE driver.userid=?";
     private static final String UPDATE_ENUM_TO_STATUS =
@@ -37,8 +39,11 @@ public class DriverDAO extends DAO<Driver> {
         }
     }
 
+    public DriverDTO selectByDriverID(Integer driverID) throws DAOException {
+        return DriverConverter.toDTO(select(SELECT_BY_DRIVER_ID, driverID));
+    }
     public DriverDTO getByUserID(Integer userID) throws DAOException {
-        return DriverConverter.toDTO(selectByID(SELECT_BY_USER_ID, userID));
+        return DriverConverter.toDTO(select(SELECT_BY_USER_ID, userID));
     }
 
     public DriverDTO insert(Integer userID) throws DAOException {
