@@ -33,8 +33,14 @@ public class OrderDAO extends DAO<Order> {
             "SELECT * from \"order\" WHERE orderid=?";
     private static final String UPDATE_DRIVER_ID =
             "UPDATE \"order\" SET driverid=? WHERE \"order\".orderid=?";
+    private static final String DECLINE_DRIVER =
+            "UPDATE \"order\" SET driverid=NULL, status=?::orderstatus WHERE \"order\".orderid=?";
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE \"order\" SET status=?::orderstatus WHERE \"order\".orderid=?";
+
+    public Boolean declineDriver(Integer orderID) throws DAOException {
+        return this.executeQuery(DECLINE_DRIVER, OrderStatus.processing, orderID);
+    }
 
     public OrderDTO selectByID(Integer id) throws DAOException {
         return OrderConverter.toDTO(select(SELECT_BY_ID, id));

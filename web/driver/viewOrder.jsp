@@ -14,14 +14,14 @@
 <jsp:include page="/common/header.jsp"/>
 <div class="container col-md-5">
     <div>
-        <h3 id="main-text">ID#${requestScope.order.orderID} Order details:</h3>
+        <h3 id="main-text">ID#${sessionScope.order.orderID} Order details:</h3>
         <div class="md" id="map" style="height: 50vh;width: 40vw;margin-top: 5px"></div>
         <div class="w-100 d-flex justify-content-between">
             <p>
-                <b>Order opened: </b>${requestScope.order.orderOpened}<br/>
-                <b>Declared car capacity: </b>${requestScope.order.carCapacity}<br/>
-                <b>Minimum car category: </b>${requestScope.order.carCategory}<br/>
-                <b>Total route length: </b>${requestScope.route.length}<br/>
+                <b>Order opened: </b>${sessionScope.order.orderOpened}<br/>
+                <b>Declared car capacity: </b>${sessionScope.order.carCapacity}<br/>
+                <b>Minimum car category: </b>${sessionScope.order.carCategory}<br/>
+                <b>Total route length: </b>${sessionScope.route.length}<br/>
             </p>
 <%--            <h3 class="text-center">User's details</h3>--%>
             <p>

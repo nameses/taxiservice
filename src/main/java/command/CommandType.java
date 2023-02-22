@@ -3,14 +3,12 @@ package command;
 import command.admin.*;
 import command.authorization.*;
 import command.authorization.Registration;
-import command.client.ViewProposition;
+import command.client.*;
 import command.driver.ConfirmOrder;
 import command.driver.ShowOrders;
 import command.driver.ViewOrder;
 import command.driver.taxi.NewTaxi;
 import command.pageRender.*;
-import command.client.OrderDetails;
-import command.client.OrderRoute;
 
 import java.util.HashMap;
 
@@ -47,6 +45,8 @@ public class CommandType {
         commandMap.put("orderRoute", new OrderRoute());
         commandMap.put("orderDetails", new OrderDetails());
         commandMap.put("viewProposition", new ViewProposition());
+        commandMap.put("declineDriver", new DeclineDriver());
+        commandMap.put("acceptDriver", new AcceptDriver());
         //driver orders process
         commandMap.put("showOrders", new ShowOrders());
         commandMap.put("viewOrder", new ViewOrder());

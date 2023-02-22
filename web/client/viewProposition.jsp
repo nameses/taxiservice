@@ -30,12 +30,10 @@
         <div class="d-flex mt-3 justify-content-center">
             <form method="POST"
                   action="${pageContext.request.contextPath}/client?command=acceptDriver">
-                <input type="hidden" value="${sessionScope.order.orderID}">
                 <button class="btn btn-outline-dark" type="submit">Accept</button>
             </form>
             <form method="POST"
                   action="${pageContext.request.contextPath}/client?command=declineDriver">
-                <input type="hidden" value="${sessionScope.order.orderID}">
                 <button class="btn btn-outline-danger" type="submit">Decline</button>
             </form>
         </div>

@@ -23,15 +23,21 @@ public class OrderDTO {
         this.message = message;
         this.success = success;
     }
+
     public OrderDTO(Boolean status, String message) {
         this.message = message;
         this.success = status;
     }
 
-    public OrderDTO(Integer orderID,Boolean success) {
+    public OrderDTO(Integer orderID) {
+        this.orderID = orderID;
+    }
+
+    public OrderDTO(Integer orderID, Boolean success) {
         this.orderID = orderID;
         this.success = success;
     }
+
     public OrderDTO(Boolean success) {
         this.success = success;
     }

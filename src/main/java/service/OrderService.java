@@ -22,6 +22,14 @@ public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();
     private final RouteDAO routeDAO = new RouteDAO();
 
+    public OrderDTO declineDriver(OrderDTO orderDTO) throws ServiceException {
+        try {
+            return new OrderDTO(orderDAO.declineDriver(orderDTO.getOrderID()));
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
     public OrderRouteView showOrders(OrderStatus orderStatus, DriverDTO driverDTO,
                                      TaxiDTO taxiDTO, SortFilterDTO sortFilterDTO) throws ServiceException {
         try {
@@ -75,8 +83,8 @@ public class OrderService {
 
     public OrderDTO updateDriverID(OrderDTO orderDTO) throws ServiceException {
         try {
-            OrderDTO response = new OrderDTO(orderDAO.updateDriverID(orderDTO.getOrderID(),orderDTO.getDriverID()));
-            if(!response.getSuccess()){
+            OrderDTO response = new OrderDTO(orderDAO.updateDriverID(orderDTO.getOrderID(), orderDTO.getDriverID()));
+            if (!response.getSuccess()) {
                 throw new DAOException("error during driver id saving to order");
             }
             return response;
@@ -84,11 +92,12 @@ public class OrderService {
             throw new ServiceException(e.getMessage(), e);
         }
     }
+
     public OrderDTO updateOrderStatus(OrderDTO orderDTO) throws ServiceException {
         try {
             OrderDTO response = new OrderDTO(
                     orderDAO.updateEnumToStatus(orderDTO.getOrderID(), orderDTO.getOrderStatus()));
-            if(!response.getSuccess()){
+            if (!response.getSuccess()) {
                 response.setMessage("Can't update order status. Try again later!");
             }
             return response;
@@ -98,7 +107,7 @@ public class OrderService {
     }
 
     public OrderView selectByID(OrderDTO orderDTO) throws ServiceException {
-        try{
+        try {
             return OrderConverter.toView(orderDAO.selectByID(orderDTO.getOrderID()));
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage(), e);
