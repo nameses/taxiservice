@@ -37,8 +37,13 @@ public class OrderDAO extends DAO<Order> {
     private static final String UPDATE_ENUM_TO_CANCELED_TO_ALL_EXCEPT_DONE =
             "UPDATE \"order\" SET status=?::orderstatus WHERE status!=?::orderstatus " +
                     "AND status!=?::orderstatus";
+    private static final String CANCEL_DRIVER_FROM_ORDER =
+            "UPDATE \"order\" SET driverid=NULL WHERE \"order\".orderid=?";
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE \"order\" SET status=?::orderstatus WHERE \"order\".orderid=?";
+    public Boolean cancelDriverFromOrder(Integer orderID) throws DAOException {
+        return executeQuery(CANCEL_DRIVER_FROM_ORDER, orderID);
+    }
     public Boolean deactivateAllOrders() throws DAOException {
         return executeQuery(UPDATE_ENUM_TO_CANCELED_TO_ALL_EXCEPT_DONE,
                 OrderStatus.canceled,

@@ -34,7 +34,8 @@ public class Homepage implements Command {
 
         if (orderID != null) orderView = orderService.selectByID(new OrderDTO(orderID));
 
-        if(orderView.getOrderStatus()== OrderStatus.completed){
+        if(orderView.getOrderStatus()== OrderStatus.completed || orderView.getOrderStatus()== OrderStatus.canceled){
+            session.setAttribute("isDriverBusy", false);
             session.removeAttribute("order");
         }
         else{

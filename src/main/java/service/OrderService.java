@@ -24,6 +24,14 @@ public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();
     private final RouteDAO routeDAO = new RouteDAO();
 
+    public OrderDTO cancelDriverFromOrder(Integer id) {
+        try{
+            return new OrderDTO(orderDAO.cancelDriverFromOrder(id));
+        }catch(DAOException e){
+            e.getStackTrace();
+            return new OrderDTO(false);
+        }
+    }
     public OrderDTO deactivateAllOrders() {
         try{
             return new OrderDTO(orderDAO.deactivateAllOrders());

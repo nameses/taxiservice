@@ -48,6 +48,7 @@ public class CommandType {
         commandMap.put("viewProposition", new ViewProposition());
         commandMap.put("declineDriver", new DeclineDriver());
         commandMap.put("acceptDriver", new AcceptDriver());
+        commandMap.put("deleteOrder", new DeleteOrder());
         //driver orders process
         commandMap.put("showOrders", new ShowOrders());
         commandMap.put("viewOrder", new ViewOrder());
