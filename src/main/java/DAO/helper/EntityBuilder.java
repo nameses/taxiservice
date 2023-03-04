@@ -49,7 +49,9 @@ public class EntityBuilder {
             order.setClientID(resultSet.getInt("clientid"));
             order.setOrderOpened(resultSet.getTimestamp("orderopened"));
             order.setCarCapacity(resultSet.getInt("carCapacity"));
-            order.setOrderStatus(OrderStatus.valueOf(resultSet.getString("status")));
+            String status = resultSet.getString("status");
+            if(status.equals("on route")) status = "on_route";
+            order.setOrderStatus(OrderStatus.valueOf(status));
             order.setCarCategory(CarCategory.valueOf(resultSet.getString("carcategory")));
             if (order.getOrderStatus() != OrderStatus.processing) {
                 order.setDriverID(resultSet.getInt("driverid"));

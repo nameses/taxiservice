@@ -17,19 +17,24 @@
         <h3 id="main-text">ID#${sessionScope.order.orderID} Order details:</h3>
         <div class="md" id="map" style="height: 50vh;width: 40vw;margin-top: 5px"></div>
         <div class="w-100 d-flex justify-content-between">
-            <p>
-                <b>Order opened: </b>${sessionScope.order.orderOpened}<br/>
-                <b>Declared car capacity: </b>${sessionScope.order.carCapacity}<br/>
-                <b>Minimum car category: </b>${sessionScope.order.carCategory}<br/>
-                <b>Total route length: </b>${sessionScope.route.length}<br/>
-            </p>
-<%--            <h3 class="text-center">User's details</h3>--%>
-            <p>
-                <b>Username:</b> ${sessionScope.user.username}<br/>
-                <b>Full name:</b> ${sessionScope.user.fullname}<br/>
-                <b>Phone:</b> ${sessionScope.user.phone}<br/>
-            </p>
-
+            <c:choose>
+                <c:when test="${sessionScope.order.orderStatus=='on_route'}">
+                    <b>Order accepted: </b>${sessionScope.order.orderAccepted}<br/>
+                    <b>Cost: </b>${sessionScope.order.cost}<br/>
+                    <form method="POST"
+                          action="${pageContext.request.contextPath}/driver?command=endOrder">
+                        <button class="btn btn-outline-danger" type="submit">End order</button>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <p>
+                        <b>Order opened: </b>${sessionScope.order.orderOpened}<br/>
+                        <b>Declared car capacity: </b>${sessionScope.order.carCapacity}<br/>
+                        <b>Minimum car category: </b>${sessionScope.order.carCategory}<br/>
+                        <b>Total route length: </b>${sessionScope.route.length}<br/>
+                    </p>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <script src="../static/js/config.js"></script>

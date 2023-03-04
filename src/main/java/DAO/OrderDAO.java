@@ -36,7 +36,6 @@ public class OrderDAO extends DAO<Order> {
             "UPDATE \"order\" SET driverid=NULL, status=?::orderstatus WHERE \"order\".orderid=?";
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE \"order\" SET status=?::orderstatus WHERE \"order\".orderid=?";
-
     public Boolean acceptDriver(Integer orderID, Integer cost) throws DAOException {
         Timestamp orderAccepted = new Timestamp(System.currentTimeMillis());
         return this.executeQuery(ACCEPT_DRIVER, orderAccepted, cost, "on route", orderID);

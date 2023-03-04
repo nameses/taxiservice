@@ -23,10 +23,18 @@ public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();
     private final RouteDAO routeDAO = new RouteDAO();
 
+    public OrderDTO endOrder(OrderDTO orderDTO) throws ServiceException {
+        try{
+            return new OrderDTO(orderDAO.updateEnumToStatus(orderDTO.getOrderID(),OrderStatus.completed));
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+
+    }
     public ClientDTO acceptDriver(OrderDTO orderDTO, ClientDTO clientDTO,
                                   RouteDTO routeDTO, TaxiDTO taxiDTO) throws ServiceException {
         try {
-            Integer cost = taxiDTO.getFare() * routeDTO.getLength();
+            Integer cost = taxiDTO.getFare() * routeDTO.getLength()/1000;
             if (orderDTO.getIfUsedPoints()) {
                 cost -= clientDTO.getBonusPoints();
                 clientDTO.setBonusPoints(cost / 10);

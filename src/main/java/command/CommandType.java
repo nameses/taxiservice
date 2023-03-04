@@ -5,6 +5,7 @@ import command.authorization.*;
 import command.authorization.Registration;
 import command.client.*;
 import command.driver.ConfirmOrder;
+import command.driver.EndOrder;
 import command.driver.ShowOrders;
 import command.driver.ViewOrder;
 import command.driver.taxi.NewTaxi;
@@ -51,6 +52,7 @@ public class CommandType {
         commandMap.put("showOrders", new ShowOrders());
         commandMap.put("viewOrder", new ViewOrder());
         commandMap.put("confirmOrder", new ConfirmOrder());
+        commandMap.put("endOrder", new EndOrder());
     }
     public static Command getCommand(String command){
         return commandMap.get(command);
