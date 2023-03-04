@@ -34,8 +34,17 @@ public class OrderDAO extends DAO<Order> {
             "UPDATE \"order\" SET orderaccepted=?, cost=?, status=?::orderstatus WHERE \"order\".orderid=?";
     private static final String DECLINE_DRIVER =
             "UPDATE \"order\" SET driverid=NULL, status=?::orderstatus WHERE \"order\".orderid=?";
+    private static final String UPDATE_ENUM_TO_CANCELED_TO_ALL_EXCEPT_DONE =
+            "UPDATE \"order\" SET status=?::orderstatus WHERE status!=?::orderstatus " +
+                    "AND status!=?::orderstatus";
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE \"order\" SET status=?::orderstatus WHERE \"order\".orderid=?";
+    public Boolean deactivateAllOrders() throws DAOException {
+        return executeQuery(UPDATE_ENUM_TO_CANCELED_TO_ALL_EXCEPT_DONE,
+                OrderStatus.canceled,
+                OrderStatus.canceled,
+                OrderStatus.completed);
+    }
     public Boolean acceptDriver(Integer orderID, Integer cost) throws DAOException {
         Timestamp orderAccepted = new Timestamp(System.currentTimeMillis());
         return this.executeQuery(ACCEPT_DRIVER, orderAccepted, cost, "on route", orderID);

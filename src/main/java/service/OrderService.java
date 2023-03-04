@@ -2,6 +2,7 @@ package service;
 
 import DAO.OrderDAO;
 import DAO.RouteDAO;
+import DAO.helper.DAO;
 import exceptions.DAOException;
 import exceptions.ServiceException;
 import models.DTO.*;
@@ -23,6 +24,14 @@ public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();
     private final RouteDAO routeDAO = new RouteDAO();
 
+    public OrderDTO deactivateAllOrders() {
+        try{
+            return new OrderDTO(orderDAO.deactivateAllOrders());
+        }catch(DAOException e){
+            e.getStackTrace();
+            return new OrderDTO(false);
+        }
+    }
     public OrderDTO endOrder(OrderDTO orderDTO) throws ServiceException {
         try{
             return new OrderDTO(orderDAO.updateEnumToStatus(orderDTO.getOrderID(),OrderStatus.completed));
