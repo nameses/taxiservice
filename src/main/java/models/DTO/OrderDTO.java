@@ -17,6 +17,17 @@ public class OrderDTO {
     private OrderStatus orderStatus;
     private String message;
     private Boolean success;
+    private Boolean ifUsedPoints;
+
+
+    public Boolean getIfUsedPoints() {
+        return ifUsedPoints;
+    }
+
+    public void setIfUsedPoints(Boolean ifUsedPoints) {
+        this.ifUsedPoints = ifUsedPoints;
+    }
+
 
     public OrderDTO(Integer orderID, Boolean success, String message) {
         this.orderID = orderID;

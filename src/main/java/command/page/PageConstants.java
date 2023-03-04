@@ -24,5 +24,6 @@ public class PageConstants {
     public static final String DRIVER_IS_BUSY_ALERT = "/driver/viewOrder.jsp";
     public static final String VIEW_PROPOSITION = "/client/viewProposition.jsp";
     public static final String DECLINE_DRIVER_PAGE = "/client/declinedDriver.jsp";
+    public static final String ACCEPTED_DRIVER_PAGE = "/client/acceptedDriver.jsp";
 
 }

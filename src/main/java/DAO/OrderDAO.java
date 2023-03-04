@@ -13,10 +13,7 @@ import models.entity.Order;
 import models.entity.Taxi;
 import models.entity.enums.OrderStatus;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,11 +30,17 @@ public class OrderDAO extends DAO<Order> {
             "SELECT * from \"order\" WHERE orderid=?";
     private static final String UPDATE_DRIVER_ID =
             "UPDATE \"order\" SET driverid=? WHERE \"order\".orderid=?";
+    private static final String ACCEPT_DRIVER =
+            "UPDATE \"order\" SET orderaccepted=?, cost=?, status=?::orderstatus WHERE \"order\".orderid=?";
     private static final String DECLINE_DRIVER =
             "UPDATE \"order\" SET driverid=NULL, status=?::orderstatus WHERE \"order\".orderid=?";
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE \"order\" SET status=?::orderstatus WHERE \"order\".orderid=?";
 
+    public Boolean acceptDriver(Integer orderID, Integer cost) throws DAOException {
+        Timestamp orderAccepted = new Timestamp(System.currentTimeMillis());
+        return this.executeQuery(ACCEPT_DRIVER, orderAccepted, cost, "on route", orderID);
+    }
     public Boolean declineDriver(Integer orderID) throws DAOException {
         return this.executeQuery(DECLINE_DRIVER, OrderStatus.processing, orderID);
     }

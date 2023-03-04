@@ -15,9 +15,14 @@ import java.util.List;
 public class ClientDAO extends DAO<Client> {
     private static final String INSERT =
             "INSERT INTO client(userid) VALUES(?)";
+    private static final String UPDATE_CLIENT =
+            "UPDATE client SET \"bonusPoints\"=? WHERE clientid=?";
     private static final String SELECT_BY_USER_ID =
             "SELECT * FROM client join \"user\" on client.userid=\"user\".userid WHERE \"user\".userid=? ";
 
+    public Boolean updateByClientID(Client client) throws DAOException {
+        return executeQuery(UPDATE_CLIENT,client.getBonusPoints(),client.getClientID());
+    }
     @Override
     protected Client buildEntity(ResultSet resultSet) throws DAOException {
         return EntityBuilder.buildClient(resultSet);

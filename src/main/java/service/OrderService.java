@@ -9,6 +9,7 @@ import models.converters.DriverConverter;
 import models.converters.OrderConverter;
 import models.converters.RouteConverter;
 import models.converters.TaxiConverter;
+import models.entity.Taxi;
 import models.entity.enums.OrderStatus;
 import models.view.OrderRouteView;
 import models.view.OrderView;
@@ -21,6 +22,23 @@ import java.util.stream.Collectors;
 public class OrderService {
     private final OrderDAO orderDAO = new OrderDAO();
     private final RouteDAO routeDAO = new RouteDAO();
+
+    public ClientDTO acceptDriver(OrderDTO orderDTO, ClientDTO clientDTO,
+                                  RouteDTO routeDTO, TaxiDTO taxiDTO) throws ServiceException {
+        try {
+            Integer cost = taxiDTO.getFare() * routeDTO.getLength();
+            if (orderDTO.getIfUsedPoints()) {
+                cost -= clientDTO.getBonusPoints();
+                clientDTO.setBonusPoints(cost / 10);
+            } else {
+                clientDTO.setBonusPoints(clientDTO.getBonusPoints() + cost / 10);
+            }
+            clientDTO.setSuccess(orderDAO.acceptDriver(orderDTO.getOrderID(), cost));
+            return clientDTO;
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
 
     public OrderDTO declineDriver(OrderDTO orderDTO) throws ServiceException {
         try {

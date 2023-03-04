@@ -30,6 +30,10 @@
         <div class="d-flex mt-3 justify-content-center">
             <form method="POST"
                   action="${pageContext.request.contextPath}/client?command=acceptDriver">
+                <p>Use all bonus points?
+                    <input type="checkbox" name="ifUsedPoints" id="ifUsedPoints">
+                    <br/>
+                </p>
                 <button class="btn btn-outline-dark" type="submit">Accept</button>
             </form>
             <form method="POST"
