@@ -62,7 +62,22 @@ public class ConnectionPool {
     }
 
     public void returnConnection(Connection connection) {
+        try {
+            connection.close();
+            availableConnections.add(renewConnection());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        availableConnections.add(connection);
+    public Connection renewConnection() {
+        try {
+            return DriverManager.getConnection((String) properties.get("url"),
+                    (String) properties.get("user"),
+                    (String) properties.get("password"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
