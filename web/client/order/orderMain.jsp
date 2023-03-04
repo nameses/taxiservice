@@ -17,9 +17,14 @@
     <div>
         <h3 id="main-text">Order details page</h3>
         <c:choose>
+            <c:when test="${sessionScope.orderStatus=='on_route'}">
+                <p><b>Driver is found.</b> Don't log out from app, this will lead to canceling of current order.</p>
+                <br/>
+            </c:when>
             <c:when test="${sessionScope.orderStatus=='confirmation'}">
                 <a class="btn btn-outline-dark"
-                href="${pageContext.request.contextPath}/client?command=viewProposition">View driver's proposition</a>
+                   href="${pageContext.request.contextPath}/client?command=viewProposition">View driver's
+                    proposition</a>
             </c:when>
             <c:otherwise>
                 <p><b>Wait for driver...</b> Don't log out from app, this will lead to canceling of current order.</p>
