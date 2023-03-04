@@ -25,16 +25,16 @@ create table "user"
 );
 create table client
 (
-    clientID     serial  not null primary key,
-    userID       integer not null,
-    bonus_points integer default 0,
+    clientID    serial  not null primary key,
+    userID      integer not null,
+    bonusPoints integer default 0,
     FOREIGN KEY (userID) REFERENCES "user" (userID)
 );
 create table driver
 (
-    driverID serial                          not null primary key,
-    userID   integer                         not null,
-    status   driverStatus default 'inactive' not null,
+    driverID     serial                          not null primary key,
+    userID       integer                         not null,
+    driverStatus driverStatus default 'inactive' not null,
     FOREIGN KEY (userID) REFERENCES "user" (userID)
 );
 create table "order"
@@ -42,14 +42,12 @@ create table "order"
     orderID       serial       not null primary key,
     clientID      integer      not null,
     driverID      integer      not null,
-    routeID       integer      not null,
     orderOpened   timestamp    not null,
     orderAccepted timestamp    not null,
     "cost"        integer      not null,
-    capacity      integer      not null,
-    category      carCategory  not null,
+    carCapacity   integer      not null,
+    carCategory   carCategory  not null,
     status        clientStatus not null,
-    FOREIGN KEY (routeID) REFERENCES route (routeID),
     FOREIGN KEY (driverID) REFERENCES driver (driverID),
     FOREIGN KEY (clientID) REFERENCES client (clientID)
 );
