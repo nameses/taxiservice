@@ -53,7 +53,7 @@ public class UserService {
             if (responseUserDTO != null) {
                 session.setAttribute("user", UserConverter.toView(responseUserDTO));
                 if (responseUserDTO.getRole() == UserRole.driver) {
-                    DriverView driverView = DriverConverter.toView(driverDAO.getByUserID(responseUserDTO.getUserID()));
+                    DriverView driverView = DriverConverter.toView(driverDAO.login(responseUserDTO.getUserID()));
                     session.setAttribute("driver", driverView);
                     session.setAttribute("isDriverBusy",false);
                 } else {//client

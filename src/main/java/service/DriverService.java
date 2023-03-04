@@ -19,6 +19,13 @@ public class DriverService {
             throw new ServiceException(e.getMessage(),e);
         }
     }
+    public Boolean inactivateAllDrivers(){
+        try {
+            return driverDAO.inactivateAllDrivers();
+        } catch(DAOException e){
+            return false;
+        }
+    }
     public Boolean updateDriverStatus(Integer userID, DriverStatus driverStatus) throws ServiceException {
         try {
             return driverDAO.updateDriverStatus(userID, driverStatus);

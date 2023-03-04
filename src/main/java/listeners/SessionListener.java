@@ -5,6 +5,7 @@ import models.entity.Order;
 import models.entity.User;
 import models.entity.enums.DriverStatus;
 import models.entity.enums.UserRole;
+import models.view.DriverView;
 import models.view.OrderView;
 import models.view.UserView;
 import service.DriverService;
@@ -25,7 +26,6 @@ public class SessionListener implements HttpSessionListener {
 
         HashMap<String, HttpSession> userSessions =
                 (HashMap<String, HttpSession>) context.getAttribute("userSessions");
-        if (userSessions == null) userSessions = new HashMap<>();
 
         userSessions.put(session.getId(), session);
         System.out.println("Session Started:: ID=" + sessionEvent.getSession().getId());
@@ -34,6 +34,12 @@ public class SessionListener implements HttpSessionListener {
     public void sessionDestroyed(HttpSessionEvent sessionEvent) {
         try {
             HttpSession session = sessionEvent.getSession();
+            ServletContext context = session.getServletContext();
+
+            HashMap<String, HttpSession> userSessions =
+                    (HashMap<String, HttpSession>) context.getAttribute("userSessions");
+
+            userSessions.remove(session.getId());
             //cancel current order, if exists
             OrderView orderView = (OrderView) session.getAttribute("order");
             if (orderView != null) {
@@ -46,8 +52,6 @@ public class SessionListener implements HttpSessionListener {
                 DriverService driverService = new DriverService();
                 driverService.updateDriverStatus(userView.getUserID(), DriverStatus.inactive);
             }
-            //session invalidate
-            session.invalidate();
             System.out.println("Session Destroyed:: ID=" + sessionEvent.getSession().getId());
         }catch (ServiceException e){
             throw new RuntimeException(e.getMessage(),e);

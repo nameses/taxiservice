@@ -1,5 +1,7 @@
 package listeners;
 
+import service.DriverService;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -12,6 +14,7 @@ public class AppContextListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext ctx = servletContextEvent.getServletContext();
+        ctx.setAttribute("userSessions", new HashMap<String, HttpSession>());
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
@@ -19,10 +22,14 @@ public class AppContextListener implements ServletContextListener {
 
         //TODO delete all routes that are without orderid.
 
+        //set to inactive all driver statuses
+        DriverService driverService = new DriverService();
+        driverService.inactivateAllDrivers();
+
         HashMap<String, HttpSession> userSessions =
                 (HashMap<String, HttpSession>) ctx.getAttribute("userSessions");
-        if (userSessions != null){
-            userSessions.forEach((k,v)-> v.invalidate());
+        if (userSessions != null && !userSessions.isEmpty()) {
+            userSessions.forEach((str, session) -> session.invalidate());
         }
         ctx.removeAttribute("userSessions");
     }

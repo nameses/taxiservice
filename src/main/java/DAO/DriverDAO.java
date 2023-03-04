@@ -21,9 +21,14 @@ public class DriverDAO extends DAO<Driver> {
             "SELECT * FROM driver WHERE driver.driverid=?";
     private static final String SELECT_BY_USER_ID =
             "SELECT * FROM driver WHERE driver.userid=?";
+    private static final String UPDATE_ENUM_TO_STATUS_TO_ALL =
+            "UPDATE driver SET \"driverStatus\"=?::driverstatus";
     private static final String UPDATE_ENUM_TO_STATUS =
             "UPDATE driver SET \"driverStatus\"=?::driverstatus WHERE userid=?";
 
+    public Boolean inactivateAllDrivers() throws DAOException {
+        return executeQuery(UPDATE_ENUM_TO_STATUS_TO_ALL, DriverStatus.inactive);
+    }
     public Boolean updateDriverStatus(Integer id, DriverStatus driverStatus) throws DAOException {
         Connection connection = connectionPool.getConnection();
         try {
@@ -42,7 +47,13 @@ public class DriverDAO extends DAO<Driver> {
     public DriverDTO selectByDriverID(Integer driverID) throws DAOException {
         return DriverConverter.toDTO(select(SELECT_BY_DRIVER_ID, driverID));
     }
-    public DriverDTO getByUserID(Integer userID) throws DAOException {
+
+    public DriverDTO logout(Integer userID) throws DAOException {
+        return new DriverDTO(updateDriverStatus(userID, DriverStatus.inactive));
+    }
+
+    public DriverDTO login(Integer userID) throws DAOException {
+        updateDriverStatus(userID, DriverStatus.active);
         return DriverConverter.toDTO(select(SELECT_BY_USER_ID, userID));
     }
 

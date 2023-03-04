@@ -14,11 +14,6 @@ public class Logout implements Command {
     @Override
     public PageUrl execute(HttpServletRequest request){
         HttpSession session = request.getSession();
-//        OrderView orderView = (OrderView) session.getAttribute("order");
-//        if(orderView!=null){
-//            OrderService orderService = new OrderService();
-//            orderService.cancelOrder(orderView.getOrderID());
-//        }
         session.invalidate();
         return new PageUrl(PageConstants.MAIN_PAGE, true);
     }
