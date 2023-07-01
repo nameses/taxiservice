@@ -6,6 +6,6 @@ The user can order a taxi, the driver can track the list of orders and coordinat
 The map and start and destination points are created using JS and TomTomAPI. The data is stored in PostgreSQL.
 
 Used technologies:
-Java, Servlets(servlets, filters, listeners, sessions, etc), JDBC, JSP, JSTL, HTML, JS + bootstrap, PostgreSQL,Apache Tomcat.
+Backend: Java, Servlets(servlets, filters, listeners, sessions, etc), JDBC, PostgreSQL, Apache Tomcat, JSP, JSTL,  HTML, CSS + bootstrap, JS.
 Used TomTomAPI for Route detection.
 
